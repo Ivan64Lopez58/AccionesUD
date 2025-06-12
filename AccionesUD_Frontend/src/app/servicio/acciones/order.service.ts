@@ -27,6 +27,15 @@ export interface Order {
   saldoDisponible: number;
 }
 
+export interface AccionHistorica {
+  fecha: string;
+  precioApertura: number;
+  precioCierre: number;
+  maximo: number;
+  minimo: number;
+  volumen: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
