@@ -1,15 +1,28 @@
 import { Component, OnInit } from '@angular/core';
+import { Order, OrderService } from '../servicio/acciones/order.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-historico-ordenes',
   templateUrl: './historico-ordenes.component.html',
-  styleUrls: ['./historico-ordenes.component.css']
+  styleUrls: ['./historico-ordenes.component.css'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class HistoricoOrdenesComponent implements OnInit {
 
-  constructor() { }
+  historicoOrdenes: Order[] = [];
 
-  ngOnInit() {
+  constructor(private orderService:OrderService) { }
+
+  ngOnInit(): void {
+    this.orderService.getOrders().subscribe({
+      next: (data) => {
+        this.historicoOrdenes = data;
+        console.log('Órdenes recibidas:', this.historicoOrdenes);
+      },
+      error: (err) => console.error('Error al cargar las órdenes', err)
+    });
   }
 
   

@@ -29,6 +29,7 @@ export interface Order {
   // Nuevos campos
   fechaCreacion: string; // Fecha de creación de la orden
   estado: string; // Estado de la orden (ej. 'pendiente', 'completada', 'cancelada')
+  operacion: string; // Operación asociada a la orden (ej. 'compra', 'venta')
 }
 
 @Injectable({
@@ -65,7 +66,8 @@ export class OrderService {
         totalEstimado: 1816,
         saldoDisponible: 412.456,
         fechaCreacion: '2023-10-01T12:00:00Z',
-        estado: 'Pendiente' 
+        estado: 'Pendiente',
+        operacion: 'Comprar'
       },
       {
         id: 2,
@@ -90,7 +92,8 @@ export class OrderService {
         totalEstimado: 350.23,
         saldoDisponible: 1000,
         fechaCreacion: '2023-10-02T14:30:00Z',
-        estado: 'Completada' 
+        estado: 'Completada',
+        operacion: 'Vender' 
       }
     ];
     return of(testOrders);
