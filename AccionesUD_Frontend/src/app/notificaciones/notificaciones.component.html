@@ -19,18 +19,18 @@
 
     <div class="dropdown-filtro" (click)="mostrarOpciones = !mostrarOpciones">
       <button class="btn-filtrar">
-        <i class="fas fa-filter"></i> {{ tipoFiltro === 'TODAS' ? 'Todas' : tipoFiltro }}
+        <i class="fas fa-filter"></i>{{ tipoFiltro === 'TODAS' ? 'Todas' : tipoFiltro }}
       </button>
 
       <ul class="filtro-opciones" *ngIf="mostrarOpciones">
-        <li (click)="seleccionarFiltro('Sin leer'); $event.stopPropagation()">Sin leer</li>
+        <li (click)="seleccionarFiltro('TODAS'); $event.stopPropagation()">Todas</li>
         <li (click)="seleccionarFiltro('INFO'); $event.stopPropagation()">Info</li>
         <li (click)="seleccionarFiltro('Operación'); $event.stopPropagation()">Operación</li>
         <li (click)="seleccionarFiltro('Transacción'); $event.stopPropagation()">Transacción</li>
         <li (click)="seleccionarFiltro('Seguridad'); $event.stopPropagation()">Seguridad</li>
         <li (click)="seleccionarFiltro('Promoción'); $event.stopPropagation()">Promoción</li>
         <li (click)="seleccionarFiltro('Leídas'); $event.stopPropagation()">Leídas</li>
-        <li (click)="seleccionarFiltro('TODAS'); $event.stopPropagation()">TODAS</li>
+        <li (click)="seleccionarFiltro('Sin leer'); $event.stopPropagation()">Sin leer</li>
       </ul>
 
     </div>

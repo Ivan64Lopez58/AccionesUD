@@ -7,5 +7,8 @@ public enum NotificationType {
     RECOVERY,
     PASSWORD_CHANGE,
     PROFILE_UPDATE,
-    ORDENES
+    ORDENES,
+    ORDEN_CREADA,
+    ORDEN_RECHAZADA,
+    ORDEN_EJECUTADA
 }

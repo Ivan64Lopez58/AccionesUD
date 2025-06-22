@@ -2,7 +2,9 @@ package com.AccionesUD.AccionesUD.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,4 +36,15 @@ public class OrderController {
                                  .body("Error interno al procesar la solicitud.");
         }
     }
+
+    @PutMapping("/{orderId}/ejecutar")
+    public ResponseEntity<OrderResponseDTO> ejecutar(@PathVariable Long orderId) {
+        return ResponseEntity.ok(orderService.ejecutarOrden(orderId));
+    }
+
+    @PutMapping("/{orderId}/rechazar")
+    public ResponseEntity<OrderResponseDTO> rechazar(@PathVariable Long orderId) {
+        return ResponseEntity.ok(orderService.rechazarOrdenPorLimite(orderId));
+    }
+
 }

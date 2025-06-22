@@ -26,6 +26,7 @@ export const routes: Routes = [
     component: NotificacionesComponent,
     canActivate: [AuthGuard],
   },
+  { path: 'ordenes', component: OrdenesPersonalizadasComponent},
 ];
 /*
 export const routes: Routes = [
