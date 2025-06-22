@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CandlestickSeries, createChart, IChartApi, ISeriesApi } from 'lightweight-charts';
 import { AccionHistorica } from '../servicio/acciones/order.service';
+import { OrderService } from '../servicio/acciones/order.service';
 
 @Component({
   selector: 'app-grafica',
@@ -13,14 +14,16 @@ export class GraficaComponent implements OnInit, AfterViewInit {
 
   @Input() chartInicialData!: AccionHistorica[];
 
+  @Input() width: number = 780;
+  @Input() height: number = 300;
+
   private chart!: IChartApi;
   private series!: ISeriesApi<'Candlestick'>;
 
   constructor() { }
 
   ngOnInit() {
-
-  
+    this.series.setData(this.chartInicialData)
 
   }
 
@@ -30,21 +33,21 @@ export class GraficaComponent implements OnInit, AfterViewInit {
 
   initializeChart() {
     const chartOptions = { 
-      width: 780,
-      height: 300,
+      width: this.width,
+      height: this.height,
       layout: { 
         background: 
         { 
-          color: 'black' 
+          color: 'white' 
         },
-        textColor: '#ffffff'
+        textColor: '#000000'
       },
       rightPriceScale: { 
         borderColor: '#cccccc',
       },
       grid: {
-        vertLines: { color: '#e1e1e1' },
-        horzLines: { color: '#e1e1e1' },
+        vertLines: { color: '#000000' },
+        horzLines: { color: '#000000' },
       },
       timeScale: {
         borderColor: '#cccccc',
@@ -54,7 +57,6 @@ export class GraficaComponent implements OnInit, AfterViewInit {
     };
     this.chart = createChart(this.chartContainer.nativeElement,chartOptions)
     this.series = this.chart.addSeries(CandlestickSeries)
-
   }
 
 

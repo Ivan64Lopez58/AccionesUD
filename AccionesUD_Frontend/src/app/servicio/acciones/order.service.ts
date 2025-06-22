@@ -28,12 +28,17 @@ export interface Order {
 }
 
 export interface AccionHistorica {
-  fecha: string;
-  precioApertura: number;
-  precioCierre: number;
-  maximo: number;
-  minimo: number;
-  volumen: number;
+  time: {
+    year: number;
+    month: number;
+    day: number;
+    hour: number;
+    minute: number;
+  };
+  open: number;
+  close: number;
+  high: number;
+  low: number;
 }
 
 @Injectable({
@@ -98,4 +103,17 @@ export class OrderService {
     // Cuando esté disponible el backend, utiliza:
     // return this.http.get<Order[]>(this.apiUrl);
   }
+
+  getHistoricalData(): Observable<AccionHistorica[]> {
+    // Datos de prueba mientras no se conecta al back end
+    const testData: AccionHistorica[] = [
+      { time: { year: 2023, month: 10, day: 1, hour: 0, minute: 0 }, open: 1800, close: 1816, high: 1820, low: 1790 },
+      { time: { year: 2023, month: 10, day: 2, hour: 0, minute: 0 }, open: 1816, close: 1805, high: 1825, low: 1800 },
+      { time: { year: 2023, month: 10, day: 3, hour: 0, minute: 0 }, open: 1805, close: 1812, high: 1818, low: 1795 }
+    ];
+    return of(testData);
+    // Cuando esté disponible el backend, utiliza:
+    // return this.http.get<AccionHistorica[]>(`${this.apiUrl}/historical-data`);
+  }
+
 }
