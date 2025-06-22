@@ -1,86 +1,124 @@
-.perfil{
+.perfil {
   position: relative;
-  background: linear-gradient(to right, rgb(247, 200, 200), #ffffff);
-  height: 100vh;
-  padding-bottom: 100px;
+  padding-top: 155px;
+  padding-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 50vh;
 }
-.perfil-container {
-  position: relative;
-  top: 170px;
+
+/* Estilos comunes para todas las tarjetas */
+.tarjeta {
   width: 100%;
-  max-width: 900px;
-  margin: 3rem auto;
-  padding: 2.5rem;
-  background: linear-gradient(to right, #ffffff, rgb(247, 200, 200));
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+  transition: all 0.3s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo para cada tarjeta específica */
+.perfil-container {
+  background: linear-gradient(to right, #DB9494, #EB1409);
+  color: white;
+}
+
+.saldo-container {
+  background: linear-gradient(to right, #DB9494, #EB1409);
+  color: white;
+}
+
+.historial-container {
+  background: linear-gradient(to right, #DB9494, #EB1409);
+  color: white;
+}
+
+/* Estilo para el encabezado de tarjetas contraídas */
+.tarjeta.contraido {
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.tarjeta-header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.tarjeta-icono {
+  width: 50px;
+  height: 50px;
+  margin-right: 1rem;
+  background-color: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.tarjeta-info {
+  flex: 1;
+}
+
+.tarjeta-titulo {
+  font-weight: bold;
+  font-size: 1.3rem;
+  margin-bottom: 0.2rem;
+}
+
+.tarjeta-subtitulo {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-top: 0.2rem;
+}
+
+.tarjeta-toggle {
+  font-size: 1.3rem;
+  margin-left: auto;
   transition: transform 0.3s ease;
 }
 
-.perfil-container:hover {
-  transform: scale(1.01);
+.tarjeta.contraido:hover .tarjeta-toggle {
+  transform: translateY(3px);
 }
 
+/* Estilos para los contenidos de las tarjetas expandidas */
 h2 {
   text-align: center;
-  color: #E6574F;
-  margin-bottom: 2rem;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
   font-size: 1.8rem;
 }
 
+.cerrar-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.cerrar-btn:hover {
+  color: #ffcccc;
+}
+
+/* Estilos del formulario existentes */
 form {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
-}
-
-label {
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-  color: #2A3448;
-  font-size: 0.95rem;
-}
-
-input,
-textarea {
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #aaa;
-}
-
-input:focus,
-textarea:focus {
-  border-color: #E6574F;
-  box-shadow: 0 0 0 3px rgba(230, 87, 79, 0.2);
-  outline: none;
-}
-
-button[type="submit"] {
-  background: linear-gradient(135deg, #e6574f, #ff725e);
-  color: white;
-  border: none;
-  padding: 0.9rem;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-button[type="submit"]:hover {
-  background: linear-gradient(135deg, #cc4a44, #ff4e39);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(230, 87, 79, 0.4);
 }
 
 .row {
@@ -96,57 +134,410 @@ button[type="submit"]:hover {
   flex-direction: column;
 }
 
-.cerrar-btn {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  background: transparent;
-  color: #e74c3c;
+label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+input,
+textarea {
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #666;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #0c44ff;
+  box-shadow: 0 0 0 3px rgba(230, 87, 79, 0.2);
+  outline: none;
+}
+
+button[type="submit"] {
+  background: linear-gradient(135deg, #e6574f, #ff725e);
+  color: white;
   border: none;
-  font-size: 2rem;
-  font-weight: bold;
+  padding: 0.9rem;
+  border-radius: 10px;
+  font-size: 1.2rem;
   cursor: pointer;
-  line-height: 1;
-  padding: 0;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 1rem;
 }
 
-
-.cerrar-btn:hover {
-  color: #ff3b2e;
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #cc4a44, #ff4e39);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(230, 87, 79, 0.4);
 }
 
-@media (max-width: 905px) {
-  .perfil-container {
-  position: relative;
-  top: 160px;
-  }
-}
-@media (max-width: 768px) {
-  .perfil-container {
-  position: relative;
-  top: 190px;
-  }
+/* Estilos específicos para la tarjeta de saldo */
+.saldo-detalle {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 1.5rem;
 }
 
-@media (max-width: 386px) {
-  .perfil-container {
-  position: relative;
-  top: 220px;
-  }
-}
-@media (max-width: 339px) {
-  .perfil-container {
-  position: relative;
-  top: 240px;
-  }
-}
-@media (max-width: 231px) {
-  .perfil-container {
-  position: relative;
-  top: 280px;
-  }
+.saldo-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.saldo-item.total {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  border-bottom: none;
+  padding-top: 0.5rem;
+}
+
+.saldo-valor {
+  font-weight: 600;
+}
+
+.btn-accion {
+  background-color: white;
+  color: #EB1409;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 1rem;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn-accion:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+.btn-accion.secundario {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  margin-top: 0.5rem;
+}
+
+.btn-accion.secundario:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Estilos adicionales para la tarjeta de saldo expandida */
+
+.saldo-expanded {
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.saldo-expanded h2 {
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.saldo-resumen {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.saldo-info {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px 20px;
+}
+
+.saldo-tabs {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tabs-container {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+  color: #EB1409;
+  border-bottom: 3px solid #EB1409;
+}
+
+.tab-content {
+  padding: 20px;
+  min-height: 300px;
+  color: #333;
+}
+
+/* Estilos para el gráfico de barras */
+.chart-container {
+  position: relative;
+  height: 300px;
+}
+
+.chart-filter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: flex;
+  gap: 5px;
+}
+
+.filter-btn {
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.filter-btn.selected {
+  background-color: #EB1409;
+  color: white;
+  border-color: #EB1409;
+}
+
+.filter-btn:hover:not(.selected) {
+  background-color: #e0e0e0;
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 250px;
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+}
+
+.chart-grid {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.grid-line {
+  width: 100%;
+  height: 1px;
+  border-top: 1px dashed #ccc;
+  text-align: left;
+  font-size: 12px;
+  color: #777;
+}
+
+.chart-bars {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 220px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  margin-top: 30px;
+}
+
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+}
+
+.bar {
+  width: 30px;
+  background-color: #3377FF;
+  border-radius: 5px 5px 0 0;
+  transition: height 0.3s ease;
+}
+
+.bar-label {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.chart-line {
+  position: absolute;
+  height: 3px;
+  width: 80%;
+  background-color: rgba(255, 140, 0, 0.7);
+  top: 40%;
+  left: 10%;
+  z-index: 0;
+}
+
+/* Estilos para el historial */
+.historial-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.search-input-wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.search-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #EB1409;
+}
+
+.search-btn {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  padding: 8px 15px;
+  color: #555;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.historial-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.historial-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: rgba(230, 230, 230, 0.5);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.historial-item:hover {
+  background-color: rgba(230, 230, 230, 0.8);
+}
+
+.item-status {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.item-status.success {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.item-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.item-date {
+  font-size: 13px;
+  color: #666;
+}
+
+.item-amount {
+  font-weight: 600;
+  font-size: 15px;
+  text-align: right;
+}
+
+/* Botón Ingresar dinero */
+.btn-ingresar {
+  width: 100%;
+  background: linear-gradient(135deg, #e6574f, #ff725e);
+  color: white;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-ingresar:hover {
+  background: linear-gradient(135deg, #cc4a44, #ff4e39);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(230, 87, 79, 0.4);
+}
+
+/* Estilos existentes mantenidos */
 .switch {
   position: relative;
   display: inline-block;
@@ -193,17 +584,6 @@ button[type="submit"]:hover {
   transform: translateX(24px);
 }
 
-
-.dato-cedula {
-  background-color: #f5f5f5;
-  padding: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-weight: bold;
-  margin-top: 0px;
-}
-
-
 .email-row {
   display: flex;
   align-items: center;
@@ -228,10 +608,312 @@ button[type="submit"]:hover {
 }
 
 .btn-remove {
-  background-color: #dc3545;
+  background-color: #ff8484;
 }
 
 .btn-add:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
 }
+
+.btn-secondary {
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #e0e0e0;
+}
+
+/* Estilos para el modal de transacción */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+  animation: overlayFadeIn 0.3s forwards;
+}
+
+@keyframes overlayFadeIn {
+  from { background: rgba(0,0,0,0); }
+  to   { background: rgba(0,0,0,0.5); }
+}
+
+.modal-content {
+  background: linear-gradient(45deg, #f8a8a8, #f3dbdb);
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d40000 #f3dbdb;
+  animation: slideInUp 0.4s ease-out forwards;
+}
+
+.transaction-modal h2 {
+  color: #d40000;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.transaction-details {
+  padding: 0 0.5rem;
+}
+
+.detail-group {
+  margin-bottom: 1.2rem;
+}
+
+.detail-question {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.2rem;
+  font-size: 1rem;
+}
+
+.detail-answer {
+  color: #555;
+  font-size: 1.1rem;
+  margin-left: 0.5rem;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #d40000;
+}
+
+.close-btn:hover {
+  color: #ff725e;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Estilos para el modal de selección de método de pago */
+.payment-modal {
+  max-width: 500px;
+  padding: 25px;
+}
+
+.payment-modal h2 {
+  color: #EB1409;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.payment-selection {
+  margin-bottom: 20px;
+}
+
+.payment-selection label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Estilos para el select personalizado */
+.custom-select {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select select {
+  appearance: none;
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.custom-select select:focus {
+  border-color: #EB1409;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(235, 20, 9, 0.2);
+}
+
+.select-arrow {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #777;
+}
+
+/* Estilos para los formularios */
+.form-field {
+  margin-bottom: 15px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.form-field input{
+  width: 90%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+
+.form-field select {
+  width: 90%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  border-color: #EB1409;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(235, 20, 9, 0.2);
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.form-field.half {
+  flex: 1;
+  min-width: 0;
+}
+
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.form-check input {
+  margin-top: 3px;
+}
+
+.form-check label {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.4;
+}
+
+/* Botón de volver */
+.btn-back {
+  background: none;
+  border: none;
+  color: #666;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 14px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 10px;
+}
+
+.btn-back:hover {
+  color: #EB1409;
+}
+
+/* Botón de depósito */
+.deposit-btn {
+  width: 100%;
+  background-color: #EB1409;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.deposit-btn:hover:not(:disabled) {
+  background-color: #d40000;
+}
+
+.deposit-btn:disabled {
+  background-color: #f99;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .tarjeta {
+    margin-top: 1rem;
+    max-width: 95%;
+  }
+
+  .form-field {
+    min-width: 100%;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .perfil {
+    padding-top: 250px;
+  }
+
+  .chart-filter,
+  .search-container {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .filter-btn {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 386px) {
+  .perfil {
+    padding-top: 290px;
+  }
+}
+
+

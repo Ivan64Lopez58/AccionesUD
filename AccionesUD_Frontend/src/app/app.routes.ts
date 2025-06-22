@@ -19,7 +19,10 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'miperfil', component: MiPerfilComponent, canActivate: [AuthGuard] },
+  { path: 'miperfil',
+    component: MiPerfilComponent,
+    canActivate: [AuthGuard]
+  },
   { path: 'reset-password', component: RecuperarComponent },
   {
     path: 'notificaciones',

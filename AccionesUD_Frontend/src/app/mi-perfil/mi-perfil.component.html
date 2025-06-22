@@ -1,94 +1,581 @@
 <app-menu2 style="position: fixed; top: 0; left: 0; width: 101vw; z-index: 1000;"></app-menu2>
 <div class="perfil">
-  <div class="perfil-container">
-    <button class="cerrar-btn" (click)="cancelarRegistro()" aria-label="Cancelar registro">&times;</button>
-    <h2>Mi Perfil</h2>
-    <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
-      <div class="row">
+  <!-- Tarjeta de Perfil -->
+  <div class="tarjeta perfil-container" [class.contraido]="isPerfilContraido">
+    <div *ngIf="isPerfilContraido" class="tarjeta-header" (click)="togglePerfil()">
+      <img src="persona.svg" alt="Icono perfil" class="tarjeta-icono" />
+      <div class="tarjeta-info">
+        <p class="tarjeta-titulo">{{ perfilForm.get('firstname')?.value }} {{ perfilForm.get('lastname')?.value }}</p>
+        <p class="tarjeta-subtitulo">{{ perfilForm.get('username')?.value }}</p>
+      </div>
+      <span class="tarjeta-toggle">▼</span>
+    </div>
+    <div *ngIf="!isPerfilContraido">
+      <button class="cerrar-btn" (click)="togglePerfil()" aria-label="Contraer tarjeta">▲</button>
+      <h2>Mi Perfil</h2>
+      <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="form-field">
+            <label for="firstname">Nombre</label>
+            <input id="firstname" formControlName="firstname" placeholder="Ej. Juan" />
+          </div>
+          <div class="form-field">
+            <label for="lastname">Apellido</label>
+            <input id="lastname" formControlName="lastname" placeholder="Ej. Pérez" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-field">
+            <label for="id">Cédula</label>
+            <input id="id" formControlName="id" placeholder="Ej. 1020304050" />
+          </div>
+          <div class="form-field">
+            <label for="phone">Teléfono</label>
+            <input id="phone" formControlName="phone" placeholder="Ej. 3001234567" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-field">
+            <label for="username">Correo</label>
+            <input id="username" type="email" formControlName="username" placeholder="Ej. usuario@correo.com" />
+          </div>
+        </div>
+
         <div class="form-field">
-          <label for="firstname">Nombre</label>
-          <input id="firstname" formControlName="firstname" placeholder="Ej. Juan" />
+          <label>Correos adicionales</label>
+          <div formArrayName="emails">
+            <ng-container *ngFor="let email of emails.controls; let i = index">
+              <div [formGroupName]="i" class="email-row">
+                <input type="email" formControlName="value" placeholder="Correo adicional" />
+                <button type="button" class="btn-remove" (click)="removeEmail(i)">−</button>
+              </div>
+            </ng-container>
+
+            <button
+              type="button"
+              class="btn-add"
+              (click)="addEmail()"
+              [disabled]="emails.length >= 2">
+              + Añadir correo
+            </button>
+          </div>
         </div>
+
         <div class="form-field">
-          <label for="lastname">Apellido</label>
-          <input id="lastname" formControlName="lastname" placeholder="Ej. Pérez" />
+          <label for="address">Dirección</label>
+          <textarea id="address" formControlName="address" placeholder="Ej. Calle 123 #45-67, Bogotá"></textarea>
         </div>
-      </div>
 
-      <div class="row">
+        <div class="row">
+          <label for="otpToggle">Activar OTP</label>
+          <label class="switch">
+            <input type="checkbox" id="otpToggle" formControlName="otpEnabled" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
         <div class="form-field">
-          <label for="id">Cédula</label>
-          <input id="id" formControlName="id" placeholder="Ej. 1020304050" />
+          <label for="dailyOrderLimit">Límite de órdenes diaria</label>
+          <div class="number-input">
+            <input
+              type="number"
+              id="dailyOrderLimit"
+              formControlName="dailyOrderLimit"
+              min="1"
+            />
+          </div>
         </div>
-        <div class="form-field">
-          <label for="phone">Teléfono</label>
-          <input id="phone" formControlName="phone" placeholder="Ej. 3001234567" />
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="form-field">
-          <label for="username">Correo</label>
-          <input id="username" type="email" formControlName="username" placeholder="Ej. usuario@correo.com" />
-        </div>
-      </div>
-
-      <div class="form-field">
-        <label>Correos adicionales</label>
-        <div formArrayName="emails">
-          <ng-container *ngFor="let email of emails.controls; let i = index">
-            <div [formGroupName]="i" class="email-row">
-              <input type="email" formControlName="value" placeholder="Correo adicional" />
-              <button type="button" class="btn-remove" (click)="removeEmail(i)">−</button>
-            </div>
-          </ng-container>
-
-          <button
-            type="button"
-            class="btn-add"
-            (click)="addEmail()"
-            [disabled]="emails.length >= 2">
-            + Añadir correo
-          </button>
-        </div>
-      </div>
-
-
-
-
-      <div class="form-field">
-        <label for="address">Dirección</label>
-        <textarea id="address" formControlName="address" placeholder="Ej. Calle 123 #45-67, Bogotá"></textarea>
-      </div>
-
-      <!-- otpEnabled -->
-      <div class="row">
-        <label for="otpToggle">Activar OTP</label>
-        <label class="switch">
-          <input type="checkbox" id="otpToggle" formControlName="otpEnabled" />
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <!-- dailyOrderLimit -->
-      <div class="form-field">
-        <label for="dailyOrderLimit">Límite de órdenes diaria</label>
-        <div class="number-input">
-          <input
-            type="number"
-            id="dailyOrderLimit"
-            formControlName="dailyOrderLimit"
-            min="1"
-          />
-        </div>
-      </div>
-
-      <button type="submit">Guardar Cambios</button>
-    </form>
-
-    <div class="perfil-footer">
-      <!-- <p>¿Necesitas ayuda? <a href="https://www.ejemplo.com/ayuda" target="_blank">Contáctanos</a></p> -->
+        <button type="submit">Guardar Cambios</button>
+      </form>
+    </div>
   </div>
 
+  <!-- Tarjeta de Saldo -->
+  <div class="tarjeta saldo-container" [class.contraido]="isSaldoContraido">
+    <div *ngIf="isSaldoContraido" class="tarjeta-header" (click)="toggleSaldo()">
+      <img src="Saldo.svg" alt="Icono saldo" class="tarjeta-icono" />
+      <div class="tarjeta-info">
+        <p class="tarjeta-titulo">{{ formatCurrency(balanceInfo.availableBalance) }}</p>
+        <p class="tarjeta-subtitulo">Total: {{ formatCurrency(balanceInfo.totalBalance) }}</p>
+      </div>
+      <span class="tarjeta-toggle">▼</span>
+    </div>
+    <div *ngIf="!isSaldoContraido" class="saldo-expanded">
+      <button class="cerrar-btn" (click)="toggleSaldo()" aria-label="Contraer tarjeta">▲</button>
+      <h2>Mi saldo</h2>
+
+      <!-- Spinner de carga para saldo -->
+      <div *ngIf="loadingBalance" class="loading-spinner-container">
+        <div class="loading-spinner"></div>
+        <p>Cargando información de saldo...</p>
+      </div>
+
+      <div *ngIf="!loadingBalance" class="saldo-resumen">
+        <div class="saldo-info">
+          <div class="saldo-item">
+            <span>Saldo Disponible:</span>
+            <span class="saldo-valor">{{ formatCurrency(balanceInfo.availableBalance) }}</span>
+          </div>
+          <div class="saldo-item">
+            <span>En tramitación de orden:</span>
+            <span class="saldo-valor">{{ formatCurrency(balanceInfo.pendingBalance) }}</span>
+          </div>
+          <div class="saldo-item total">
+            <span>Total:</span>
+            <span class="saldo-valor">{{ formatCurrency(balanceInfo.totalBalance) }}</span>
+          </div>
+        </div>
+
+        <!-- Pestañas de navegación -->
+        <div class="saldo-tabs">
+          <div class="tabs-container">
+            <button
+              [class.active]="activeTab === 'resumen'"
+              (click)="setActiveTab('resumen')"
+              class="tab-btn">
+              Resumen
+            </button>
+            <button
+              [class.active]="activeTab === 'historial'"
+              (click)="setActiveTab('historial')"
+              class="tab-btn">
+              Historial
+            </button>
+          </div>
+
+          <!-- Contenido de la pestaña Resumen -->
+          <div *ngIf="activeTab === 'resumen'" class="tab-content resumen-tab">
+            <div class="chart-container">
+              <div class="chart-filter">
+                <button
+                  class="filter-btn"
+                  [class.selected]="selectedPeriod === 'month'"
+                  (click)="changePeriod('month')">
+                  Mes
+                </button>
+                <button
+                  class="filter-btn"
+                  [class.selected]="selectedPeriod === 'week'"
+                  (click)="changePeriod('week')">
+                  Semana
+                </button>
+                <button
+                  class="filter-btn"
+                  [class.selected]="selectedPeriod === 'day'"
+                  (click)="changePeriod('day')">
+                  Día
+                </button>
+              </div>
+
+              <!-- Spinner de carga para el gráfico -->
+              <div *ngIf="loadingChartData" class="loading-spinner-container chart-loading">
+                <div class="loading-spinner"></div>
+                <p>Cargando datos...</p>
+              </div>
+
+              <div *ngIf="!loadingChartData" class="chart">
+                <!-- Gráfico de barras simulado -->
+                <div class="chart-wrapper">
+                  <div class="chart-grid">
+                    <div class="grid-line">250.000</div>
+                    <div class="grid-line">200.000</div>
+                    <div class="grid-line">150.000</div>
+                    <div class="grid-line">100.000</div>
+                    <div class="grid-line">50.000</div>
+                    <div class="grid-line">0</div>
+                  </div>
+
+                  <!-- Gráfico de barras -->
+                  <div class="chart-bars">
+                    <ng-container *ngFor="let item of chartData">
+                      <div class="bar-container">
+                        <div class="bar" [style.height.%]="item.value"></div>
+                        <span class="bar-label">{{ item.label }}</span>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="chart-line"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contenido de la pestaña Historial -->
+          <div *ngIf="activeTab === 'historial'" class="tab-content historial-tab">
+            <div class="historial-header">
+              <div class="search-container">
+                <div class="search-input-wrapper">
+                  <input
+                    type="text"
+                    class="search-input"
+                    placeholder="Nombre del banco..."
+                    [(ngModel)]="bankSearchTerm"
+                    (keyup.enter)="searchTransactions()"
+                  />
+                  <button class="search-btn" (click)="searchTransactions()" [disabled]="loadingTransactions">
+                    <i class="fa fa-search"></i> Buscar
+                  </button>
+                </div>
+                <div class="filter-buttons">
+                  <button
+                    class="filter-btn"
+                    [class.selected]="selectedPeriod === 'month'"
+                    (click)="changePeriod('month')">
+                    Mes
+                  </button>
+                  <button
+                    class="filter-btn"
+                    [class.selected]="selectedPeriod === 'week'"
+                    (click)="changePeriod('week')">
+                    Semana
+                  </button>
+                  <button
+                    class="filter-btn"
+                    [class.selected]="selectedPeriod === 'day'"
+                    (click)="changePeriod('day')">
+                    Día
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Spinner de carga para transacciones -->
+            <div *ngIf="loadingTransactions" class="loading-spinner-container">
+              <div class="loading-spinner"></div>
+              <p>Cargando transacciones...</p>
+            </div>
+
+            <!-- Lista de transacciones filtradas -->
+            <div *ngIf="!loadingTransactions" class="historial-list">
+              <ng-container *ngIf="filteredTransactions.length > 0; else noResults">
+                <div class="historial-item" *ngFor="let transaction of filteredTransactions" (click)="showTransactionDetails(transaction)">
+                  <div class="item-status" [ngClass]="transaction.status">
+                    <i class="fa"
+                       [class.fa-check-circle]="transaction.status === 'success'"
+                       [class.fa-clock-o]="transaction.status === 'pending'"
+                       [class.fa-times-circle]="transaction.status === 'failed'">
+                    </i>
+                  </div>
+                  <div class="item-details">
+                    <div class="item-title" [innerHtml]="isSearchActive ? highlightSearchTerm(transaction.bank) : transaction.bank"></div>
+                    <div class="item-date">{{ transaction.date }}</div>
+                  </div>
+                  <div class="item-amount">{{ transaction.amount }}</div>
+                </div>
+              </ng-container>
+              <ng-template #noResults>
+                <div class="no-results">
+                  <p>No se encontraron transacciones con el banco "{{ bankSearchTerm }}"</p>
+                  <button class="btn-secondary" (click)="clearSearch()">Mostrar todos</button>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-ingresar" (click)="openDepositModal()">Ingresar dinero</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tarjeta de Historial de Órdenes -->
+  <div class="tarjeta historial-container" [class.contraido]="isHistorialContraido">
+    <div *ngIf="isHistorialContraido" class="tarjeta-header" (click)="toggleHistorial()">
+      <img src="historialsaldo.svg" alt="Icono historial" class="tarjeta-icono" />
+      <div class="tarjeta-info">
+        <p class="tarjeta-titulo">Histórico de órdenes</p>
+        <p class="tarjeta-subtitulo">0 órdenes realizadas, estado pendiente</p>
+      </div>
+      <span class="tarjeta-toggle">▼</span>
+    </div>
+    <div *ngIf="!isHistorialContraido">
+      <button class="cerrar-btn" (click)="toggleHistorial()" aria-label="Contraer tarjeta">▲</button>
+      <h2>Histórico de órdenes</h2>
+      <div class="historial-contenido">
+        <p class="mensaje-vacio">No hay órdenes registradas</p>
+        <!-- Aquí se podría agregar una tabla o lista de órdenes cuando existan -->
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- Modal para los detalles de la transacción -->
+<div *ngIf="showTransactionModal" class="modal-overlay" (click)="closeModal($event)">
+  <div class="modal-content transaction-modal">
+    <span class="close-btn" (click)="closeTransactionModal()">&times;</span>
+    <h2>{{ selectedTransaction?.type || 'Ingreso de' }} {{ selectedTransaction?.bank }}</h2>
+
+    <div class="transaction-details">
+      <div class="detail-group">
+        <p class="detail-question">¿A dónde llegó el dinero?</p>
+        <p class="detail-answer">{{ selectedTransaction?.bank }}</p>
+      </div>
+
+      <div class="detail-group">
+        <p class="detail-question">¿Cuánto?</p>
+        <p class="detail-answer">{{ selectedTransaction?.amount }}</p>
+      </div>
+
+      <div class="detail-group">
+        <p class="detail-question">Fecha</p>
+        <p class="detail-answer">{{ selectedTransaction?.fullDate || selectedTransaction?.date }}</p>
+      </div>
+
+      <div class="detail-group">
+        <p class="detail-question">Referencia</p>
+        <p class="detail-answer">{{ selectedTransaction?.reference || 'Sin referencia' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para selección de método de pago -->
+<div *ngIf="showDepositModal" class="modal-overlay" (click)="closeModal($event)">
+  <div class="modal-content payment-modal">
+    <span class="close-btn" (click)="closeDepositModal()">×</span>
+    <h2>Ingresar dinero</h2>
+
+    <!-- Formulario de selección de método de pago -->
+    <div *ngIf="currentDepositStep === 'method-selection'">
+      <div class="payment-selection">
+        <label for="paymentMethod">Selecciona un método de pago</label>
+        <div class="custom-select">
+          <select
+            id="paymentMethod"
+            [(ngModel)]="selectedPaymentMethod"
+            (change)="onPaymentMethodChange()">
+            <option value="" disabled selected>Selecciona uno</option>
+            <option value="pse">PSE</option>
+            <option value="visa">Visa</option>
+            <option value="mastercard">Mastercard</option>
+            <option value="wallet">Billetera virtual</option>
+          </select>
+          <div class="select-arrow">▼</div>
+        </div>
+      </div>
+
+      <button
+        class="deposit-btn"
+        [disabled]="!selectedPaymentMethod"
+        (click)="goToPaymentForm()">
+        Continuar
+      </button>
+    </div>
+
+    <!-- Formulario de billetera virtual -->
+    <div *ngIf="currentDepositStep === 'wallet'">
+      <form [formGroup]="walletForm" (ngSubmit)="processWalletPayment()">
+        <div class="form-field">
+          <label for="walletAmount">Monto a ingresar</label>
+          <input
+            type="number"
+            id="walletAmount"
+            formControlName="amount"
+            placeholder="Ingrese el monto"
+            min="10000">
+        </div>
+
+        <div class="form-field">
+          <label for="walletAddress">Dirección de la billetera</label>
+          <input
+            type="text"
+            id="walletAddress"
+            formControlName="address"
+            placeholder="Ingrese la dirección">
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="walletTerms" formControlName="terms">
+          <label for="walletTerms">Autorizo el tratamiento de datos personales y acepto el aviso de privacidad</label>
+        </div>
+
+        <button
+          type="submit"
+          class="deposit-btn"
+          [disabled]="walletForm.invalid || processingDeposit">
+          <span *ngIf="!processingDeposit">Ingresar dinero</span>
+          <span *ngIf="processingDeposit">Procesando...</span>
+        </button>
+      </form>
+
+      <button class="btn-back" (click)="backToMethodSelection()">Volver</button>
+    </div>
+
+    <!-- Formulario de tarjeta Visa -->
+    <div *ngIf="currentDepositStep === 'visa'">
+      <form [formGroup]="cardForm" (ngSubmit)="processCardPayment()">
+        <div class="form-field">
+          <label for="cardAmount">Monto a ingresar</label>
+          <input
+            type="number"
+            id="cardAmount"
+            formControlName="amount"
+            placeholder="Ingrese el monto"
+            min="10000">
+        </div>
+
+        <div class="form-field">
+          <label for="cardNumber">Número de tarjeta</label>
+          <input
+            type="text"
+            id="cardNumber"
+            formControlName="cardNumber"
+            placeholder="XXXX XXXX XXXX XXXX"
+            maxlength="19">
+        </div>
+
+        <div class="form-row">
+          <div class="form-field half">
+            <label for="cardExpiry">Caducidad</label>
+            <input
+              type="text"
+              id="cardExpiry"
+              formControlName="expiry"
+              placeholder="MM/YY"
+              maxlength="5">
+          </div>
+
+          <div class="form-field half">
+            <label for="cardCvv">Código CVV</label>
+            <input
+              type="password"
+              id="cardCvv"
+              formControlName="cvv"
+              placeholder="XXX"
+              maxlength="4">
+          </div>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="cardTerms" formControlName="terms">
+          <label for="cardTerms">Autorizo el tratamiento de datos personales y acepto el aviso de privacidad</label>
+        </div>
+
+        <button
+          type="submit"
+          class="deposit-btn"
+          [disabled]="cardForm.invalid || processingDeposit">
+          <span *ngIf="!processingDeposit">Ingresar dinero</span>
+          <span *ngIf="processingDeposit">Procesando...</span>
+        </button>
+      </form>
+
+      <button class="btn-back" (click)="backToMethodSelection()">Volver</button>
+    </div>
+
+    <!-- Formulario de transferencia bancaria -->
+    <div *ngIf="currentDepositStep === 'pse'">
+      <form [formGroup]="bankTransferForm" (ngSubmit)="processBankTransfer()">
+        <div class="form-field">
+          <label for="transferAmount">Monto a ingresar</label>
+          <input
+            type="number"
+            id="transferAmount"
+            formControlName="amount"
+            placeholder="Ingrese el monto"
+            min="10000">
+        </div>
+
+        <div class="form-field">
+          <label for="firstName">Nombres</label>
+          <input
+            type="text"
+            id="firstName"
+            formControlName="firstName"
+            placeholder="Ingrese sus nombres">
+        </div>
+
+        <div class="form-field">
+          <label for="lastName">Apellidos</label>
+          <input
+            type="text"
+            id="lastName"
+            formControlName="lastName"
+            placeholder="Ingrese sus apellidos">
+        </div>
+
+        <div class="form-field">
+          <label for="clientType">Tipo de cliente</label>
+          <div class="custom-select">
+            <select id="clientType" formControlName="clientType">
+              <option value="natural">Persona Natural</option>
+              <option value="juridica">Persona Jurídica</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field half">
+            <label for="docType">Tipo de documento</label>
+            <div class="custom-select">
+              <select id="docType" formControlName="docType">
+                <option value="cc">C.C.</option>
+                <option value="ce">C.E.</option>
+                <option value="nit">NIT</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field half">
+            <label for="docNumber">Número de documento</label>
+            <input
+              type="text"
+              id="docNumber"
+              formControlName="docNumber"
+              placeholder="Ingrese su documento">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="phone">Móvil</label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            placeholder="Ingrese su número de móvil">
+        </div>
+
+        <div class="form-field">
+          <label for="email">Correo electrónico</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="Ingrese su correo electrónico">
+        </div>
+
+        <div class="form-field">
+          <label for="bank">Lista de Bancos</label>
+          <div class="custom-select">
+            <select id="bank" formControlName="bank">
+              <option value="" disabled selected>Seleccione un banco</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="nequi">Nequi</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="transferTerms" formControlName="terms">
+          <label for="transferTerms">Autorizo el tratamiento de datos personales y acepto el aviso de privacidad</label>
+        </div>
+
+        <button
+          type="submit"
+          class="deposit-btn"
+          [disabled]="bankTransferForm.invalid || processingDeposit">
+          <span *ngIf="!processingDeposit">Ingresar dinero</span>
+          <span *ngIf="processingDeposit">Procesando...</span>
+        </button>
+      </form>
+
+      <button class="btn-back" (click)="backToMethodSelection()">Volver</button>
+    </div>
+  </div>
+</div>
+
+<app-pie-pagina-principal style="position: flex; width: 99vw;"></app-pie-pagina-principal>
