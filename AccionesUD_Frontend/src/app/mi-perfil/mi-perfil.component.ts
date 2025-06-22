@@ -97,12 +97,18 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
   cardForm!: FormGroup;
   bankTransferForm!: FormGroup;
 
+  // Propiedades para idioma y tema
+  selectedLanguage: 'es' | 'en' = 'es';
+  selectedTheme: 'light' | 'dark' = 'light';
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private userProfileService: UserProfileService,
     private transaccionesService: TransaccionesService
-  ) {}
+  ) {
+    this.loadUserPreferences();
+  }
 
   ngOnInit(): void {
     // Crear formulario de perfil
@@ -170,6 +176,43 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     // Cargar saldo y transacciones iniciales
     this.loadBalanceInfo();
     this.loadPeriodData();
+    this.applyTheme();
+  }
+
+  // Cargar preferencias del usuario
+  loadUserPreferences(): void {
+    const savedLanguage = localStorage.getItem('userLanguage');
+    if (savedLanguage === 'es' || savedLanguage === 'en') {
+      this.selectedLanguage = savedLanguage;
+    }
+
+    const savedTheme = localStorage.getItem('userTheme');
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      this.selectedTheme = savedTheme;
+    }
+  }
+
+  // Cambiar idioma
+  changeLanguage(): void {
+    localStorage.setItem('userLanguage', this.selectedLanguage);
+    // Aquí iría el código para cambiar el idioma en toda la app
+    // Por ejemplo, usando un servicio de traducción
+    console.log(`Idioma cambiado a: ${this.selectedLanguage}`);
+  }
+
+  // Cambiar tema
+  changeTheme(): void {
+    localStorage.setItem('userTheme', this.selectedTheme);
+    this.applyTheme();
+  }
+
+  // Aplicar tema
+  applyTheme(): void {
+    if (this.selectedTheme === 'dark') {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
   }
 
   // Cargar datos del perfil del usuario
