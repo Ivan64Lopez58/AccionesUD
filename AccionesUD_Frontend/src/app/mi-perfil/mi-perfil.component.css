@@ -15,30 +15,30 @@
   margin: 1rem auto;
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 15px var(--tarjeta-shadow);
   font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
   transition: all 0.3s ease;
 }
 
 .tarjeta:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px var(--tarjeta-shadow-hover);
 }
 
 /* Estilo para cada tarjeta específica */
 .perfil-container {
-  background: linear-gradient(to right, #DB9494, #EB1409);
-  color: white;
+  background: var(--tarjeta-gradient);
+  color: var(--miperfil-tarjetas-titulo);
 }
 
 .saldo-container {
-  background: linear-gradient(to right, #DB9494, #EB1409);
-  color: white;
+  background: var(--tarjeta-gradient);
+  color: var(--miperfil-tarjetas-titulo);
 }
 
 .historial-container {
-  background: linear-gradient(to right, #DB9494, #EB1409);
-  color: white;
+  background: var(--tarjeta-gradient);
+  color: var(--miperfil-tarjetas-titulo);
 }
 
 /* Estilo para el encabezado de tarjetas contraídas */
@@ -57,7 +57,7 @@
   width: 50px;
   height: 50px;
   margin-right: 1rem;
-  background-color: white;
+  background-color: var(--miperfil-tarjetas-titulo);
   border-radius: 50%;
   padding: 5px;
 }
@@ -91,7 +91,7 @@
 /* Estilos para los contenidos de las tarjetas expandidas */
 h2 {
   text-align: center;
-  color: #ffffff;
+  color: var(--miperfil-tarjetas-titulo);
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
 }
@@ -101,7 +101,7 @@ h2 {
   top: 12px;
   right: 16px;
   background: transparent;
-  color: #ffffff;
+  color: var(--color-white);
   border: none;
   font-size: 2rem;
   font-weight: bold;
@@ -111,7 +111,7 @@ h2 {
 }
 
 .cerrar-btn:hover {
-  color: #ffcccc;
+  color: var(--color-primary-lighter);
 }
 
 /* Estilos del formulario existentes */
@@ -137,14 +137,14 @@ form {
 label {
   font-weight: 600;
   margin-bottom: 0.4rem;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 0.95rem;
 }
 
 input,
 textarea {
   padding: 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--tarjeta-input-border);
   border-radius: 10px;
   font-size: 1rem;
   font-family: inherit;
@@ -158,14 +158,14 @@ textarea::placeholder {
 
 input:focus,
 textarea:focus {
-  border-color: #0c44ff;
-  box-shadow: 0 0 0 3px rgba(230, 87, 79, 0.2);
+  border-color: var(--tarjeta-input-focus);
+  box-shadow: 0 0 0 3px var(--tarjeta-input-shadow);
   outline: none;
 }
 
 button[type="submit"] {
-  background: linear-gradient(135deg, #e6574f, #ff725e);
-  color: white;
+  background: var(--tarjeta-button-gradient);
+  color: var(--miperfil-tarjetas-titulo);
   border: none;
   padding: 0.9rem;
   border-radius: 10px;
@@ -178,14 +178,14 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background: linear-gradient(135deg, #cc4a44, #ff4e39);
+  background: var(--tarjeta-button-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(230, 87, 79, 0.4);
+  box-shadow: 0 4px 12px var(--tarjeta-button-shadow);
 }
 
 /* Estilos específicos para la tarjeta de saldo */
 .saldo-detalle {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--tarjeta-item-bg);
   border-radius: 10px;
   padding: 1.5rem;
 }
@@ -195,14 +195,14 @@ button[type="submit"]:hover {
   justify-content: space-between;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--tarjeta-border);
 }
 
 .saldo-item.total {
   font-weight: bold;
   font-size: 1.2rem;
   margin-top: 1rem;
-  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid var(--tarjeta-border);
   border-bottom: none;
   padding-top: 0.5rem;
 }
@@ -212,8 +212,8 @@ button[type="submit"]:hover {
 }
 
 .btn-accion {
-  background-color: white;
-  color: #EB1409;
+  background-color: var(--tarjeta-accion-bg);
+  color: var(--color-primary);
   border: none;
   padding: 0.8rem;
   border-radius: 8px;
@@ -226,18 +226,18 @@ button[type="submit"]:hover {
 }
 
 .btn-accion:hover {
-  background-color: #f0f0f0;
+  background-color: var(--tarjeta-accion-bg-hover);
   transform: translateY(-2px);
 }
 
 .btn-accion.secundario {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
+  background-color: var(--tarjeta-accion-secundario);
+  color: var(--miperfil-tarjetas-titulo);
   margin-top: 0.5rem;
 }
 
 .btn-accion.secundario:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: var(--tarjeta-accion-secundario-hover);
 }
 
 /* Estilos adicionales para la tarjeta de saldo expandida */
@@ -259,20 +259,20 @@ button[type="submit"]:hover {
 }
 
 .saldo-info {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--tarjeta-item-bg);
   border-radius: 10px;
   padding: 15px 20px;
 }
 
 .saldo-tabs {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: var(--color-white);
   border-radius: 10px;
   overflow: hidden;
 }
 
 .tabs-container {
   display: flex;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--tarjeta-border);
 }
 
 .tab-btn {
@@ -282,20 +282,20 @@ button[type="submit"]:hover {
   padding: 12px 0;
   font-size: 16px;
   font-weight: 600;
-  color: #555;
+  color: var(--color-text);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .tab-btn.active {
-  color: #EB1409;
-  border-bottom: 3px solid #EB1409;
+  color: var(--color-primary);
+  border-bottom: 3px solid var(--color-primary);
 }
 
 .tab-content {
   padding: 20px;
   min-height: 300px;
-  color: #333;
+  color: var(--color-text);
 }
 
 /* Estilos para el gráfico de barras */
@@ -314,9 +314,9 @@ button[type="submit"]:hover {
 }
 
 .filter-btn {
-  background-color: #f0f0f0;
-  color: #555;
-  border: 1px solid #ddd;
+  background-color: var(--tarjeta-filter-bg);
+  color: var(--color-text);
+  border: 1px solid var(--tarjeta-input-border);
   padding: 6px 12px;
   border-radius: 5px;
   cursor: pointer;
@@ -325,13 +325,13 @@ button[type="submit"]:hover {
 }
 
 .filter-btn.selected {
-  background-color: #EB1409;
-  color: white;
-  border-color: #EB1409;
+  background-color: var(--tarjeta-filter-selected);
+  color: var(--color-white);
+  border-color: var(--tarjeta-filter-selected);
 }
 
 .filter-btn:hover:not(.selected) {
-  background-color: #e0e0e0;
+  background-color: var(--color-text);
 }
 
 .chart-wrapper {
@@ -356,10 +356,10 @@ button[type="submit"]:hover {
 .grid-line {
   width: 100%;
   height: 1px;
-  border-top: 1px dashed #ccc;
+  border-top: 1px dashed var(--tarjeta-chart-grid);
   text-align: left;
   font-size: 12px;
-  color: #777;
+  color: var(--color-text);
 }
 
 .chart-bars {
@@ -382,7 +382,7 @@ button[type="submit"]:hover {
 
 .bar {
   width: 30px;
-  background-color: #3377FF;
+  background-color: var(--tarjeta-chart-bar);
   border-radius: 5px 5px 0 0;
   transition: height 0.3s ease;
 }
@@ -390,14 +390,14 @@ button[type="submit"]:hover {
 .bar-label {
   margin-top: 5px;
   font-size: 14px;
-  color: #666;
+  color: var(--color-text);
 }
 
 .chart-line {
   position: absolute;
   height: 3px;
   width: 80%;
-  background-color: rgba(255, 140, 0, 0.7);
+  background-color: var(--tarjeta-chart-line);
   top: 40%;
   left: 10%;
   z-index: 0;
@@ -426,7 +426,7 @@ button[type="submit"]:hover {
 .search-input {
   flex: 1;
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--notification-border);
   border-radius: 5px 0 0 5px;
   font-size: 14px;
   outline: none;
@@ -434,7 +434,7 @@ button[type="submit"]:hover {
 }
 
 .search-input:focus {
-  border-color: #EB1409;
+  border-color: var(--tarjeta-filter-selected);
 }
 
 .search-btn {
@@ -449,7 +449,7 @@ button[type="submit"]:hover {
 }
 
 .search-btn:hover {
-  background-color: #f0f0f0;
+  background-color: var(--tarjeta-accion-bg-hover);
 }
 
 .filter-buttons {
@@ -469,14 +469,14 @@ button[type="submit"]:hover {
   display: flex;
   align-items: center;
   padding: 15px;
-  background-color: rgba(230, 230, 230, 0.5);
+  background-color: var(--tarjeta-historial-bg);
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .historial-item:hover {
-  background-color: rgba(230, 230, 230, 0.8);
+  background-color: var(--tarjeta-historial-hover);
 }
 
 .item-status {
@@ -490,8 +490,8 @@ button[type="submit"]:hover {
 }
 
 .item-status.success {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--tarjeta-historial-success);
+  color: var(--miperfil-tarjetas-titulo);
 }
 
 .item-details {
@@ -517,8 +517,8 @@ button[type="submit"]:hover {
 /* Botón Ingresar dinero */
 .btn-ingresar {
   width: 100%;
-  background: linear-gradient(135deg, #e6574f, #ff725e);
-  color: white;
+  background: var(--tarjeta-button-gradient);
+  color: var(--miperfil-tarjetas-titulo);
   border: none;
   padding: 0.9rem;
   border-radius: 10px;
@@ -532,9 +532,9 @@ button[type="submit"]:hover {
 }
 
 .btn-ingresar:hover {
-  background: linear-gradient(135deg, #cc4a44, #ff4e39);
+  background: var(--tarjeta-button-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(230, 87, 79, 0.4);
+  box-shadow: 0 4px 12px var(--tarjeta-button-shadow);
 }
 
 /* Estilos existentes mantenidos */
@@ -559,7 +559,7 @@ button[type="submit"]:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: var(--tarjeta-chart-grid);
   transition: 0.4s;
   border-radius: 34px;
 }
@@ -571,13 +571,13 @@ button[type="submit"]:hover {
   width: 22px;
   left: 2px;
   bottom: 2px;
-  background-color: #fff;
+  background-color: var(--color-background);
   transition: 0.4s;
   border-radius: 50%;
 }
 
 .switch input:checked + .slider {
-  background-color: #e6574f;
+  background-color: var(--color-primary);
 }
 
 .switch input:checked + .slider:before {
@@ -598,8 +598,8 @@ button[type="submit"]:hover {
 
 .btn-add,
 .btn-remove {
-  background-color: #f72a2a;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   border: none;
   padding: 6px 12px;
   font-size: 14px;
@@ -652,22 +652,22 @@ button[type="submit"]:hover {
 }
 
 .modal-content {
-  background: linear-gradient(45deg, #f8a8a8, #f3dbdb);
+  background: var(--tarjeta-modal-bg);
   padding: 2rem;
   max-width: 500px;
   width: 90%;
   border-radius: 10px;
   position: relative;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px var(--tarjeta-shadow);
   max-height: 80vh;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #d40000 #f3dbdb;
+  scrollbar-color: var(--tarjeta-scrollbar) var(--tarjeta-scrollbar-bg);
   animation: slideInUp 0.4s ease-out forwards;
 }
 
 .transaction-modal h2 {
-  color: #d40000;
+  color: var(--color-primary);
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
   text-align: center;
@@ -683,7 +683,7 @@ button[type="submit"]:hover {
 
 .detail-question {
   font-weight: bold;
-  color: #333;
+  color: var(--letras-mi-perfil);
   margin-bottom: 0.2rem;
   font-size: 1rem;
 }
@@ -700,11 +700,11 @@ button[type="submit"]:hover {
   right: 15px;
   font-size: 2rem;
   cursor: pointer;
-  color: #d40000;
+  color: var(--color-primary);
 }
 
 .close-btn:hover {
-  color: #ff725e;
+  color: var(--color-primary-light);
 }
 
 @keyframes slideInUp {
@@ -725,7 +725,7 @@ button[type="submit"]:hover {
 }
 
 .payment-modal h2 {
-  color: #EB1409;
+  color: var(--color-primary);
   text-align: center;
   margin-bottom: 25px;
 }
@@ -738,7 +738,7 @@ button[type="submit"]:hover {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: var(--letras-mi-perfil);
 }
 
 /* Estilos para el select personalizado */
@@ -759,9 +759,9 @@ button[type="submit"]:hover {
 }
 
 .custom-select select:focus {
-  border-color: #EB1409;
+  border-color: var(--color-primary);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(235, 20, 9, 0.2);
+  box-shadow: 0 0 0 2px var(--tarjeta-input-shadow);
 }
 
 .select-arrow {
@@ -782,7 +782,7 @@ button[type="submit"]:hover {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: var(--letras-mi-perfil);
   font-size: 14px;
 }
 
@@ -805,9 +805,9 @@ button[type="submit"]:hover {
 
 .form-field input:focus,
 .form-field select:focus {
-  border-color: #EB1409;
+  border-color: var(--color-primary);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(235, 20, 9, 0.2);
+  box-shadow: 0 0 0 2px var(--tarjeta-input-shadow);
 }
 
 .form-row {
@@ -854,14 +854,14 @@ button[type="submit"]:hover {
 }
 
 .btn-back:hover {
-  color: #EB1409;
+  color: var(--color-primary);
 }
 
 /* Botón de depósito */
 .deposit-btn {
   width: 100%;
-  background-color: #EB1409;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   border: none;
   padding: 12px;
   border-radius: 5px;
@@ -872,11 +872,11 @@ button[type="submit"]:hover {
 }
 
 .deposit-btn:hover:not(:disabled) {
-  background-color: #d40000;
+  background-color: var(--color-primary-dark);
 }
 
 .deposit-btn:disabled {
-  background-color: #f99;
+  background-color: var(--color-primary-lighter);
   cursor: not-allowed;
 }
 
@@ -934,6 +934,14 @@ button[type="submit"]:hover {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: var(--letras-mi-perfil);
 }
 
+.activarotp{
+  color: var(--letras-mi-perfil);
+}
+
+.saldo-info span {
+  font-weight: bold;
+  color: var(--letras-mi-perfil);
+}

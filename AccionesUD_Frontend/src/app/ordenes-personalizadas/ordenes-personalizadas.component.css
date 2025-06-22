@@ -11,10 +11,10 @@
 
 .orden-tarjeta {
   display: flex;
-  background: #f4fafa;
-  border-color: #b4d5e6;
+  background: var(--orden-tarjeta-bg);
+  border-color: var(--orden-tarjeta-border);
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px var(--orden-tarjeta-shadow);
   padding: 1.5rem 2rem;
   align-items: center;
   width: 100%;
@@ -24,7 +24,7 @@
 }
 
 .orden-tarjeta:hover {
-  border-color: #d40000;
+  border-color: var(--orden-tarjeta-hover-border);
   transform: scale(1.02);
   transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
@@ -56,7 +56,7 @@
 
 .orden-subtitulo {
   font-size: 1rem;
-  color: #888;
+  color: var(--orden-subtitulo-color);
   margin-top: -0.3rem;
 }
 
@@ -78,24 +78,24 @@
 }
 
 .orden-precio.comprar {
-  background: #454e5a;
-  color: #fff;
+  background: var(--orden-precio-comprar-bg);
+  color: var(--orden-precio-comprar-color);
   transition: all 0.3s ease;
 }
 
 .orden-precio.comprar:hover {
-  background: #656d79;
+  background: var(--orden-precio-comprar-hover);
   scale: 1.05;
 }
 
 .orden-precio.vender {
-  background: #e07a7a;
-  color: #fff;
+  background: var(--orden-precio-vender-bg);
+  color: var(--orden-precio-vender-color);
   transition: all 0.3s ease;
 }
 
 .orden-precio.vender:hover {
-  background: #d45a5a;
+  background: var(--orden-precio-vender-hover);
   scale: 1.05;
 }
 
@@ -114,7 +114,7 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  background: #e0dede;
+  background: var(--orden-cantidad-bg);
   border-radius: 8px;
   padding: 0.4rem 1rem;
   width: 100%;
@@ -128,7 +128,7 @@
   background: transparent;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #333;
+  color: var(--orden-cantidad-texto);
 }
 
 .orden-cantidad input {
@@ -138,7 +138,7 @@
   background: transparent;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #333;
+  color: var(--orden-cantidad-texto);
 }
 
 .orden-cantidad input::-webkit-inner-spin-button,
@@ -150,14 +150,14 @@
 }
 
 .orden-cantidad input:invalid {
-  border: 1px solid red;
-  background-color: #ffe6e6;
-  color: #d40000;
+  border: 1px solid var(--orden-cantidad-invalido-border);
+  background-color: var(--orden-cantidad-invalido-bg);
+  color: var(--orden-cantidad-invalido-color);
 }
 
 .cantidad-label {
   font-size: 1rem;
-  color: #555;
+  color: var(--orden-cantidad-label);
   margin-left: 0.5rem;
 }
 
@@ -168,14 +168,14 @@
 }
 
 .cantidad-controles button {
-  background: #d3cfcf;
+  background: var(--orden-cantidad-controles-bg);
   border: none;
   border-radius: 3px;
   width: 22px;
   height: 18px;
   font-size: 1rem;
   cursor: pointer;
-  color: #333;
+  color: var(--orden-cantidad-controles-color);
   padding: 0;
 }
 
@@ -189,9 +189,9 @@
 .orden-grafica img {
   width: 100%;
   max-width: 430px;
-  border: 2px solid #888;
+  border: 2px solid var(--orden-grafica-border);
   border-radius: 6px;
-  background: #fff;
+  background: var(--orden-grafica-bg);
 }
 
 @media (max-width: 900px) {
@@ -220,21 +220,21 @@
 
 @keyframes overlayFadeIn {
   from { background: rgba(0,0,0,0); }
-  to   { background: rgba(0,0,0,0.5); }
+  to   { background: var(--orden-modal-overlay); }
 }
 
 .modal-contenido {
-  background: linear-gradient(45deg, #f8a8a8, #f3dbdb);
+  background: var(--orden-modal-bg);
   padding: 2rem;
   max-width: 600px;
   width: 90%;
   border-radius: 10px;
   position: relative;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px var(--orden-modal-shadow);
   max-height: 80vh;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #d40000 #f3dbdb;
+  scrollbar-color: var(--orden-modal-scrollbar) var(--orden-modal-scrollbar-bg);
 }
 
 .modal-titulo {
@@ -242,7 +242,7 @@
   font-weight: bold;
   margin: 0;
   text-align: center;
-  color: #d40000;
+  color: var(--orden-modal-titulo);
 }
 .orden-header-modal {
   display: flex;
@@ -264,7 +264,7 @@
 
 .orden-subtitulo-modal {
   font-size: 1rem;
-  color: #747474;
+  color: var(--orden-modal-subtitulo);
   margin-top: -0.3rem;
 }
 
@@ -273,7 +273,7 @@
   top: 12px;
   right: 16px;
   background: transparent;
-  color: #d40000;
+  color: var(--orden-modal-cerrar);
   border: none;
   font-size: 1.5rem;
   font-weight: bold;
@@ -284,7 +284,7 @@
 }
 
 .modal-cerrar:hover {
-  color: #ff725e;
+  color: var(--orden-modal-cerrar-hover);
 }
 
 .orden-cantidadprecios-modal{
@@ -301,11 +301,11 @@
 .cantidad-modal input {
   padding: 0px;
   text-align: center;
-  border: solid 1px #B58182;
+  border: solid 1px var(--orden-modal-input-border);
   border-radius: 10px;
-  background: #B58182;
+  background: var(--orden-modal-input-bg);
   font-size: 1.2rem;
-  color: #000000;
+  color: var(--orden-modal-input-color);
   width: 100px;
   height: 30px;
 }
@@ -319,9 +319,9 @@
 }
 
 .cantidad-modal input:invalid {
-  border: 1px solid red;
-  background-color: #ffe6e6;
-  color: #d40000;
+  border: 1px solid var(--orden-modal-input-invalido-border);
+  background-color: var(--orden-modal-input-invalido-bg);
+  color: var(--orden-modal-input-invalido-color);
 }
 
 .precio-modal {
@@ -333,11 +333,11 @@
   margin: 0px;
   padding: 0px;
   text-align: center;
-  border: solid 1px #B58182;
+  border: solid 1px var(--orden-modal-input-border);
   border-radius: 10px;
-  background: #B58182;
+  background: var(--orden-modal-input-bg);
   font-size: 1.2rem;
-  color: #000000;
+  color: var(--orden-modal-input-color);
   width: 100px;
   height: 30px;
 }
@@ -399,7 +399,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: var(--orden-modal-slider-bg);
   transition: 0.4s;
   border-radius: 34px;
 }
@@ -411,13 +411,13 @@
   width: 22px;
   left: 2px;
   bottom: 2px;
-  background-color: #fff;
+  background-color: var(--orden-modal-slider-button);
   transition: 0.4s;
   border-radius: 50%;
 }
 
 .switch input:checked + .slider {
-  background-color: #e6574f;
+  background-color: var(--orden-modal-slider-active);
 }
 
 .switch input:checked + .slider:before {
@@ -433,11 +433,11 @@
 .precio-especifico input{
   padding: 0px;
   text-align: center;
-  border: solid 1px #B58182;
+  border: solid 1px var(--orden-modal-input-border);
   border-radius: 10px;
-  background: #B58182;
+  background: var(--orden-modal-input-bg);
   font-size: 1.2rem;
-  color: #000000;
+  color: var(--orden-modal-input-color);
   width: 100px;
   height: 30px;
 }
@@ -451,9 +451,9 @@
 }
 
 .precio-especifico input:invalid {
-  border: 1px solid red;
-  background-color: #ffe6e6;
-  color: #d40000;
+  border: 1px solid var(--orden-modal-input-invalido-border);
+  background-color: var(--orden-modal-input-invalido-bg);
+  color: var(--orden-modal-input-invalido-color);
 }
 
 .loss-take{
@@ -474,11 +474,11 @@
 .take-profit #takeProfit{
   padding: 0px;
   text-align: center;
-  border: solid 1px #B58182;
+  border: solid 1px var(--orden-modal-input-border);
   border-radius: 10px;
-  background: #B58182;
+  background: var(--orden-modal-input-bg);
   font-size: 1.2rem;
-  color: #000000;
+  color: var(--orden-modal-input-color);
   width: 100px;
   height: 30px;
 }
@@ -493,9 +493,9 @@
 }
 .stop-loss #stopLoss:invalid,
 .take-profit #takeProfit:invalid {
-  border: 1px solid red;
-  background-color: #ffe6e6;
-  color: #d40000;
+  border: 1px solid var(--orden-modal-input-invalido-border);
+  background-color: var(--orden-modal-input-invalido-bg);
+  color: var(--orden-modal-input-invalido-color);
 }
 .totales-modal {
   display: flex;
@@ -509,14 +509,14 @@
 .datototal{
   text-align: center;
   border-radius: 10px;
-  background: #B58182;
-  color: #000000;
+  background: var(--orden-modal-input-bg);
+  color: var(--orden-modal-input-color);
 }
 .datosaldo {
   text-align: center;
   border-radius: 10px;
-  background: #B58182;
-  color: #000000;
+  background: var(--orden-modal-input-bg);
+  color: var(--orden-modal-input-color);
 }
 
 .botones-modal{
@@ -527,8 +527,8 @@
 }
 
 .botones-modal .cancelar-modal {
-  background: #d40000;
-  color: #fff;
+  background: var(--orden-modal-cancelar-bg);
+  color: var(--orden-modal-cancelar-color);
   border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 6px;
@@ -537,11 +537,11 @@
   transition: background-color 0.3s ease;
 }
 .botones-modal .cancelar-modal:hover {
-  background: #b30000;
+  background: var(--orden-modal-cancelar-hover);
 }
 .botones-modal .confirmar-modal {
-  background: #28a745;
-  color: #fff;
+  background: var(--orden-modal-confirmar-bg);
+  color: var(--orden-modal-confirmar-color);
   border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 6px;
@@ -550,7 +550,7 @@
   transition: background-color 0.3s ease;
 }
 .botones-modal .confirmar-modal:hover {
-  background: #218838;
+  background: var(--orden-modal-confirmar-hover);
 }
 
 /* modal confirmacion*/
@@ -567,21 +567,21 @@
 
 @keyframes overlayFadeIn {
   from { background: rgba(0,0,0,0); }
-  to   { background: rgba(0,0,0,0.5); }
+  to   { background: var(--orden-modal-overlay); }
 }
 
 .modal-contenido-confirmacion {
-  background: linear-gradient(45deg, #f8a8a8, #f3dbdb);
+  background: var(--orden-modal-bg);
   padding: 2rem;
   max-width: 600px;
   width: 90%;
   border-radius: 10px;
   position: relative;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px var(--orden-modal-shadow);
   max-height: 80vh;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #d40000 #f3dbdb;
+  scrollbar-color: var(--orden-modal-scrollbar) var(--orden-modal-scrollbar-bg);
 }
 
 .modal-titulo-confirmacion {
@@ -589,7 +589,7 @@
   font-weight: bold;
   margin: 0;
   text-align: center;
-  color: #d40000;
+  color: var(--orden-modal-titulo);
 }
 
 .modal-cerrar-confirmacion {
@@ -597,7 +597,7 @@
   top: 12px;
   right: 16px;
   background: transparent;
-  color: #d40000;
+  color: var(--orden-modal-cerrar);
   border: none;
   font-size: 1.5rem;
   font-weight: bold;
@@ -608,18 +608,18 @@
 }
 
 .modal-cerrar-confirmacion:hover {
-  color: #ff725e;
+  color: var(--orden-modal-cerrar-hover);
 }
 
 .orden-header-modal-confirmacion {
-  background-color: #F3F6EB;
+  background-color: var(--orden-confirmacion-header-bg);
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   margin-top: 1.5rem;
   justify-content: center;
   text-align: center;
-  box-shadow: #454e5a 0px 0px 10px;
+  box-shadow: var(--orden-confirmacion-header-shadow) 0px 0px 10px;
 }
 
 .orden-titulo-modal-confirmacion {
@@ -642,13 +642,13 @@
 }
 .accion-comprar{
   font-weight: normal;
-  background-color: #b0ffa9;
+  background-color: var(--orden-confirmacion-accion-comprar);
   border-radius: 10px;
   padding: 5px 10px;
 }
 .accion-vender{
   font-weight: normal;
-  background-color: #ffb0b0;
+  background-color: var(--orden-confirmacion-accion-vender);
   border-radius: 10px;
   padding: 5px 10px;
 }
@@ -657,9 +657,9 @@
   flex-direction: column;
   margin-top: 10px;
   margin-bottom: 10px;
-  background-color: #f8a8a8;
+  background-color: var(--orden-confirmacion-resumen-bg);
   border-radius: 10px;
-  box-shadow: #454e5a 0px 0px 10px;
+  box-shadow: var(--orden-confirmacion-resumen-shadow) 0px 0px 10px;
 }
 .cantidadToral-resumen {
   display: grid;
@@ -667,7 +667,7 @@
   margin-left: 10px;
 }
 .label-cantidadToral-resumen {
-  background-color: #B58182;
+  background-color: var(--orden-confirmacion-label-bg);
   border-radius: 10px;
   width: 100%;
   max-width: 150px;
@@ -681,7 +681,7 @@
   margin-left: 10px;
 }
 .label-totalAcciones-resumen {
-  background-color: #B58182;
+  background-color: var(--orden-confirmacion-label-bg);
   border-radius: 10px;
   width: 100%;
   max-width: 150px;
@@ -695,7 +695,7 @@
   margin-left: 10px;
 }
 .label-comision-resumen {
-  background-color: #B58182;
+  background-color: var(--orden-confirmacion-label-bg);
   border-radius: 10px;
   width: 100%;
   max-width: 150px;
@@ -709,7 +709,7 @@
   margin-left: 10px;
 }
 .label-importeFinal-resumen {
-  background-color: #B58182;
+  background-color: var(--orden-confirmacion-label-bg);
   border-radius: 10px;
   width: 100%;
   max-width: 150px;
@@ -719,8 +719,8 @@
 }
 .confirmar-modal-comprar{
   width: 100%;
-  background: #28a745;
-  color: #fff;
+  background: var(--orden-modal-confirmar-bg);
+  color: var(--orden-modal-confirmar-color);
   border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 6px;
@@ -729,12 +729,12 @@
   transition: background-color 0.3s ease;
 }
 .confirmar-modal-comprar:hover {
-  background: #218838;
+  background: var(--orden-modal-confirmar-hover);
 }
 .confirmar-modal-vender {
   width: 100%;
-  background: #d40000;
-  color: #fff;
+  background: var(--orden-modal-cancelar-bg);
+  color: var(--orden-modal-cancelar-color);
   border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 6px;
@@ -743,5 +743,5 @@
   transition: background-color 0.3s ease;
 }
 .confirmar-modal-vender:hover {
-  background: #b30000;
+  background: var(--orden-modal-cancelar-hover);
 }

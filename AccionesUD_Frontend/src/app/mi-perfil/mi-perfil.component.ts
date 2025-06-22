@@ -26,6 +26,7 @@ import {
 } from '../servicio/transacciones/transaccionesService';
 import { finalize, catchError } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
+import { ThemeService } from '../servicio/tema/theme.service';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -105,7 +106,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private userProfileService: UserProfileService,
-    private transaccionesService: TransaccionesService
+    private transaccionesService: TransaccionesService,
+    private themeService: ThemeService
   ) {
     this.loadUserPreferences();
   }
@@ -186,10 +188,10 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
       this.selectedLanguage = savedLanguage;
     }
 
-    const savedTheme = localStorage.getItem('userTheme');
-    if (savedTheme === 'light' || savedTheme === 'dark') {
-      this.selectedTheme = savedTheme;
-    }
+    // Obtener el tema del servicio
+    this.themeService.darkMode$.subscribe(isDark => {
+      this.selectedTheme = isDark ? 'dark' : 'light';
+    });
   }
 
   // Cambiar idioma
@@ -202,8 +204,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
 
   // Cambiar tema
   changeTheme(): void {
-    localStorage.setItem('userTheme', this.selectedTheme);
-    this.applyTheme();
+    const isDark = this.selectedTheme === 'dark';
+    this.themeService.setDarkMode(isDark);
   }
 
   // Aplicar tema
