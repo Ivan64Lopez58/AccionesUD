@@ -136,4 +136,11 @@ export class Menu2Component implements OnInit {
     const payload = JSON.parse(atob(token.split('.')[1]));
     return Date.now() < payload.exp * 1000;
   }
+
+  scrollToBottom(duration: number) {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth',
+    });
+  }
 }

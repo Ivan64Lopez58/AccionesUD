@@ -13,7 +13,12 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
 export const routes: Routes = [
   { path: '', component: CuerpoPrincipalComponent },
   { path: 'registro', component: VistaRegistroComponent },
-  { path: 'login', component: Menu2Component, canActivate: [AuthGuard] },
+  {
+    path: 'logged',
+    component: CuerpoPrincipalComponent,
+    canActivate: [AuthGuard],
+    data: { showMenu1: false, showMenu2: true }
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -29,6 +34,10 @@ export const routes: Routes = [
     component: NotificacionesComponent,
     canActivate: [AuthGuard],
   },
+  { path: 'ordenes',
+    component: OrdenesPersonalizadasComponent,
+    canActivate: [AuthGuard],
+  }
 ];
 /*
 export const routes: Routes = [
