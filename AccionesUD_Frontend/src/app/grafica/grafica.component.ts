@@ -14,7 +14,7 @@ export class GraficaComponent implements OnInit, AfterViewInit {
 
   @Input() chartInicialData!: AccionHistorica[];
 
-  @Input() width: number = 780;
+  @Input() width: number = 600;
   @Input() height: number = 300;
 
   private chart!: IChartApi;
@@ -23,12 +23,13 @@ export class GraficaComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit() {
-    this.series.setData(this.chartInicialData)
 
   }
 
   ngAfterViewInit() {
     this.initializeChart();
+    this.series.setData(this.chartInicialData)
+
   }
 
   initializeChart() {
@@ -46,8 +47,8 @@ export class GraficaComponent implements OnInit, AfterViewInit {
         borderColor: '#cccccc',
       },
       grid: {
-        vertLines: { color: '#000000' },
-        horzLines: { color: '#000000' },
+        vertLines: { color: '#cdcdcd' },
+        horzLines: { color: '#cdcdcd' },
       },
       timeScale: {
         borderColor: '#cccccc',

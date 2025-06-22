@@ -25,6 +25,9 @@ export interface Order {
   takeProfit: number;
   totalEstimado: number;
   saldoDisponible: number;
+
+  //Añadido para el historico de acciones
+  historicalData: AccionHistorica[];
 }
 
 export interface AccionHistorica {
@@ -73,7 +76,12 @@ export class OrderService {
         stopLoss: 0.1,
         takeProfit: 0,
         totalEstimado: 1816,
-        saldoDisponible: 412.456
+        saldoDisponible: 412.456,
+        historicalData: [
+          { time: { year: 2023, month: 10, day: 1, hour: 0, minute: 0 }, open: 1800, close: 1816, high: 1820, low: 1790 },
+          { time: { year: 2023, month: 10, day: 2, hour: 0, minute: 0 }, open: 1816, close: 1805, high: 1825, low: 1800 },
+          { time: { year: 2023, month: 10, day: 3, hour: 0, minute: 0 }, open: 1805, close: 1812, high: 1818, low: 1795 }
+        ]
       },
       {
         id: 2,
@@ -96,24 +104,17 @@ export class OrderService {
         stopLoss: 0,
         takeProfit: 0,
         totalEstimado: 350.23,
-        saldoDisponible: 1000
+        saldoDisponible: 1000,
+        historicalData: [
+          { time: { year: 2023, month: 10, day: 1, hour: 0, minute: 0 }, open: 345.00, close: 350.23, high: 355.00, low: 340.00 },
+          { time: { year: 2023, month: 10, day: 2, hour: 0, minute: 0 }, open: 350.23, close: 348.50, high: 352.00, low: 345.00 },
+          { time: { year: 2023, month: 10, day: 3, hour: 0, minute: 0 }, open: 348.50, close: 349.75, high: 351.00, low: 347.00 }
+        ]
       }
     ];
     return of(testOrders);
     // Cuando esté disponible el backend, utiliza:
     // return this.http.get<Order[]>(this.apiUrl);
-  }
-
-  getHistoricalData(): Observable<AccionHistorica[]> {
-    // Datos de prueba mientras no se conecta al back end
-    const testData: AccionHistorica[] = [
-      { time: { year: 2023, month: 10, day: 1, hour: 0, minute: 0 }, open: 1800, close: 1816, high: 1820, low: 1790 },
-      { time: { year: 2023, month: 10, day: 2, hour: 0, minute: 0 }, open: 1816, close: 1805, high: 1825, low: 1800 },
-      { time: { year: 2023, month: 10, day: 3, hour: 0, minute: 0 }, open: 1805, close: 1812, high: 1818, low: 1795 }
-    ];
-    return of(testData);
-    // Cuando esté disponible el backend, utiliza:
-    // return this.http.get<AccionHistorica[]>(`${this.apiUrl}/historical-data`);
   }
 
 }

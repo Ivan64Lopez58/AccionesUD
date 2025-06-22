@@ -4,11 +4,12 @@ import { PiePaginaPrincipalComponent } from '../pie-pagina-principal/pie-pagina-
 import { OrderService, Order } from '../servicio/acciones/order.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { GraficaComponent } from "../grafica/grafica.component";
 
 
 @Component({
   selector: 'app-ordenes-personalizadas',
-  imports: [ MenuComponent, PiePaginaPrincipalComponent , CommonModule, FormsModule],
+  imports: [MenuComponent, PiePaginaPrincipalComponent, CommonModule, FormsModule, GraficaComponent],
   templateUrl: './ordenes-personalizadas.component.html',
   styleUrls: ['./ordenes-personalizadas.component.css'],
   standalone: true,

@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="orden-grafica">
-      <img [src]="orden.grafica" alt="Gráfica de {{orden.name}}">
+      <app-grafica [chartInicialData]="orden.historicalData"></app-grafica>
     </div>
 
 
