@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 import com.AccionesUD.AccionesUD.domain.model.User;
+import com.AccionesUD.AccionesUD.domain.model.auth.OtpVerificationResult;
 import com.AccionesUD.AccionesUD.dto.auth.AuthResponse;
 import com.AccionesUD.AccionesUD.dto.auth.OtpRequest;
 import com.AccionesUD.AccionesUD.repository.UserRepository;
@@ -47,4 +48,25 @@ public class OtpService {
 
         return AuthResponse.builder().token(token).build();
     }
+
+
+    public OtpVerificationResult verifyOtp(String username, String otp) {
+        
+        OtpEntry entry = otpStorage.get(username);
+
+        if (entry == null || !entry.code().equals(otp)) {
+            throw new RuntimeException("OTP inválido");
+        }
+
+        if (System.currentTimeMillis() - entry.timestamp() > OTP_VALIDITY_MILLIS) {
+            otpStorage.remove(username);
+            throw new RuntimeException("OTP expirado");
+        }
+
+        otpStorage.remove(username);
+        User user = userRepository.findByUsername(username).orElseThrow();
+        String token = jwtService.getToken(user);
+        return new OtpVerificationResult(token, user);
+    }
+
 }

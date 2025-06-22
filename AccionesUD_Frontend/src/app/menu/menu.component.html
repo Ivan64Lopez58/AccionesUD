@@ -20,7 +20,6 @@
   </div>
   <div class="actions">
     <button class="premium-btn">Premium</button>
-    <button *ngIf="usuarioAutenticado" (click)="cerrarSesion()">Cerrar sesión</button>
     <button *ngIf="usuarioAutenticado" (click)="verPerfil()">Mi Perfil</button>
     <button *ngIf="!usuarioAutenticado" class="invertir-btn" (click)="abrirModal()">Invierte ya</button>
   </div>
@@ -30,60 +29,60 @@
 <div class="modal-overlay" [hidden]="!mostrarModal">
   <div class="modal" [class.cerrar-anim]="animandoCerrar">
 
-    <div class="fondo-estereograma"></div>
-
     <button class="cerrar-btn" (click)="cerrarModal()" aria-label="Cerrar modal">&times;</button>
-    <img src="/logo.svg" alt="Logo Acciones UD" class="logo" />
+    <img src="/logo.svg" alt="Logo Acciones UD" class="logo2" />
     <h2 class="saludo">¡Bienvenido a Acciones UD!</h2>
-    <h2 class="inicio-sesion">Iniciar sesión</h2>
+    <h2 class="inicio-sesion">¡Iniciar sesión en tu cuenta!</h2>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="formulario-contenedor">
       <!-- Campo de correo con ícono -->
-      <div class="form-group" *ngIf="!showOtpField">
-        <label for="usuario">Correo electrónico</label>
-        <div class="input-wrapper">
-          <i class="fa-solid fa-envelope icon-left"></i>
-          <input
-            id="usuario"
-            type="email"
-            formControlName="username"
-            class="custom-input"
-            placeholder="nombre@correo.com"
-            required
-          />
-        </div>
-        <div *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)" class="error">
-          <div *ngIf="loginForm.get('username')?.errors?.['required']" style="color: red;">El correo es obligatorio.</div>
-          <div *ngIf="loginForm.get('username')?.errors?.['email']" style="color: red;">Ingrese un correo válido.</div>
-        </div>
-      </div>
 
-      <!-- Campo de contraseña con íconos -->
-      <div class="form-group" *ngIf="!showOtpField">
-        <label for="contrasena">Contraseña</label>
-        <div class="input-wrapper">
-          <i class="fa-solid fa-lock icon-left"></i>
-          <input
-            id="contrasena"
-            [type]="mostrarContrasena ? 'text' : 'password'"
-            formControlName="password"
-            class="custom-input"
-            placeholder="Introduce tu contraseña"
-            required
-          />
-          <i
-            class="fa-solid icon-right"
-            [ngClass]="mostrarContrasena ? 'fa-eye-slash' : 'fa-eye'"
-            (click)="mostrarContrasena = !mostrarContrasena"
-          ></i>
-        </div>
-        <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)" class="error">
-          <div *ngIf="loginForm.get('password')?.errors?.['required']" style="color: red;">La contraseña es requerida.</div>
-          <div *ngIf="loginForm.get('password')?.errors?.['incorrect']" style="color: red;">
-            La contraseña o el correo son incorrectos.
-          </div>
-        </div>
-      </div>
+            <!-- Campo de correo -->
+            <div class="form-group" *ngIf="!showOtpField">
+              <label for="usuario">Correo electrónico</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-envelope icon-left"></i>
+                <input
+                  id="usuario"
+                  type="email"
+                  formControlName="username"
+                  class="custom-input"
+                  placeholder="nombre@correo.com"
+                  [class.input-error]="formularioEnviado && loginForm.get('username')?.invalid"
+                />
+                <span class="tooltip-error"
+                  *ngIf="formularioEnviado && loginForm.get('username')?.invalid">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  {{ loginForm.get('username')?.errors?.['required'] ? 'Completa este campo' : 'Correo inválido' }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Campo de contraseña -->
+            <div class="form-group" *ngIf="!showOtpField">
+              <label for="contrasena">Contraseña</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-lock icon-left"></i>
+                <input
+                  id="contrasena"
+                  [type]="mostrarContrasena ? 'text' : 'password'"
+                  formControlName="password"
+                  class="custom-input"
+                  placeholder="Introduce tu contraseña"
+                  [class.input-error]="formularioEnviado && loginForm.get('password')?.invalid"
+                />
+                <i
+                  class="fa-solid icon-right"
+                  [ngClass]="mostrarContrasena ? 'fa-eye-slash' : 'fa-eye'"
+                  (click)="mostrarContrasena = !mostrarContrasena"
+                ></i>
+                <span class="tooltip-error"
+                  *ngIf="formularioEnviado && loginForm.get('password')?.invalid">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  {{ loginForm.get('password')?.errors?.['required'] ? 'La contraseña es requerida' : 'Contraseña incorrecta' }}
+                </span>
+              </div>
+            </div>
 
       <!-- Campo OTP -->
       <div *ngIf="showOtpField" class="código-verificacion">
@@ -98,14 +97,16 @@
         />
       </div>
 
-      <!-- Mensaje de error -->
-      <div *ngIf="mensaje" class="mensaje-error">
-        {{ mensaje }}
-      </div>
 
       <button type="submit" class="entrar-btn">
         {{ showOtpField ? 'Verificar código' : 'Entrar' }}
       </button>
+
+      <span class="tooltip-error mensaje-general"
+      *ngIf="mensaje">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      {{ mensaje }}
+  </span>
     </form>
 
     <div class="registro-link">
@@ -120,7 +121,7 @@
 <div class="modal-overlay" [hidden]="!mostrarModalRecuperacion">
   <div class="modal modal-recuperacion" [class.cerrar-anim]="animandoCerrar">
     <button class="cerrar-btn" (click)="cerrarModalRecuperacion()" aria-label="Cerrar modal">&times;</button>
-    <img src="/logo.svg" alt="Logo Acciones UD" class="logo" />
+    <img src="/logo.svg" alt="Logo Acciones UD" class="logo2" />
     <h2 class="inicio-sesion">Recuperar contraseña</h2>
 
     <form (ngSubmit)="recuperarContrasena()" #recuperarForm="ngForm" class="formulario-contenedor">

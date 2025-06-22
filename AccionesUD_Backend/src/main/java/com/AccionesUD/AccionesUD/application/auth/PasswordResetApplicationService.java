@@ -6,6 +6,7 @@ import com.AccionesUD.AccionesUD.dto.auth.PasswordResetRequestDTO;
 import com.AccionesUD.AccionesUD.dto.auth.PasswordUpdateDTO;
 import com.AccionesUD.AccionesUD.utilities.email.EmailService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class PasswordResetApplicationService {
 private final TokenService tokenService;
 private final UserService userService;
 private final EmailService emailService;
-
+@Transactional
 public void requestReset(PasswordResetRequestDTO dto) {
     String email = dto.getEmail();
     userService.ensureUserExists(email);

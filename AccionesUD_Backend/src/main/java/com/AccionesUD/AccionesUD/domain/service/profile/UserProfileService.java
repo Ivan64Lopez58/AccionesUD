@@ -28,19 +28,9 @@ public void updateUser(UpdateUserProfileRequest request) {
     userRepository.save(user);
 }
 
-public UpdateUserProfileRequest getProfile(String username) {
-    User user = userRepository.findByUsername(username)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    public User getProfile(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
 
-    return UpdateUserProfileRequest.builder()
-            .id(user.getId())
-            .firstname(user.getFirstname())
-            .lastname(user.getLastname())
-            .username(user.getUsername())
-            .phone(user.getPhone())
-            .address(user.getAddress())
-            .otpEnabled(user.isOtpEnabled())
-            .dailyOrderLimit(user.getDailyOrderLimit())
-            .build();
-}
 }

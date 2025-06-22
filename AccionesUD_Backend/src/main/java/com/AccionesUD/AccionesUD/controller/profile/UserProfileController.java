@@ -3,17 +3,13 @@ package com.AccionesUD.AccionesUD.controller.profile;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.AccionesUD.AccionesUD.application.profile.UserProfileApplicationService;
 import com.AccionesUD.AccionesUD.dto.profile.UpdateUserProfileRequest;
-
-import org.springframework.security.core.Authentication;
+import com.AccionesUD.AccionesUD.dto.profile.UserProfileResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserProfileController {
+
     private final UserProfileApplicationService appService;
 
     @PutMapping("/update")
@@ -31,7 +28,8 @@ public class UserProfileController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UpdateUserProfileRequest> getMyProfile(Authentication auth) {
+    public ResponseEntity<UserProfileResponse> getMyProfile() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return ResponseEntity.ok(appService.getProfile(auth.getName()));
     }
 }
