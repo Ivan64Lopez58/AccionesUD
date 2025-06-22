@@ -916,4 +916,24 @@ button[type="submit"]:hover {
   }
 }
 
+/* Estilos para los selectores de preferencias */
+.preferencias-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 25px;
+  border-radius: 8px;
+}
+
+.preferencia-item {
+  flex: 1;
+  min-width: 200px;
+}
+
+.preferencia-item label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
 
