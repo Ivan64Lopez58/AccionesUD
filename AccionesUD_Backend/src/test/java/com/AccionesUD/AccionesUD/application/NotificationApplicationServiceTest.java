@@ -32,7 +32,7 @@ class NotificationApplicationServiceTest {
     @Test
     void testProcessNotification() {
         // Arrange
-        NotificationRequest request = new NotificationRequest();
+        NotificationRequest request = new NotificationRequest(null, null, null);
         request.setType("INFO");
         request.setMessage("Test message");
 

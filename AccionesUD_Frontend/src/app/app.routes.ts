@@ -39,6 +39,7 @@ export const routes: Routes = [
     component: OrdenesPersonalizadasComponent,
     canActivate: [AuthGuard],
   }
+
 ];
 /*
 export const routes: Routes = [

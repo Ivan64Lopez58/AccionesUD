@@ -30,7 +30,7 @@ export class NotificacionesComponent implements OnInit {
   notificaciones: Notificacion[] = [];
   expandedNotifications: { [key: number]: boolean } = {};
   busqueda: string = '';
-  tipoFiltro: string = 'TODAS';
+  tipoFiltro: string = 'Sin leer';
 
   constructor(
     private notificacionesService: NotificacionesService,
@@ -43,19 +43,17 @@ export class NotificacionesComponent implements OnInit {
   }
 
   cargarNotificaciones(): void {
-    this.notificacionesService.getNotificaciones().subscribe({
-      next: (data) => {
-        this.notificacionesOriginales = data; // copia original para filtrar
-        this.notificaciones = [...data].sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-      },
-      error: (error) => {
-        console.error('Error al cargar notificaciones:', error);
-      },
-    });
-  }
+  this.notificacionesService.getNotificaciones().subscribe({
+    next: (data) => {
+      this.notificacionesOriginales = data;
+      this.filtrarYBuscar(); // Aplica el filtro 'Sin leer'
+    },
+    error: (error) => {
+      console.error('Error al cargar notificaciones:', error);
+    },
+  });
+}
+
 
   formatFecha(fecha: string): string {
     if (!fecha) return '';

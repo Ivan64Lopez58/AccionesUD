@@ -10,7 +10,7 @@ public class NotificationMapper {
 
     public Notification toNotification(NotificationRequest request, String recipient) {
         Notification notification = new Notification();
-        notification.setType(request.type);
+        notification.setType(request.getType());
         notification.setTitle(request.title);
         notification.setMessage(request.message);
         notification.setRecipient(recipient);

@@ -16,7 +16,10 @@ public class Notification {
     @Column(nullable = false)
     private String recipient;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private NotificationType type;
+
 
     @Column(nullable = false)
     private String title;

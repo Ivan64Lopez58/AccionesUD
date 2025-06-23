@@ -2,8 +2,11 @@ package com.AccionesUD.AccionesUD.application.profile;
 
 import org.springframework.stereotype.Service;
 
+import com.AccionesUD.AccionesUD.application.NotificationApplicationService;
 import com.AccionesUD.AccionesUD.domain.model.User;
+import com.AccionesUD.AccionesUD.domain.model.notification.NotificationType;
 import com.AccionesUD.AccionesUD.domain.service.profile.UserProfileService;
+import com.AccionesUD.AccionesUD.dto.notification.NotificationRequest;
 import com.AccionesUD.AccionesUD.dto.profile.UpdateUserProfileRequest;
 import com.AccionesUD.AccionesUD.dto.profile.UserProfileResponse;
 
@@ -13,10 +16,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserProfileApplicationService {
     private final UserProfileService userProfileService;
+    private final NotificationApplicationService notificationService;
+
 
 public void updateUserProfile(UpdateUserProfileRequest request) {
     userProfileService.updateUser(request);
+
+   
+    notificationService.processNotification(
+        new NotificationRequest(
+            NotificationType.PROFILE_UPDATE,
+            "Perfil actualizado",
+            "Has actualizado tu perfil de usuario"
+        ),
+        request.getUsername()
+    );
 }
+
 
 public UserProfileResponse getProfile(String username) {
     User user = userProfileService.getProfile(username);

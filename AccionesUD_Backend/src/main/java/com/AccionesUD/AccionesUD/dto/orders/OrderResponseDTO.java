@@ -6,9 +6,13 @@ import java.time.LocalDateTime;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderStatus;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderType;
 
+import lombok.Data;
+@Data
+
 public class OrderResponseDTO {
 
     private Long id;
+    private String username;
     private String symbol;
     private Integer quantity;
     private OrderType orderType;
@@ -23,6 +27,7 @@ public class OrderResponseDTO {
     }
 
     public OrderResponseDTO(Long id,
+                            String username,
                             String symbol,
                             Integer quantity,
                             OrderType orderType,
@@ -32,6 +37,7 @@ public class OrderResponseDTO {
                             OrderStatus status,
                             LocalDateTime createdAt) {
         this.id = id;
+        this.username = username;
         this.symbol = symbol;
         this.quantity = quantity;
         this.orderType = orderType;
@@ -42,75 +48,4 @@ public class OrderResponseDTO {
         this.createdAt = createdAt;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public OrderType getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(OrderType orderType) {
-        this.orderType = orderType;
-    }
-
-    public BigDecimal getLimitPrice() {
-        return limitPrice;
-    }
-
-    public void setLimitPrice(BigDecimal limitPrice) {
-        this.limitPrice = limitPrice;
-    }
-
-    public BigDecimal getStopLossPrice() {
-        return stopLossPrice;
-    }
-
-    public void setStopLossPrice(BigDecimal stopLossPrice) {
-        this.stopLossPrice = stopLossPrice;
-    }
-
-    public BigDecimal getTakeProfitPrice() {
-        return takeProfitPrice;
-    }
-
-    public void setTakeProfitPrice(BigDecimal takeProfitPrice) {
-        this.takeProfitPrice = takeProfitPrice;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }
