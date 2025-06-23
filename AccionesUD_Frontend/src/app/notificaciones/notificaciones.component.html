@@ -1,40 +1,58 @@
 <app-menu2 style="position: fixed; top: 0; left: 0; width: 100vw; z-index: 1000;"></app-menu2>
 
-
 <div class="notificaciones">
   <div class="notificaciones-container">
     <div class="notificaciones-header">
-      <h1>Todas las notificaciones</h1>
+      <h1>{{ 'ALL_NOTIFICATIONS' | translate }}</h1>
       <div class="notificaciones-actions">
         <button class="btn-buscar">
           <input
             type="text"
-            placeholder="Buscar notificaciones..."
+            placeholder="{{ 'SEARCH_NOTIFICATIONS_PLACEHOLDER' | translate }}"
             class="input-buscar"
             [(ngModel)]="busqueda"
             (input)="filtrarYBuscar()"
           />
-          <i class="fas fa-search"></i> Buscar
+          <i class="fas fa-search"></i> {{ 'SEARCH' | translate }}
         </button>
 
-    <div class="dropdown-filtro" (click)="mostrarOpciones = !mostrarOpciones">
-      <button class="btn-filtrar">
-        <i class="fas fa-filter"></i> {{ tipoFiltro === 'TODAS' ? 'Todas' : tipoFiltro }}
-      </button>
+        <div class="dropdown-filtro" (click)="mostrarOpciones = !mostrarOpciones">
+          <button class="btn-filtrar">
+            <i class="fas fa-filter"></i>
+            {{
+              tipoFiltro === 'TODAS'
+                ? ('FILTER_ALL' | translate)
+                : (tipoFiltro | translate)
+            }}
+          </button>
 
-      <ul class="filtro-opciones" *ngIf="mostrarOpciones">
-        <li (click)="seleccionarFiltro('TODAS'); $event.stopPropagation()">Todas</li>
-        <li (click)="seleccionarFiltro('INFO'); $event.stopPropagation()">Info</li>
-        <li (click)="seleccionarFiltro('Operación'); $event.stopPropagation()">Operación</li>
-        <li (click)="seleccionarFiltro('Transacción'); $event.stopPropagation()">Transacción</li>
-        <li (click)="seleccionarFiltro('Seguridad'); $event.stopPropagation()">Seguridad</li>
-        <li (click)="seleccionarFiltro('Promoción'); $event.stopPropagation()">Promoción</li>
-        <li (click)="seleccionarFiltro('Leídas'); $event.stopPropagation()">Leídas</li>
-        <li (click)="seleccionarFiltro('Sin leer'); $event.stopPropagation()">Sin leer</li>
-      </ul>
-
-    </div>
-
+          <ul class="filtro-opciones" *ngIf="mostrarOpciones">
+            <li (click)="seleccionarFiltro('TODAS'); $event.stopPropagation()">
+              {{ 'FILTER_ALL' | translate }}
+            </li>
+            <li (click)="seleccionarFiltro('INFO'); $event.stopPropagation()">
+              {{ 'FILTER_INFO' | translate }}
+            </li>
+            <li (click)="seleccionarFiltro('Operación'); $event.stopPropagation()">
+              {{ 'FILTER_OPERATION' | translate }}
+            </li>
+            <li (click)="seleccionarFiltro('Transacción'); $event.stopPropagation()">
+              {{ 'FILTER_TRANSACTION' | translate }}
+            </li>
+            <li (click)="seleccionarFiltro('Seguridad'); $event.stopPropagation()">
+              {{ 'FILTER_SECURITY' | translate }}
+            </li>
+            <li (click)="seleccionarFiltro('Promoción'); $event.stopPropagation()">
+              {{ 'FILTER_PROMOTION' | translate }}
+            </li>
+            <li (click)="seleccionarFiltro('Leídas'); $event.stopPropagation()">
+              {{ 'FILTER_READ' | translate }}
+            </li>
+            <li (click)="seleccionarFiltro('Sin leer'); $event.stopPropagation()">
+              {{ 'FILTER_UNREAD' | translate }}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -62,12 +80,12 @@
         </div>
 
         <div class="notificacion-toggle" (click)="toggleNotificacion(i)">
-          <i class="fas" [ngClass]="{'fa-chevron-down': !isExpanded(i), 'fa-chevron-up': isExpanded(i)}"></i>
+          <i class="fas" [ngClass]="{ 'fa-chevron-down': !isExpanded(i), 'fa-chevron-up': isExpanded(i) }"></i>
         </div>
       </div>
 
       <div *ngIf="notificaciones.length === 0" class="no-notificaciones">
-        <p>No hay notificaciones disponibles</p>
+        <p>{{ 'NO_NOTIFICATIONS_AVAILABLE' | translate }}</p>
       </div>
     </div>
   </div>
