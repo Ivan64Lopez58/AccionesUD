@@ -1,54 +1,57 @@
 <app-menu *ngIf="showMenu1" style="position: fixed; top: 0; left: 0; width: 100vw; z-index: 1000;"></app-menu>
 <app-menu2 *ngIf="showMenu2" style="position: fixed; top: 0; left: 0; width: 100vw; z-index: 1000;"></app-menu2>
+
 <div class="cuerpo-principal">
   <div class="imagen-principal">
-    <img src="banner.svg" alt="Imagen principal" />
+    <img src="/banner.svg" alt="Imagen principal" />
   </div>
-  <h2 class="titulo-seccion">Tú decides en qué invertir</h2>
+
+  <!-- Título traducible -->
+  <h2 class="titulo-seccion">{{ 'TITLE' | translate }}</h2>
 
   <div class="cuadros-graficos">
     <div class="cuadro">
-      <h3>New York</h3>
+      <h3>{{ 'NEW_YORK' | translate }}</h3>
       <div class="contenido-cuadro">
-        <img src="logo.svg" alt="New York" />
+        <img src="/logo.svg" alt="New York" />
       </div>
     </div>
     <div class="cuadro">
-      <h3>Sydney</h3>
+      <h3>{{ 'SYDNEY' | translate }}</h3>
       <div class="contenido-cuadro">
-        <img src="logo.svg" alt="Sydney" />
+        <img src="/logo.svg" alt="Sydney" />
       </div>
     </div>
     <div class="cuadro">
-      <h3>Tokio</h3>
+      <h3>{{ 'TOKYO' | translate }}</h3>
       <div class="contenido-cuadro">
-        <img src="logo.svg" alt="Tokio" />
+        <img src="/logo.svg" alt="Tokyo" />
       </div>
     </div>
   </div>
 
   <div class="cuadros-graficos-2">
     <div class="cuadro">
-      <h3>Londres</h3>
+      <h3>{{ 'LONDON' | translate }}</h3>
       <div class="contenido-cuadro">
-        <img src="logo.svg" alt="Londres" />
+        <img src="/logo.svg" alt="London" />
       </div>
     </div>
     <div class="cuadro">
-      <h3>París</h3>
+      <h3>{{ 'PARIS' | translate }}</h3>
       <div class="contenido-cuadro">
-        <img src="logo.svg" alt="París" />
+        <img src="/logo.svg" alt="Paris" />
       </div>
     </div>
   </div>
 
-  <!-- RELOJES EN VIVO (reemplazo de imágenes) -->
+
+
+  <!-- Relojes -->
   <div class="relojes">
     <app-relojes></app-relojes>
   </div>
 
-
+  <!-- Pie de página -->
   <app-pie-pagina-principal style="position: flex; width: 99vw;"></app-pie-pagina-principal>
-
-
 </div>
