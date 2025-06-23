@@ -1,12 +1,12 @@
 footer {
-  background: #ff666659;
-  color: #ebf4f6;
+  background: var(--pie-background);
+  color: var(--pie-texto);
   font-family: 'Poppins', sans-serif;
   padding: 3rem 2rem 1.5rem;
   font-size: 14px;
   line-height: 1.6;
   border-radius: 2rem 2rem 0 0;
-  text-shadow: 1px 1px 2px rgba(230, 87, 79, 0.2);
+  text-shadow: 1px 1px 2px var(--pie-texto-sombra);
 }
 
 .footer-container {
@@ -47,7 +47,7 @@ footer {
   width: 24px;
   height: 24px;
   margin-right: 10px;
-  opacity: 0.7;
+  opacity: var(--pie-social-opacity);
   transition: opacity 0.3s ease;
 }
 
@@ -56,13 +56,13 @@ footer {
 }
 
 .social-icons a:hover img {
-  opacity: 1;
+  opacity: var(--pie-social-hover-opacity);
 }
 
 .footer-section h2 {
   font-size: 18px;
   margin-bottom: 15px;
-  color: #d40000;
+  color: var(--pie-titulo);
   font-weight: 600;
 }
 
@@ -78,14 +78,14 @@ footer {
 }
 
 .footer-section ul li a {
-  color: #333;
+  color: var(--pie-enlace);
   text-decoration: none;
   font-size: 14px;
   transition: color 0.3s ease;
 }
 
 .footer-section ul li a:hover {
-  color: #d40000;
+  color: var(--pie-enlace-hover);
   text-decoration: underline;
 }
 
@@ -93,9 +93,9 @@ footer {
   text-align: center;
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #d40000;
+  border-top: 1px solid var(--pie-borde);
   font-size: 12px;
-  color: #555;
+  color: var(--pie-copyright);
   max-width: 95%;
   margin-left: auto;
   margin-right: auto;
@@ -109,7 +109,7 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--pie-modal-overlay);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -119,21 +119,21 @@ footer {
 
 @keyframes overlayFadeIn {
   from { background: rgba(0,0,0,0); }
-  to   { background: rgba(0,0,0,0.5); }
+  to   { background: var(--pie-modal-overlay); }
 }
 
 .modal-content {
-  background: linear-gradient(45deg, #f8a8a8, #f3dbdb);
+  background: var(--pie-modal-bg);
   padding: 2rem;
   max-width: 600px;
   width: 90%;
   border-radius: 10px;
   position: relative;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px var(--pie-modal-shadow);
   max-height: 80vh;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #d40000 #f3dbdb;
+  scrollbar-color: var(--pie-modal-scrollbar) var(--pie-modal-scrollbar-bg);
   animation: slideInUp 1.5s ease-out forwards;
 }
 
@@ -142,19 +142,19 @@ footer {
 }
 
 .modal-content::-webkit-scrollbar-track {
-  background: #f3dbdb;
+  background: var(--pie-modal-scrollbar-bg);
   border-radius: 10px;
 }
 
 .modal-content::-webkit-scrollbar-thumb {
-  background: #d40000;
+  background: var(--pie-modal-scrollbar);
   border-radius: 10px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 .modal-content::-webkit-scrollbar-thumb:hover {
-  background: #ff725e;
+  background: var(--pie-modal-scrollbar-hover);
 }
 
 
@@ -164,30 +164,30 @@ footer {
   right: 15px;
   font-size: 2rem;
   cursor: pointer;
-  color: #d40000;
+  color: var(--pie-modal-cerrar);
 }
 
 .close-btn:hover {
-  color: #ff725e;
+  color: var(--pie-modal-cerrar-hover);
 }
 
 .modal-content h2 {
   font-size: 2rem;
-  color: #d40000;
+  color: var(--pie-modal-titulo);
   margin-bottom: 1rem;
   text-align: center;
 }
 
 .modal-content h3 {
   font-size: 1.5rem;
-  color: #333;
+  color: var(--pie-modal-subtitulo);
   margin-bottom: 0.75rem;
   text-align: left;
 }
 
 .modal-content p {
   font-size: 1rem;
-  color: #555;
+  color: var(--pie-modal-texto);
   line-height: 1.6;
   margin-bottom: 1rem;
   text-align: justify;

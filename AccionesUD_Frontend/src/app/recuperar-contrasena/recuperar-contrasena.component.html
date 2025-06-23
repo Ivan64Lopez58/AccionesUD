@@ -1,5 +1,5 @@
 <div class="contenedor-recuperarcontrasena">
-  <h2 class="titulo">🔐 Restablecer tu contraseña</h2>
+  <h2 class="titulo">🔐 {{ 'RESET_PASSWORD.TITLE' | translate }}</h2>
 
   <div *ngIf="error" class="alerta-error">{{ error }}</div>
 
@@ -7,38 +7,39 @@
     <form [formGroup]="form" (ngSubmit)="enviar()">
       <!-- Campo: Nueva contraseña -->
       <div class="form-group">
-        <label for="nuevaContrasena" class="nuevaContrasena">Nueva contraseña</label>
+        <label for="nuevaContrasena" class="nuevaContrasena">
+          {{ 'RESET_PASSWORD.NEW_PASSWORD_LABEL' | translate }}
+        </label>
         <div class="input-icon">
           <i class="fa-solid fa-lock"></i>
           <input
             id="nuevaContrasena"
             type="password"
             formControlName="nuevaContrasena"
-            placeholder="Mínimo 6 caracteres"
+            [placeholder]="'RESET_PASSWORD.NEW_PASSWORD_PLACEHOLDER' | translate"
             required
           />
         </div>
         <div
-          *ngIf="
-            form.get('nuevaContrasena')?.invalid &&
-            form.get('nuevaContrasena')?.touched
-          "
+          *ngIf="form.get('nuevaContrasena')?.invalid && form.get('nuevaContrasena')?.touched"
           class="mensaje-error"
         >
-          La contraseña es requerida (mínimo 6 caracteres).
+          {{ 'RESET_PASSWORD.NEW_PASSWORD_ERROR' | translate }}
         </div>
       </div>
 
       <!-- Campo: Confirmar contraseña -->
       <div class="form-group">
-        <label for="confirmarContrasena" class="nuevaContrasena">Confirmar contraseña</label>
+        <label for="confirmarContrasena" class="nuevaContrasena">
+          {{ 'RESET_PASSWORD.CONFIRM_PASSWORD_LABEL' | translate }}
+        </label>
         <div class="input-icon">
           <i class="fa-solid fa-lock"></i>
           <input
             id="confirmarContrasena"
             type="password"
             formControlName="confirmarContrasena"
-            placeholder="Repite la contraseña"
+            [placeholder]="'RESET_PASSWORD.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
             required
           />
         </div>
@@ -46,15 +47,14 @@
           *ngIf="form.hasError('noCoincide') && form.get('confirmarContrasena')?.touched"
           class="mensaje-error"
         >
-          Las contraseñas no coinciden.
+          {{ 'RESET_PASSWORD.CONFIRM_PASSWORD_ERROR' | translate }}
         </div>
       </div>
 
       <button type="submit" [disabled]="form.invalid" class="btn-principal">
-        Cambiar contraseña
+        {{ 'RESET_PASSWORD.SUBMIT_BUTTON' | translate }}
       </button>
     </form>
-
   </div>
 
   <div *ngIf="mensaje" class="alerta-exito">{{ mensaje }}</div>

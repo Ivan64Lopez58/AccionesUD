@@ -1,15 +1,503 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
+  /* Colores Ionic existentes */
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #3171e0;
   --ion-color-primary-tint: #4c8dff;
+
+  /* Variables de colores personalizados - Tema claro */
+  --color-background: #ffffff;
+  --color-background-secondary: #f1e4e4;
+  --color-text: #1a1a1a;
+  --color-primary: #d40000;
+  --color-primary-light: #ff6666;
+  --color-primary-lighter: #ff9999;
+  --color-primary-dark: #cc0000;
+  --color-primary-bg: #fff0f0;
+  --color-primary-bg-light: #fff5f5;
+  --color-shadow: rgba(212, 0, 0, 0.2);
+  --color-shadow-strong: rgba(212, 0, 0, 0.3);
+  --color-shadow-light: rgba(212, 0, 0, 0.1);
+  --color-text-shadow: rgba(0, 0, 0, 0.1);
+  --color-white: #ffffff;
+  --gradient-primary: linear-gradient(145deg, #ffcccc, #ff6666);
+  --gradient-primary-hover: linear-gradient(145deg, #ff9999, #cc0000);
+  --gradient-background: linear-gradient(to bottom, #fff, #f1e4e4);
+  /* Variables específicas para el menú */
+  --menu-background: #f0b5b6;
+  --menu-text: #000000;
+  --menu-text-hover: #f10909;
+  --banner-background: linear-gradient(to right, #f10909, #eb756f);
+  --button-background: linear-gradient(to right, #eb1409, #ff8a65);
+  --button-background-hover: #dd2626;
+
+  /* Variables específicas para menu2 */
+  --dropdown-background: #ffffff;
+  --dropdown-border: rgba(230, 87, 79, 0.2);
+  --dropdown-item-bg: #f7d7d7;
+  --dropdown-item-hover: #f5f5f5;
+  --dropdown-item-hover-accent: #f7cece;
+  --notification-item-bg: #f7d7d7;
+  --notification-item-hover: #f89999;
+  --notification-item-read: #f5e2e2;
+  --notification-border: #ddd;
+  --notification-accent: #e63946;
+  --modal-background: linear-gradient(135deg, #ea6666 0%, #a24b4b 100%);
+  --modal-border: rgba(255, 255, 255, 0.2);
+  --modal-text: #ffffff;
+  --modal-text-gradient: linear-gradient(135deg, #fff, #e0e7ff);
+  --modal-input-background: rgba(255, 255, 255, 0.1);
+  --modal-input-border: rgba(255, 255, 255, 0.2);
+  --modal-input-focus-border: rgba(255, 255, 255, 0.5);
+  --modal-input-focus-background: rgba(255, 255, 255, 0.15);
+  --modal-input-shadow: rgba(255, 255, 255, 0.1);
+  --error-background: rgba(239, 68, 68, 0.1);
+  --error-color: #fca5a5;
+  --error-border: #ef4444;
+  --tooltip-background: #fff3cd;
+  --tooltip-color: #856404;
+  --tooltip-border: #ffeeba;
+  --logo2-background: linear-gradient(135deg, #f7e2e2, #e9a4a4);
+  --logo2-shadow: rgba(234, 102, 102, 0.3);
+  --input-error-border: #dc3545;
+
+  /* Variables específicas para mi-perfil */
+  --tarjeta-shadow: rgba(0, 0, 0, 0.1);
+  --tarjeta-shadow-hover: rgba(0, 0, 0, 0.15);
+  --tarjeta-gradient: linear-gradient(to right, #DB9494, #EB1409);
+  --tarjeta-border: rgba(255, 255, 255, 0.2);
+  --tarjeta-item-bg: rgba(255, 255, 255, 0.1);
+  --tarjeta-input-border: #ddd;
+  --tarjeta-input-focus: #0c44ff;
+  --tarjeta-input-shadow: rgba(230, 87, 79, 0.2);
+  --tarjeta-button-gradient: linear-gradient(135deg, #e6574f, #ff725e);
+  --tarjeta-button-hover: linear-gradient(135deg, #cc4a44, #ff4e39);
+  --tarjeta-button-shadow: rgba(230, 87, 79, 0.4);
+  --tarjeta-accion-bg: white;
+  --tarjeta-accion-bg-hover: #f0f0f0;
+  --tarjeta-accion-secundario: rgba(255, 255, 255, 0.2);
+  --tarjeta-accion-secundario-hover: rgba(255, 255, 255, 0.3);
+  --tarjeta-chart-bar: #3377FF;
+  --tarjeta-chart-line: rgba(255, 140, 0, 0.7);
+  --tarjeta-chart-grid: #ccc;
+  --tarjeta-filter-bg: #f0f0f0;
+  --tarjeta-filter-selected: #EB1409;
+  --tarjeta-historial-bg: rgba(230, 230, 230, 0.5);
+  --tarjeta-historial-hover: rgba(230, 230, 230, 0.8);
+  --tarjeta-historial-success: #4CAF50;
+  --tarjeta-modal-bg: linear-gradient(45deg, #f8a8a8, #f3dbdb);
+  --tarjeta-scrollbar: #d40000;
+  --tarjeta-scrollbar-bg: #f3dbdb;
+  /*Font mi perfil*/
+  --letras-mi-perfil: #333;
+  --miperfil-tarjetas-titulo: #ffffff;
+
+  /*Notificaciones modo claro*/
+  --notif-background: linear-gradient(to right, rgb(247, 200, 200), #ffffff);
+  --notif-header-bg: linear-gradient(to right, #ffffff, rgb(247, 200, 200));
+  --notif-item-bg: linear-gradient(to right, #ffffff, rgb(233, 115, 115));
+  --notif-item-hover: linear-gradient(to right, #ffffff, rgb(248, 174, 174));
+  --notif-item-leida: linear-gradient(to right, #ffffff, rgb(232, 226, 245));
+  --notif-item-border: #ccc;
+  --notif-title-color: #333;
+  --notif-fecha-color: #e63946;
+  --notif-descripcion-color: #555;
+  --notif-toggle-color: #555;
+  --notif-toggle-hover: #333;
+  --notif-empty-color: #777;
+  --notif-button-bg: #e67a75;
+  --notif-button-hover: #d36560;
+  --notif-search-bg: white;
+  --notif-search-border: rgba(230, 122, 117, 0.3);
+  --notif-search-focus-shadow: rgba(230, 87, 79, 0.3);
+  --notif-search-focus-border: #e67a75;
+  --notif-search-text: #333;
+  --notif-search-placeholder: #888;
+  --notif-dropdown-bg: white;
+  --notif-dropdown-border: #ccc;
+  --notif-dropdown-shadow: rgba(0, 0, 0, 0.15);
+  --notif-dropdown-item-hover: #f0f0f0;
+  /*Ordenes modo claro*/
+  --orden-background: #ffffff;
+  --orden-tarjeta-bg: #f4fafa;
+  --orden-tarjeta-border: #b4d5e6;
+  --orden-tarjeta-shadow: rgba(0,0,0,0.07);
+  --orden-tarjeta-hover-border: #d40000;
+  --orden-titulo-color: #000000;
+  --orden-subtitulo-color: #888;
+  --orden-precio-comprar-bg: #454e5a;
+  --orden-precio-comprar-color: #fff;
+  --orden-precio-comprar-hover: #656d79;
+  --orden-precio-vender-bg: #e07a7a;
+  --orden-precio-vender-color: #fff;
+  --orden-precio-vender-hover: #d45a5a;
+  --orden-cantidad-bg: #e0dede;
+  --orden-cantidad-texto: #333;
+  --orden-cantidad-invalido-border: red;
+  --orden-cantidad-invalido-bg: #ffe6e6;
+  --orden-cantidad-invalido-color: #d40000;
+  --orden-cantidad-label: #555;
+  --orden-cantidad-controles-bg: #d3cfcf;
+  --orden-cantidad-controles-color: #333;
+  --orden-grafica-border: #888;
+  --orden-grafica-bg: #fff;
+
+  /* Modal */
+  --orden-modal-overlay: rgba(0,0,0,0.5);
+  --orden-modal-bg: linear-gradient(45deg, #f8a8a8, #f3dbdb);
+  --orden-modal-shadow: rgba(0, 0, 0, 0.2);
+  --orden-modal-scrollbar: #d40000;
+  --orden-modal-scrollbar-bg: #f3dbdb;
+  --orden-modal-titulo: #d40000;
+  --orden-modal-subtitulo: #747474;
+  --orden-modal-cerrar: #d40000;
+  --orden-modal-cerrar-hover: #ff725e;
+  --orden-modal-input-bg: #B58182;
+  --orden-modal-input-border: #B58182;
+  --orden-modal-input-color: #000000;
+  --orden-modal-input-invalido-border: red;
+  --orden-modal-input-invalido-bg: #ffe6e6;
+  --orden-modal-input-invalido-color: #d40000;
+  --orden-modal-slider-bg: #ccc;
+  --orden-modal-slider-button: #fff;
+  --orden-modal-slider-active: #e6574f;
+  --orden-modal-cancelar-bg: #d40000;
+  --orden-modal-cancelar-color: #fff;
+  --orden-modal-cancelar-hover: #b30000;
+  --orden-modal-confirmar-bg: #28a745;
+  --orden-modal-confirmar-color: #fff;
+  --orden-modal-confirmar-hover: #218838;
+
+  /* Modal Confirmación */
+  --orden-confirmacion-header-bg: #F3F6EB;
+  --orden-confirmacion-header-shadow: #454e5a;
+  --orden-confirmacion-accion-comprar: #b0ffa9;
+  --orden-confirmacion-accion-vender: #ffb0b0;
+  --orden-confirmacion-resumen-bg: #f8a8a8;
+  --orden-confirmacion-resumen-shadow: #454e5a;
+  --orden-confirmacion-label-bg: #B58182;
+  /*Pie modo claro*/
+  --pie-background: #ff666659;
+  --pie-texto: #ebf4f6;
+  --pie-texto-sombra: rgba(230, 87, 79, 0.2);
+  --pie-titulo: #d40000;
+  --pie-enlace: #333;
+  --pie-enlace-hover: #d40000;
+  --pie-borde: #d40000;
+  --pie-copyright: #555;
+  --pie-social-opacity: 0.7;
+  --pie-social-hover-opacity: 1;
+
+  /* Modal Pie */
+  --pie-modal-overlay: rgba(0, 0, 0, 0.5);
+  --pie-modal-bg: linear-gradient(45deg, #f8a8a8, #f3dbdb);
+  --pie-modal-shadow: rgba(0, 0, 0, 0.2);
+  --pie-modal-titulo: #d40000;
+  --pie-modal-subtitulo: #333;
+  --pie-modal-texto: #555;
+  --pie-modal-cerrar: #d40000;
+  --pie-modal-cerrar-hover: #ff725e;
+  --pie-modal-scrollbar: #d40000;
+  --pie-modal-scrollbar-bg: #f3dbdb;
+  --pie-modal-scrollbar-hover: #ff725e;
+  /*Recuperar tema claro*/
+  --recuperar-contenedor-bg: #ffffff;
+  --recuperar-contenedor-shadow: rgba(0, 0, 0, 0.12);
+  --recuperar-texto-principal: #333;
+  --recuperar-titulo: #004aad;
+  --recuperar-icono: #888;
+  --recuperar-input-borde: #ccc;
+  --recuperar-input-focus: #004aad;
+  --recuperar-error-texto: red;
+  --recuperar-error-bg: #ffe0e0;
+  --recuperar-error-color: #c70000;
+  --recuperar-exito-bg: #e0ffe5;
+  --recuperar-exito-color: #007f30;
+  --recuperar-btn-disabled-bg: #b8c6e3;
+  --recuperar-btn-gradient: linear-gradient(to right, #eb1409, #ff8a65);
+  --recuperar-btn-hover: #dd2626;
+  /*Relojes tema claro*/
+  --relojes-container-bg: #eccbcb;
+  --relojes-reloj-gradient: linear-gradient(145deg, #f0f0f0, #cacaca);
+  --relojes-reloj-shadow-1: #bebebe;
+  --relojes-reloj-shadow-2: #ffffff;
+  --relojes-reloj-hover-shadow-1: #b0b0b0;
+  --relojes-reloj-hover-shadow-2: #ffffff;
+  --relojes-texto: #333;
+  --relojes-ciudad-color: #ff3c3c;
+  --relojes-hora-color: #222;
+  --relojes-efecto-radial: rgba(255, 60, 60, 0.15);
+
+  /*Registro tema claro*/
+  --registro-bg-gradient: linear-gradient(to right, rgb(247, 200, 200), #ffffff);
+  --registro-container-bg: linear-gradient(to right, #ffffff, rgb(247, 200, 200));
+  --registro-container-shadow: rgba(0, 0, 0, 0.08);
+  --registro-container-border: #E6574F;
+  --registro-titulo: #E6574F;
+  --registro-label: #2A3448;
+  --registro-input-border: #ddd;
+  --registro-input-focus-border: #E6574F;
+  --registro-input-focus-shadow: rgba(230, 87, 79, 0.2);
+  --registro-input-placeholder: #aaa;
+  --registro-btn-gradient: linear-gradient(135deg, #e6574f, #ff725e);
+  --registro-btn-hover-gradient: linear-gradient(135deg, #cc4a44, #ff4e39);
+  --registro-btn-hover-shadow: rgba(230, 87, 79, 0.4);
+  --registro-btn-text: white;
+  --registro-cerrar-btn: #e74c3c;
+  --registro-cerrar-btn-hover: #ff3b2e;
+}
+
+/* Tema oscuro */
+.dark-theme {
+  --color-background: #121212;
+  --color-background-secondary: #1f1f1f;
+  --color-text: #e0e0e0;
+  --color-primary: #ff4d4d;
+  --color-primary-light: #ff7f7f;
+  --color-primary-lighter: #ffb3b3;
+  --color-primary-dark: #b30000;
+  --color-primary-bg: #2a1a1a;
+  --color-primary-bg-light: #2d2020;
+  --color-shadow: rgba(255, 77, 77, 0.2);
+  --color-shadow-strong: rgba(255, 77, 77, 0.3);
+  --color-shadow-light: rgba(255, 77, 77, 0.1);
+  --color-text-shadow: rgba(0, 0, 0, 0.3);
+  --color-white: #2a2a2a;
+  --gradient-primary: linear-gradient(145deg, #661a1a, #ff4d4d);
+  --gradient-primary-hover: linear-gradient(145deg, #802020, #b30000);
+  --gradient-background: linear-gradient(to bottom, #1a1a1a, #2d1c1c);
+  /* Variables específicas para el menú en modo oscuro */
+  --menu-background: #2a1a1a;
+  --menu-text: #e0e0e0;
+  --menu-text-hover: #ff4d4d;
+  --banner-background: linear-gradient(to right, #b30000, #c34f4a);
+  --button-background: linear-gradient(to right, #b30000, #cc5a46);
+  --button-background-hover: #9e1a1a;
+
+  /* Variables específicas para menu2 en modo oscuro */
+  --dropdown-background: #232323;
+  --dropdown-border: rgba(255, 77, 77, 0.3);
+  --dropdown-item-bg: #2d1c1c;
+  --dropdown-item-hover: #3a2424;
+  --dropdown-item-hover-accent: #4d2626;
+  --notification-item-bg: #2d1c1c;
+  --notification-item-hover: #661a1a;
+  --notification-item-read: #262020;
+  --notification-border: #333;
+  --notification-accent: #ff4d4d;
+  --modal-background: linear-gradient(135deg, #661a1a 0%, #4f2525 100%);
+  --modal-border: rgba(255, 255, 255, 0.1);
+  --modal-text: #e0e0e0;
+  --modal-text-gradient: linear-gradient(135deg, #e0e0e0, #c0c7ff);
+  --modal-input-background: rgba(255, 255, 255, 0.05);
+  --modal-input-border: rgba(255, 255, 255, 0.1);
+  --modal-input-focus-border: rgba(255, 255, 255, 0.3);
+  --modal-input-focus-background: rgba(255, 255, 255, 0.08);
+  --modal-input-shadow: rgba(255, 255, 255, 0.05);
+  --error-background: rgba(239, 68, 68, 0.08);
+  --error-color: #ca8a8a;
+  --error-border: #c13333;
+  --tooltip-background: #5c4a20;
+  --tooltip-color: #e6d5aa;
+  --tooltip-border: #856404;
+  --logo2-background: linear-gradient(135deg, #502929, #803333);
+  --logo2-shadow: rgba(234, 102, 102, 0.15);
+  --input-error-border: #a62c2c;
+
+  /* Variables específicas para mi-perfil en modo oscuro */
+  --tarjeta-shadow: rgba(0, 0, 0, 0.2);
+  --tarjeta-shadow-hover: rgba(0, 0, 0, 0.25);
+  --tarjeta-gradient: linear-gradient(to right, #661a1a, #b30000);
+  --tarjeta-border: rgba(255, 255, 255, 0.1);
+  --tarjeta-item-bg: rgba(0, 0, 0, 0.25);
+  --tarjeta-input-border: #444;
+  --tarjeta-input-focus: #ff4d4d;
+  --tarjeta-input-shadow: rgba(255, 77, 77, 0.3);
+  --tarjeta-button-gradient: linear-gradient(135deg, #b30000, #cc5a46);
+  --tarjeta-button-hover: linear-gradient(135deg, #9e1a1a, #b34b3c);
+  --tarjeta-button-shadow: rgba(255, 77, 77, 0.4);
+  --tarjeta-accion-bg: #333;
+  --tarjeta-accion-bg-hover: #444;
+  --tarjeta-accion-secundario: rgba(255, 255, 255, 0.1);
+  --tarjeta-accion-secundario-hover: rgba(255, 255, 255, 0.2);
+  --tarjeta-chart-bar: #ff4d4d;
+  --tarjeta-chart-line: rgba(255, 140, 0, 0.5);
+  --tarjeta-chart-grid: #444;
+  --tarjeta-filter-bg: #333;
+  --tarjeta-filter-selected: #ff4d4d;
+  --tarjeta-historial-bg: rgba(50, 50, 50, 0.5);
+  --tarjeta-historial-hover: rgba(60, 60, 60, 0.8);
+  --tarjeta-historial-success: #2e7d32;
+  --tarjeta-modal-bg: linear-gradient(45deg, #4d2626, #3a1a1a);
+  --tarjeta-scrollbar: #ff4d4d;
+  --tarjeta-scrollbar-bg: #2a1a1a;
+  /*Font mi perfil*/
+  --letras-mi-perfil: #e0e0e0;
+  --miperfil-tarjetas-titulo: #ffffff;
+
+  /*Notificaciones modo oscuro*/
+  --notif-background: linear-gradient(to right, #3a1a1a, #1f1f1f);
+  --notif-header-bg: linear-gradient(to right, #1f1f1f, #3a1a1a);
+  --notif-item-bg: linear-gradient(to right, #1f1f1f, #661a1a);
+  --notif-item-hover: linear-gradient(to right, #1f1f1f, #8a2222);
+  --notif-item-leida: linear-gradient(to right, #1f1f1f, #2d2333);
+  --notif-item-border: #333;
+  --notif-title-color: #e0e0e0;
+  --notif-fecha-color: #ff4d4d;
+  --notif-descripcion-color: #b0b0b0;
+  --notif-toggle-color: #b0b0b0;
+  --notif-toggle-hover: #ffffff;
+  --notif-empty-color: #888;
+  --notif-button-bg: #b30000;
+  --notif-button-hover: #9e1a1a;
+  --notif-search-bg: #232323;
+  --notif-search-border: rgba(255, 77, 77, 0.3);
+  --notif-search-focus-shadow: rgba(255, 77, 77, 0.3);
+  --notif-search-focus-border: #ff4d4d;
+  --notif-search-text: #e0e0e0;
+  --notif-search-placeholder: #a0a0a0;
+  --notif-dropdown-bg: #232323;
+  --notif-dropdown-border: #444;
+  --notif-dropdown-shadow: rgba(0, 0, 0, 0.3);  --notif-dropdown-item-hover: #2d1c1c;
+
+  /*Ordenes modo oscuro*/
+  --orden-background: #121212;
+  --orden-tarjeta-bg: #1f1f1f;
+  --orden-tarjeta-border: #374956;
+  --orden-tarjeta-shadow: rgba(0,0,0,0.2);
+  --orden-tarjeta-hover-border: #ff4d4d;
+  --orden-titulo-color: #e0e0e0;
+  --orden-subtitulo-color: #b0b0b0;
+  --orden-precio-comprar-bg: #2d343e;
+  --orden-precio-comprar-color: #e0e0e0;
+  --orden-precio-comprar-hover: #394453;
+  --orden-precio-vender-bg: #8a2222;
+  --orden-precio-vender-color: #e0e0e0;
+  --orden-precio-vender-hover: #b30000;
+  --orden-cantidad-bg: #333333;
+  --orden-cantidad-texto: #e0e0e0;
+  --orden-cantidad-invalido-border: #ff4d4d;
+  --orden-cantidad-invalido-bg: #3a1a1a;
+  --orden-cantidad-invalido-color: #ff4d4d;
+  --orden-cantidad-label: #b0b0b0;
+  --orden-cantidad-controles-bg: #444444;
+  --orden-cantidad-controles-color: #e0e0e0;
+  --orden-grafica-border: #444;
+  --orden-grafica-bg: #1a1a1a;
+
+  /* Modal */
+  --orden-modal-overlay: rgba(0,0,0,0.7);
+  --orden-modal-bg: linear-gradient(45deg, #4d2626, #3a1a1a);
+  --orden-modal-shadow: rgba(0, 0, 0, 0.4);
+  --orden-modal-scrollbar: #ff4d4d;
+  --orden-modal-scrollbar-bg: #2a1a1a;
+  --orden-modal-titulo: #ff4d4d;
+  --orden-modal-subtitulo: #b0b0b0;
+  --orden-modal-cerrar: #ff4d4d;
+  --orden-modal-cerrar-hover: #ff7f7f;
+  --orden-modal-input-bg: #661a1a;
+  --orden-modal-input-border: #661a1a;
+  --orden-modal-input-color: #e0e0e0;
+  --orden-modal-input-invalido-border: #ff4d4d;
+  --orden-modal-input-invalido-bg: #3a1a1a;
+  --orden-modal-input-invalido-color: #ff4d4d;
+  --orden-modal-slider-bg: #333;
+  --orden-modal-slider-button: #aaa;
+  --orden-modal-slider-active: #b30000;
+  --orden-modal-cancelar-bg: #b30000;
+  --orden-modal-cancelar-color: #e0e0e0;
+  --orden-modal-cancelar-hover: #9e1a1a;
+  --orden-modal-confirmar-bg: #1e7e34;
+  --orden-modal-confirmar-color: #e0e0e0;
+  --orden-modal-confirmar-hover: #186429;
+
+  /* Modal Confirmación */
+  --orden-confirmacion-header-bg: #232323;
+  --orden-confirmacion-header-shadow: #000000;
+  --orden-confirmacion-accion-comprar: #1e7e34;
+  --orden-confirmacion-accion-vender: #8a2222;
+  --orden-confirmacion-resumen-bg: #661a1a;
+  --orden-confirmacion-resumen-shadow: #000000;
+  --orden-confirmacion-label-bg: #4d2626;
+  /*Pie modo oscuro*/
+  --pie-background: #331a1a80;
+  --pie-texto: #e0e0e0;
+  --pie-texto-sombra: rgba(255, 77, 77, 0.2);
+  --pie-titulo: #ff4d4d;
+  --pie-enlace: #b0b0b0;
+  --pie-enlace-hover: #ff4d4d;
+  --pie-borde: #ff4d4d;
+  --pie-copyright: #888;
+  --pie-social-opacity: 0.5;
+  --pie-social-hover-opacity: 0.8;
+
+  /* Modal Pie */
+  --pie-modal-overlay: rgba(0, 0, 0, 0.7);
+  --pie-modal-bg: linear-gradient(45deg, #4d2626, #3a1a1a);
+  --pie-modal-shadow: rgba(0, 0, 0, 0.4);
+  --pie-modal-titulo: #ff4d4d;
+  --pie-modal-subtitulo: #e0e0e0;
+  --pie-modal-texto: #b0b0b0;
+  --pie-modal-cerrar: #ff4d4d;
+  --pie-modal-cerrar-hover: #ff7f7f;
+  --pie-modal-scrollbar: #ff4d4d;
+  --pie-modal-scrollbar-bg: #2a1a1a;
+  --pie-modal-scrollbar-hover: #ff7f7f;
+  /*Recuperar tema oscuro*/
+  --recuperar-contenedor-bg: #1f1f1f;
+  --recuperar-contenedor-shadow: rgba(0, 0, 0, 0.25);
+  --recuperar-texto-principal: #e0e0e0;
+  --recuperar-titulo: #7fb2ff;
+  --recuperar-icono: #b0b0b0;
+  --recuperar-input-borde: #444;
+  --recuperar-input-focus: #7fb2ff;
+  --recuperar-error-texto: #ff7f7f;
+  --recuperar-error-bg: #3a1a1a;
+  --recuperar-error-color: #ff4d4d;
+  --recuperar-exito-bg: #1e3b25;
+  --recuperar-exito-color: #4caf50;
+  --recuperar-btn-disabled-bg: #404552;
+  --recuperar-btn-gradient: linear-gradient(to right, #b30000, #cc5a46);
+  --recuperar-btn-hover: #9e1a1a;
+  /*Relojes tema oscuro*/
+  --relojes-container-bg: #3a1a1a;
+  --relojes-reloj-gradient: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  --relojes-reloj-shadow-1: #0f0f0f;
+  --relojes-reloj-shadow-2: #333333;
+  --relojes-reloj-hover-shadow-1: #000000;
+  --relojes-reloj-hover-shadow-2: #3c3c3c;
+  --relojes-texto: #e0e0e0;
+  --relojes-ciudad-color: #ff7f7f;
+  --relojes-hora-color: #f0f0f0;
+  --relojes-efecto-radial: rgba(255, 77, 77, 0.15);
+
+  /*Registro tema oscuro*/
+  --registro-bg-gradient: linear-gradient(to right, #3a1a1a, #1f1f1f);
+  --registro-container-bg: linear-gradient(to right, #1f1f1f, #3a1a1a);
+  --registro-container-shadow: rgba(0, 0, 0, 0.2);
+  --registro-container-border: #ff4d4d;
+  --registro-titulo: #ff4d4d;
+  --registro-label: #e0e0e0;
+  --registro-input-border: #444;
+  --registro-input-focus-border: #ff4d4d;
+  --registro-input-focus-shadow: rgba(255, 77, 77, 0.3);
+  --registro-input-placeholder: #888;
+  --registro-btn-gradient: linear-gradient(135deg, #b30000, #cc5a46);
+  --registro-btn-hover-gradient: linear-gradient(135deg, #9e1a1a, #b34b3c);
+  --registro-btn-hover-shadow: rgba(255, 77, 77, 0.4);
+  --registro-btn-text: #e0e0e0;
+  --registro-cerrar-btn: #ff4d4d;
+  --registro-cerrar-btn-hover: #ff7f7f;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: Jomolhari, -apple-system, Roboto, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

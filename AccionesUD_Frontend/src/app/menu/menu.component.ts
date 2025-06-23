@@ -9,13 +9,15 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, TranslateModule],
 })
 export class MenuComponent {
   mostrarModal = false;
@@ -29,7 +31,8 @@ export class MenuComponent {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -203,5 +206,19 @@ export class MenuComponent {
           alert('Hubo un problema al procesar la solicitud.');
         },
       });
+  }
+
+  switchLang(lang: string) {
+    this.translate.use(lang);
+  }
+
+  menuIdiomaAbierto: boolean = false;
+
+  toggleMenuIdioma(): void {
+    this.menuIdiomaAbierto = !this.menuIdiomaAbierto;
+  }
+
+  cerrarMenuIdioma(): void {
+    this.menuIdiomaAbierto = false;
   }
 }

@@ -1,3 +1,4 @@
+// app.routes.ts
 import { Routes } from '@angular/router';
 import { VistaRegistroComponent } from './vista-registro/vista-registro.component';
 import { CuerpoPrincipalComponent } from './cuerpo-principal/cuerpo-principal.component';
@@ -13,20 +14,32 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
 export const routes: Routes = [
   { path: '', component: CuerpoPrincipalComponent },
   { path: 'registro', component: VistaRegistroComponent },
-  { path: 'login', component: Menu2Component, canActivate: [AuthGuard] },
+  {
+    path: 'logged',
+    component: CuerpoPrincipalComponent,
+    canActivate: [AuthGuard],
+    data: { showMenu1: false, showMenu2: true }
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'miperfil', component: MiPerfilComponent, canActivate: [AuthGuard] },
+  { path: 'miperfil',
+    component: MiPerfilComponent,
+    canActivate: [AuthGuard]
+  },
   { path: 'reset-password', component: RecuperarComponent },
   {
     path: 'notificaciones',
     component: NotificacionesComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'ordenes', component: OrdenesPersonalizadasComponent},
+  { path: 'ordenes',
+    component: OrdenesPersonalizadasComponent,
+    canActivate: [AuthGuard],
+  }
+
 ];
 /*
 export const routes: Routes = [
