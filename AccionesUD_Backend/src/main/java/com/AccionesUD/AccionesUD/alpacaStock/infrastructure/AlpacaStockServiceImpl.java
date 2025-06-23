@@ -2,6 +2,7 @@ package com.AccionesUD.AccionesUD.alpacaStock.infrastructure;
 
 import net.jacobpeterson.alpaca.AlpacaAPI;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.AccionesUD.AccionesUD.alpacaStock.application.StockService;
 import com.AccionesUD.AccionesUD.alpacaStock.domain.model.StockInfo;
@@ -12,6 +13,7 @@ import net.jacobpeterson.alpaca.openapi.marketdata.model.StockFeed;
 import net.jacobpeterson.alpaca.openapi.marketdata.model.StockTrade;
 import net.jacobpeterson.alpaca.openapi.marketdata.ApiException;
 
+@Service
 public class AlpacaStockServiceImpl implements StockService{
 
      private final AlpacaAPI alpacaAPI;
