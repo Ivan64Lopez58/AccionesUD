@@ -21,6 +21,22 @@ import { NotificacionesService } from '../servicio/notificaciones/notificaciones
   imports: [ReactiveFormsModule, CommonModule, FormsModule, TranslateModule],
 })
 export class MenuComponent {
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('jwt');
+    if (!token) return false;
+
+    try {
+      // Decodificar el token (formato: header.payload.signature)
+      const payload = token.split('.')[1];
+      const decoded = JSON.parse(atob(payload));
+
+      // Verificar expiración
+      const currentTime = Math.floor(Date.now() / 1000);
+      return decoded.exp > currentTime;
+    } catch (e) {
+      return false;
+    }
+  }
   mostrarModal = false;
   animandoCerrar = false;
   loginForm: FormGroup;
