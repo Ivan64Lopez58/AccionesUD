@@ -16,11 +16,11 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
   },
   { path: 'miperfil', component: MiPerfilComponent, canActivate: [AuthGuard] },
   { path: 'reset-password', component: RecuperarComponent },
-  { path: 'portafolio', component: PortafolioAccionesComponent , canActivate: [AuthGuard]},
+  { path: 'portafolio', component: PortafolioAccionesComponent},
 ];
 
 /*

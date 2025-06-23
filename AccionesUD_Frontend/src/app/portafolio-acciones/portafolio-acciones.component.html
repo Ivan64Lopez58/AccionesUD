@@ -1,38 +1,36 @@
+<app-menu2>
+</app-menu2>
 <div class="controls">
-  <label for="sort">Ordenar por:</label>
-  <select id="sort" (change)="onSortChange($event)">
-    <option value="">--</option>
-    <option value="nombre">Nombre</option>
-    <option value="valor">Valor total</option>
-    <option value="rendimiento">Rendimiento</option>
-  </select>
+  <h1>Mi portafolio de acciones</h1>
+  <div class="filters">
+    <label for="sector" class="sector">Filtrar por sector:</label>
+    <select id="sector" (change)="onSectorChange($event)">
+      <option value="">Todas</option>
+      <option *ngFor="let s of sectores()" [value]="s">{{ s }}</option>
+    </select>
 
-  <label for="sector">Filtrar por sector:</label>
-  <select id="sector" (change)="onSectorChange($event)">
-    <option value="">Todos</option>
-    <option *ngFor="let s of sectores()" [value]="s">{{ s }}</option>
-  </select>
+    <label for="sort" class="sort">Ordenar por:</label>
+    <select id="sort" (change)="onSortChange($event)">
+      <option value="">--</option>
+      <option value="nombre">Nombre</option>
+      <option value="valor">Valor total</option>
+      <option value="rendimiento">Rendimiento</option>
+    </select>
+  </div>
 </div>
 
-<table class="portfolio-table">
-  <thead>
-    <tr>
-      <th>Acción</th>
-      <th>Cantidad</th>
-      <th>Precio Actual</th>
-      <th>Valor Total</th>
-      <th>Rendimiento</th>
-      <th>Sector</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let stock of filteredPortfolio()">
-      <td>{{ stock.name }}</td>
-      <td>{{ stock.quantity }}</td>
-      <td>\${{ stock.currentPrice }}</td>
-      <td>\${{ totalValue(stock) | number:'1.2-2' }}</td>
-      <td>{{ rendimiento(stock) | number:'1.2-2' }}%</td>
-      <td>{{ stock.sector }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="portfolio-cards">
+  <div class="card" *ngFor="let stock of filteredPortfolio()">
+    <button class="sell-btn">Vender</button>
+    <div class="name">{{ stock.name }}</div>
+    <div class="values">
+      <div><span>{{ stock.quantity }}</span> Cantidad</div>
+      <div><span>${{ stock.currentPrice }}</span> Precio actual</div>
+      <div><span>${{ stock.initialPrice }}</span> Precio comprado</div>
+      <div><span>{{ rendimiento(stock) | number:'1.2-2' }}%</span> Rendimiento</div>
+    </div>
+    <div class="options">•••</div>
+  </div>
+</div>
+<app-pie-pagina-principal>
+</app-pie-pagina-principal>
