@@ -51,7 +51,8 @@ public class User implements UserDetails {
     private int dailyOrderLimit;
 
     @Column(nullable = false)
-    private double balance; // Cambiado de Double a int para representar el saldo
+    private Double balance = 0.0;
+
 
     // Métodos obligatorios de UserDetails
     @Override
