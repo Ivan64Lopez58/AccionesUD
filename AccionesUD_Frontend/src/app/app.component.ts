@@ -21,7 +21,7 @@ import { ThemeService } from './servicio/tema/theme.service';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    TranslateModule // ✅ solo el módulo aquí
+    TranslateModule // 
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -29,16 +29,16 @@ import { ThemeService } from './servicio/tema/theme.service';
 export class AppComponent implements OnInit {
   title = 'acciones-ud';
 
-  constructor(
-    private themeService: ThemeService,
-    private translate: TranslateService
-  ) {
-    translate.addLangs(['en', 'es']);
-    translate.setDefaultLang('es');
+constructor(
+  private themeService: ThemeService,
+  private translate: TranslateService
+) {
+  translate.addLangs(['en', 'es']);
+  translate.setDefaultLang('es');
 
-    const browserLang = translate.getBrowserLang();
-    const lang = browserLang && browserLang.match(/en|es/) ? browserLang : 'es';
-    translate.use(lang);
+  const savedLang = localStorage.getItem('idioma');
+  const lang = savedLang ?? 'es';
+  translate.use(lang);
 
   }
 

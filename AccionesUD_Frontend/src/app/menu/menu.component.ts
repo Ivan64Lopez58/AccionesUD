@@ -11,7 +11,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
-
+import { NotificationRequest } from '../servicio/notificaciones/notification-request.model';
+import { NotificacionesService } from '../servicio/notificaciones/notificaciones.service';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -32,7 +33,8 @@ export class MenuComponent {
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+  private notificacionesService: NotificacionesService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -208,9 +210,34 @@ export class MenuComponent {
       });
   }
 
-  switchLang(lang: string) {
-    this.translate.use(lang);
+  switchLang(lang: string): void {
+    this.translate.use(lang);                      // Cambia idioma del frontend
+    localStorage.setItem('idioma', lang);          // Guarda la preferencia
+    this.idiomaActual = lang;                      // Actualiza variable
+    this.cargarNotificacionesTraducidas();         // Llama al backend traducido
   }
+
+idiomaActual: string = localStorage.getItem('idioma') || 'es';
+
+
+notificacionesTraducidas: NotificationRequest[] = [];
+
+cargarNotificacionesTraducidas(): void {
+  this.notificacionesService.getNotificacionesTraducidas(this.idiomaActual).subscribe({
+    next: (data) => {
+      this.notificacionesTraducidas = data;
+    },
+    error: (err) => {
+      console.error('Error al obtener notificaciones traducidas:', err);
+    }
+  });
+}
+
+ngOnInit(): void {
+  this.cargarNotificacionesTraducidas();
+}
+
+
 
   menuIdiomaAbierto: boolean = false;
 

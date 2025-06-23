@@ -15,63 +15,39 @@
           />
           <i class="fas fa-search"></i> {{ 'SEARCH' | translate }}
         </button>
-
-
-    <div class="dropdown-filtro" (click)="mostrarOpciones = !mostrarOpciones">
-      <button class="btn-filtrar">
-        <i class="fas fa-filter"></i>{{ tipoFiltro === 'TODAS' ? 'Todas' : tipoFiltro }}
-      </button>
-
-      <ul class="filtro-opciones" *ngIf="mostrarOpciones">
-        <li (click)="seleccionarFiltro('TODAS'); $event.stopPropagation()">Todas</li>
-        <li (click)="seleccionarFiltro('INFO'); $event.stopPropagation()">Info</li>
-        <li (click)="seleccionarFiltro('Operación'); $event.stopPropagation()">Operación</li>
-        <li (click)="seleccionarFiltro('Transacción'); $event.stopPropagation()">Transacción</li>
-        <li (click)="seleccionarFiltro('Seguridad'); $event.stopPropagation()">Seguridad</li>
-        <li (click)="seleccionarFiltro('Promoción'); $event.stopPropagation()">Promoción</li>
-        <li (click)="seleccionarFiltro('Leídas'); $event.stopPropagation()">Leídas</li>
-        <li (click)="seleccionarFiltro('Sin leer'); $event.stopPropagation()">Sin leer</li>
-      </ul>
-
-    </div>
-
+        
         <div class="dropdown-filtro" (click)="mostrarOpciones = !mostrarOpciones">
           <button class="btn-filtrar">
-            <i class="fas fa-filter"></i>
-            {{
-              tipoFiltro === 'TODAS'
-                ? ('FILTER_ALL' | translate)
-                : (tipoFiltro | translate)
-            }}
-          </button>
+  <i class="fas fa-filter"></i>
+  {{ tipoFiltro | translate }}
+</button>
 
-
-          <ul class="filtro-opciones" *ngIf="mostrarOpciones">
-            <li (click)="seleccionarFiltro('TODAS'); $event.stopPropagation()">
-              {{ 'FILTER_ALL' | translate }}
-            </li>
-            <li (click)="seleccionarFiltro('INFO'); $event.stopPropagation()">
-              {{ 'FILTER_INFO' | translate }}
-            </li>
-            <li (click)="seleccionarFiltro('Operación'); $event.stopPropagation()">
-              {{ 'FILTER_OPERATION' | translate }}
-            </li>
-            <li (click)="seleccionarFiltro('Transacción'); $event.stopPropagation()">
-              {{ 'FILTER_TRANSACTION' | translate }}
-            </li>
-            <li (click)="seleccionarFiltro('Seguridad'); $event.stopPropagation()">
-              {{ 'FILTER_SECURITY' | translate }}
-            </li>
-            <li (click)="seleccionarFiltro('Promoción'); $event.stopPropagation()">
-              {{ 'FILTER_PROMOTION' | translate }}
-            </li>
-            <li (click)="seleccionarFiltro('Leídas'); $event.stopPropagation()">
-              {{ 'FILTER_READ' | translate }}
-            </li>
-            <li (click)="seleccionarFiltro('Sin leer'); $event.stopPropagation()">
-              {{ 'FILTER_UNREAD' | translate }}
-            </li>
-          </ul>
+<ul class="filtro-opciones" *ngIf="mostrarOpciones">
+  <li (click)="seleccionarFiltro('FILTER_ALL'); $event.stopPropagation()">
+    {{ 'FILTER_ALL' | translate }}
+  </li>
+  <li (click)="seleccionarFiltro('FILTER_INFO'); $event.stopPropagation()">
+    {{ 'FILTER_INFO' | translate }}
+  </li>
+  <li (click)="seleccionarFiltro('FILTER_OPERATION'); $event.stopPropagation()">
+    {{ 'FILTER_OPERATION' | translate }}
+  </li>
+  <li (click)="seleccionarFiltro('FILTER_TRANSACTION'); $event.stopPropagation()">
+    {{ 'FILTER_TRANSACTION' | translate }}
+  </li>
+  <li (click)="seleccionarFiltro('FILTER_SECURITY'); $event.stopPropagation()">
+    {{ 'FILTER_SECURITY' | translate }}
+  </li>
+  <li (click)="seleccionarFiltro('FILTER_PROMOTION'); $event.stopPropagation()">
+    {{ 'FILTER_PROMOTION' | translate }}
+  </li>
+  <li (click)="seleccionarFiltro('FILTER_READ'); $event.stopPropagation()">
+    {{ 'FILTER_READ' | translate }}
+  </li>
+  <li (click)="seleccionarFiltro('FILTER_UNREAD'); $event.stopPropagation()">
+    {{ 'FILTER_UNREAD' | translate }}
+  </li>
+</ul>
         </div>
       </div>
     </div>

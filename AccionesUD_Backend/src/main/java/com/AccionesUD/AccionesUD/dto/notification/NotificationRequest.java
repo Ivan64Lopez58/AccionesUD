@@ -14,6 +14,7 @@ public class NotificationRequest {
         this.type = type;
         this.title = title;
         this.message = message;
+        
     }
 }
 

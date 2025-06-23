@@ -12,6 +12,8 @@ export interface Notificacion {
   readonly createdAt: string;
   read?: boolean;
 }
+import { NotificationRequest } from './notification-request.model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -43,4 +45,15 @@ export class NotificacionesService {
     const url = `${this.apiUrl}/${id}/read`;
     return this.http.patch<void>(url, null, { headers });
   }
+
+getNotificacionesTraducidas(idioma: string): Observable<NotificationRequest[]> {
+  const token = localStorage.getItem('jwt');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  return this.http.get<NotificationRequest[]>(
+    `http://localhost:8080/api/notifications/translated?idioma=${idioma}`,
+    { headers }
+  );
+}
+
 }
