@@ -24,14 +24,14 @@ describe('AuthGuard', () => {
     localStorage.clear();
   });
 
-  it('debería redirigir si no hay token', () => {
+  it('should redirect if there is no token', () => {
     localStorage.removeItem('jwt');
     const result = guard.canActivate();
     expect(routerSpy.parseUrl).toHaveBeenCalledWith('/');
     expect(result instanceof UrlTree).toBeTrue();
   });
 
-  it('debería redirigir si el token está expirado', () => {
+  it('should redirect if the token is expired', () => {
     // Token expirado: fecha de expiración pasada
     const expiredToken = generarTokenConExpiracion(-60); // hace 1 minuto
     localStorage.setItem('jwt', expiredToken);
@@ -42,7 +42,7 @@ describe('AuthGuard', () => {
     expect(result instanceof UrlTree).toBeTrue();
   });
 
-  it('debería permitir el acceso si el token es válido', () => {
+  it('should allow access if the token is valid', () => {
     const validToken = generarTokenConExpiracion(60); // 1 minuto en el futuro
     localStorage.setItem('jwt', validToken);
 
