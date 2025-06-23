@@ -11,11 +11,12 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menu2',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, TranslateModule],
   templateUrl: './menu2.component.html',
   styleUrl: './menu2.component.css',
   providers: [DatePipe],
@@ -26,10 +27,11 @@ export class Menu2Component implements OnInit {
   notificaciones: Notificacion[] = [];
 
   constructor(
-    private http: HttpClient, // AÑADE ESTO
+    private http: HttpClient,
     private notificacionesService: NotificacionesService,
     private datePipe: DatePipe,
-    private router: Router
+    private router: Router,
+    private translate: TranslateModule
   ) {}
   ngOnInit(): void {
     this.cargarNotificaciones();

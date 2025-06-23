@@ -1,3 +1,4 @@
+// app.routes.ts
 import { Routes } from '@angular/router';
 import { VistaRegistroComponent } from './vista-registro/vista-registro.component';
 import { CuerpoPrincipalComponent } from './cuerpo-principal/cuerpo-principal.component';

@@ -4,24 +4,30 @@ import { OrderService, Order } from '../servicio/acciones/order.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Menu2Component } from '../menu2/menu2.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈 importa TranslateModule y TranslateService
+
 
 
 @Component({
   selector: 'app-ordenes-personalizadas',
-  imports: [ PiePaginaPrincipalComponent , CommonModule, FormsModule, Menu2Component],
+  imports: [
+    PiePaginaPrincipalComponent,
+    CommonModule,
+    FormsModule,
+    Menu2Component,
+    TranslateModule,
+  ],
   templateUrl: './ordenes-personalizadas.component.html',
   styleUrls: ['./ordenes-personalizadas.component.css'],
   standalone: true,
 })
 export class OrdenesPersonalizadasComponent implements OnInit {
-
   ordenes: Order[] = [];
 
   mostrarModal: boolean = false; // Controla la visibilidad del modal
   mostrarModalConfirmacion: boolean = false;
   ordenSeleccionada: Order | null = null; // Almacena la orden seleccionada
   modalTitulo: string = '';
-
 
   // Estas propiedades ya no se inicializan con valores fijos, se asignarán desde la orden:
   cantidad!: number;
@@ -40,17 +46,20 @@ export class OrdenesPersonalizadasComponent implements OnInit {
   saldoDisponible!: number;
   aceptoTerminos: boolean = false;
 
-  constructor(private orderService: OrderService) { }
+  constructor(
+    private orderService: OrderService,
+    private translate: TranslateModule
+  ) {}
 
   ngOnInit(): void {
-  this.orderService.getOrders().subscribe({
-    next: (data) => {
-      this.ordenes = data;
-      console.log('Órdenes recibidas:', this.ordenes);
-    },
-    error: (err) => console.error('Error al cargar las órdenes', err)
-  });
- }
+    this.orderService.getOrders().subscribe({
+      next: (data) => {
+        this.ordenes = data;
+        console.log('Órdenes recibidas:', this.ordenes);
+      },
+      error: (err) => console.error('Error al cargar las órdenes', err),
+    });
+  }
 
   abrirModal(orden: Order, operacion: string): void {
     this.ordenSeleccionada = orden;
@@ -111,9 +120,10 @@ export class OrdenesPersonalizadasComponent implements OnInit {
       precio: this.precio,
       tipoOrden: this.tipoOrden,
       stopLoss: this.stopLoss,
-      takeProfit: this.takeProfit
+      takeProfit: this.takeProfit,
     });
     this.cerrarModal();
     this.cerrarModalConfirmacion();
   }
+
 }

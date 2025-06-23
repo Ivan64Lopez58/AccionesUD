@@ -8,6 +8,8 @@ import {
 } from '../servicio/notificaciones/notificaciones.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈 importa TranslateModule y TranslateService
+
 
 @Component({
   selector: 'app-notificaciones',
@@ -16,6 +18,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     Menu2Component,
     PiePaginaPrincipalComponent,
+    TranslateModule
   ],
   templateUrl: './notificaciones.component.html',
   styleUrl: './notificaciones.component.css',
@@ -31,7 +34,8 @@ export class NotificacionesComponent implements OnInit {
 
   constructor(
     private notificacionesService: NotificacionesService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private translate: TranslateModule
   ) {}
 
   ngOnInit(): void {

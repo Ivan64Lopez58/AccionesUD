@@ -8,11 +8,12 @@ import {
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-recuperar',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './recuperar-contrasena.component.html',
   styleUrls: ['./recuperar-contrasena.component.css'],
 })
@@ -27,7 +28,8 @@ export class RecuperarComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private translate: TranslateModule
   ) {
     this.form = this.fb.group(
       {

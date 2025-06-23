@@ -27,6 +27,9 @@ import {
 import { finalize, catchError } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { ThemeService } from '../servicio/tema/theme.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈 importa TranslateModule y TranslateService
+
+
 
 @Component({
   selector: 'app-mi-perfil',
@@ -39,7 +42,8 @@ import { ThemeService } from '../servicio/tema/theme.service';
     FormsModule,
     HttpClientModule,
     CommonModule,
-    PiePaginaPrincipalComponent
+    PiePaginaPrincipalComponent,
+    TranslateModule
   ],
 })
 export class MiPerfilComponent implements OnInit, OnDestroy {
@@ -107,7 +111,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     private router: Router,
     private userProfileService: UserProfileService,
     private transaccionesService: TransaccionesService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private translate: TranslateModule
   ) {
     this.loadUserPreferences();
   }
