@@ -9,7 +9,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core'; 
+import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -210,5 +210,15 @@ export class MenuComponent {
 
   switchLang(lang: string) {
     this.translate.use(lang);
+  }
+
+  menuIdiomaAbierto: boolean = false;
+
+  toggleMenuIdioma(): void {
+    this.menuIdiomaAbierto = !this.menuIdiomaAbierto;
+  }
+
+  cerrarMenuIdioma(): void {
+    this.menuIdiomaAbierto = false;
   }
 }

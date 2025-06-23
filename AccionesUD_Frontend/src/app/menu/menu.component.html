@@ -18,17 +18,48 @@
       <li><a href="javascript:void(0)" (click)="scrollToBottom(3000)">{{ 'MENU_POLICY' | translate }}</a></li>
     </ul>
   </div>
+<!-- Contenedor para acciones + idiomas en una sola línea -->
+<div class="acciones-idiomas">
   <div class="actions">
     <button class="premium-btn">{{ 'BTN_PREMIUM' | translate }}</button>
     <button *ngIf="usuarioAutenticado" (click)="verPerfil()">{{ 'BTN_MY_PROFILE' | translate }}</button>
     <button *ngIf="!usuarioAutenticado" class="invertir-btn" (click)="abrirModal()">{{ 'BTN_INVEST_NOW' | translate }}</button>
   </div>
 
-    <!-- Botones para cambiar idioma -->
-    <div style="margin: 20px; text-align: center;">
-      <button (click)="switchLang('es')">{{ 'SPANISH' | translate }}</button>
-      <button (click)="switchLang('en')">{{ 'ENGLISH' | translate }}</button>
-    </div>
+<!-- Menú desplegable de idiomas -->
+<div class="dropdown-container">
+  <button class="dropdown-toggle" (click)="toggleMenuIdioma()">
+    🌐 {{ 'LANGUAGE' | translate }} ▼
+  </button>
+
+  <ul class="dropdown-menu compact-menu" *ngIf="menuIdiomaAbierto" (mouseleave)="cerrarMenuIdioma()">
+    <li (click)="switchLang('es'); cerrarMenuIdioma()">{{ 'SPANISH' | translate }}</li>
+    <li (click)="switchLang('en'); cerrarMenuIdioma()">{{ 'ENGLISH' | translate }}</li>
+    <li (click)="switchLang('de'); cerrarMenuIdioma()">{{ 'GERMAN' | translate }}</li>
+    <li (click)="switchLang('pt'); cerrarMenuIdioma()">{{ 'PORTUGUESE' | translate }}</li>
+    <li (click)="switchLang('fr'); cerrarMenuIdioma()">{{ 'FRENCH' | translate }}</li>
+    <li (click)="switchLang('zh-CN'); cerrarMenuIdioma()">{{ 'CHINESE' | translate }}</li>
+    <li (click)="switchLang('ru'); cerrarMenuIdioma()">{{ 'RUSSIAN' | translate }}</li>
+    <li (click)="switchLang('ar'); cerrarMenuIdioma()">{{ 'ARABIC' | translate }}</li>
+    <li (click)="switchLang('ja'); cerrarMenuIdioma()">{{ 'JAPANESE' | translate }}</li>
+    <li (click)="switchLang('hi'); cerrarMenuIdioma()">{{ 'HINDI' | translate }}</li>
+    <li (click)="switchLang('it'); cerrarMenuIdioma()">{{ 'ITALIAN' | translate }}</li>
+    <li (click)="switchLang('ko'); cerrarMenuIdioma()">{{ 'KOREAN' | translate }}</li>
+    <li (click)="switchLang('nl'); cerrarMenuIdioma()">{{ 'DUTCH' | translate }}</li>
+    <li (click)="switchLang('pl'); cerrarMenuIdioma()">{{ 'POLISH' | translate }}</li>
+    <li (click)="switchLang('tr'); cerrarMenuIdioma()">{{ 'TURKISH' | translate }}</li>
+  </ul>
+</div>
+
+
+
+
+</div>
+
+
+
+
+
 </nav>
 
 <!-- Modal de inicio de sesión -->

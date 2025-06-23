@@ -4,7 +4,7 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  overflow: hidden;
+  overflow: visible;
   height: 100vh;
   background: var(--color-background);
 }
@@ -58,7 +58,7 @@ body {
   z-index: 1000;
   transition: all 0.3s ease-in-out;
   height: 78px;
-  overflow: hidden;
+  overflow: visible;
   margin-right: 14px;
 }
 
@@ -105,7 +105,8 @@ body {
 
 .premium-btn,
 .invertir-btn,
-.actions button {
+.actions button,
+.dropdown-toggle {
   background: var(--button-background);
   color: var(--color-white);
   font-weight: 600;
@@ -119,7 +120,8 @@ body {
 
 .premium-btn:hover,
 .invertir-btn:hover,
-.actions button:hover {
+.actions button:hover,
+.dropdown-toggle:hover {
   background: var(--button-background-hover);
 }
 
@@ -613,4 +615,76 @@ body {
   margin-top: 10px;
   align-self: center;
   text-align: center;
+}
+
+
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  margin: 0.25rem 0 0 0;
+  padding: 0;
+  z-index: 1000;
+  min-width: 150px;
+}
+
+.dropdown-menu li {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f8f8f8;
+}
+.acciones-idiomas {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  /* espacio entre botones e idioma */
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+
+/* Botón permanece grande */
+.dropdown-toggle {
+  font-size: 1rem;
+  padding: 8px 12px;
+}
+
+/* Estilo compacto del menú */
+.compact-menu {
+  font-size: 0.75rem;
+  padding: 4px 0;
+  min-width: 140px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  list-style: none;
+}
+
+.compact-menu li {
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.compact-menu li:hover {
+  background-color: #f0f0f0;
 }
