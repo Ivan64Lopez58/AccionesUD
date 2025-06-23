@@ -1,0 +1,38 @@
+<div class="controls">
+  <label for="sort">Ordenar por:</label>
+  <select id="sort" (change)="onSortChange($event)">
+    <option value="">--</option>
+    <option value="nombre">Nombre</option>
+    <option value="valor">Valor total</option>
+    <option value="rendimiento">Rendimiento</option>
+  </select>
+
+  <label for="sector">Filtrar por sector:</label>
+  <select id="sector" (change)="onSectorChange($event)">
+    <option value="">Todos</option>
+    <option *ngFor="let s of sectores()" [value]="s">{{ s }}</option>
+  </select>
+</div>
+
+<table class="portfolio-table">
+  <thead>
+    <tr>
+      <th>Acción</th>
+      <th>Cantidad</th>
+      <th>Precio Actual</th>
+      <th>Valor Total</th>
+      <th>Rendimiento</th>
+      <th>Sector</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let stock of filteredPortfolio()">
+      <td>{{ stock.name }}</td>
+      <td>{{ stock.quantity }}</td>
+      <td>\${{ stock.currentPrice }}</td>
+      <td>\${{ totalValue(stock) | number:'1.2-2' }}</td>
+      <td>{{ rendimiento(stock) | number:'1.2-2' }}%</td>
+      <td>{{ stock.sector }}</td>
+    </tr>
+  </tbody>
+</table>

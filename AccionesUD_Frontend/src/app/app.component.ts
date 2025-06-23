@@ -1,7 +1,7 @@
 // app.component.ts
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { RelojesComponent } from './relojes/relojes.component'; // 👈 importa el componente
+import { RelojesComponent } from './relojes/relojes.component';
 
 @Component({
   selector: 'app-root',
