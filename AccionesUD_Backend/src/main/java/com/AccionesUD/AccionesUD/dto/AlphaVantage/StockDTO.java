@@ -4,14 +4,14 @@ import lombok.Data;
 
 @Data
 public class StockDTO {
-    public String ticker;
-    public String companyName;
-    public String sector;
-    public Double price;
-    public Long volume;
-    public Long marketCap;
+    private String ticker;
+    private String companyName;
+    private String sector;
+    private Double price;
+    private Long volume;
+    private Double marketCap;
 
-    public StockDTO(String ticker, String companyName, String sector, Double price, Long volume, Long marketCap) {
+    public StockDTO(String ticker, String companyName, String sector, Double price, Long volume, Double marketCap) {
         this.ticker = ticker;
         this.companyName = companyName;
         this.sector = sector;

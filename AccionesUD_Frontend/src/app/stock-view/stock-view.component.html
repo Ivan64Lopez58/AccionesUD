@@ -1,0 +1,16 @@
+<div class="container">
+  <h2>Consulta de Stock</h2>
+  <input [(ngModel)]="symbol" placeholder="Símbolo (ej: AAPL)" />
+  <button (click)="buscarStock()">Buscar</button>
+
+<div *ngIf="stock">
+  <h3>{{ stock.companyName }} ({{ stock.ticker }})</h3>
+  <p>Sector: {{ stock.sector }}</p>
+  <p>Precio: {{ stock.price }}</p>
+  <p>Volumen: {{ stock.volume }}</p>
+  <p>Market Cap: {{ stock.marketCap || 'No disponible' }}</p>
+</div>
+
+
+  <p *ngIf="error" class="error">{{ error }}</p>
+</div>

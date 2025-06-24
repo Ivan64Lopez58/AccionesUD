@@ -10,6 +10,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { OrdenesPersonalizadasComponent } from './ordenes-personalizadas/ordenes-personalizadas.component';
 import { RecuperarComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { StockViewComponent } from './stock-view/stock-view.component';
 
 export const routes: Routes = [
   { path: '', component: CuerpoPrincipalComponent },
@@ -38,7 +39,8 @@ export const routes: Routes = [
   { path: 'ordenes',
     component: OrdenesPersonalizadasComponent,
     canActivate: [AuthGuard],
-  }
+  },
+    { path: 'stock', component: StockViewComponent },
 
 ];
 /*
