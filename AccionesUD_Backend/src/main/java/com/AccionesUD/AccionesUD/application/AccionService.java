@@ -16,11 +16,12 @@ public class AccionService {
         this.scraperClient = scraperClient;
     }
 
-    public String scrapearEmpresasEjemplo() {
+    public List<Map<String, Object>> scrapearEmpresasEjemplo() {
         List<Map<String, String>> empresas = List.of(
             Map.of("empresa", "Apple", "url", "https://www.investing.com/equities/apple-drc"),
             Map.of("empresa", "Microsoft", "url", "https://www.investing.com/equities/microsoft-corp")
         );
         return scraperClient.obtenerDatosScraper(empresas);
     }
+
 }
