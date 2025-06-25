@@ -18,49 +18,70 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Data
 @Table(name = "orders")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
+    /** Quién coloca la orden */
     @Column(nullable = false)
     private String username;
+
+    /** Mercado o bolsa (NASDAQ, NYSE, etc.) */
+    @Column(nullable = false)
+    private String market;
 
     @Column(nullable = false)
     private String symbol;
 
+    /** Empresa / ticker (AAPL, MSFT, etc.) */
+    @Column(nullable = false)
+    private String company;
+
+    /** Precio de mercado al crear la orden */
+    @Column(precision = 19, scale = 4, nullable = false)
+    private BigDecimal marketPrice;
+
+    /** Cantidad de acciones */
     @Column(nullable = false)
     private Integer quantity;
 
+    /** Tipo de orden */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderType orderType;
 
+    /** Precio límite (solo para LIMIT) */
     @Column(precision = 19, scale = 4)
     private BigDecimal limitPrice;
 
+    /** Precio stop loss (solo para STOP_LOSS) */
     @Column(precision = 19, scale = 4)
     private BigDecimal stopLossPrice;
 
+    /** Precio take profit (solo para TAKE_PROFIT) */
     @Column(precision = 19, scale = 4)
     private BigDecimal takeProfitPrice;
 
+    /** Estado de la orden */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderStatus status;
 
+    /** Fecha y hora de creación */
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    // Constructor sin argumentos (requerido por JPA)
+    public Order() {}
 
-    public Order() {
-        
-    }
-
-    public Order(String symbol,
+    // Constructor completo (sin id, que se genera automáticamente)
+    public Order(String username,
+                 String market,
+                 String company,
+                 BigDecimal marketPrice,
                  Integer quantity,
                  OrderType orderType,
                  BigDecimal limitPrice,
@@ -68,14 +89,17 @@ public class Order {
                  BigDecimal takeProfitPrice,
                  OrderStatus status,
                  LocalDateTime createdAt) {
-        this.symbol = symbol;
-        this.quantity = quantity;
-        this.orderType = orderType;
-        this.limitPrice = limitPrice;
-        this.stopLossPrice = stopLossPrice;
-        this.takeProfitPrice = takeProfitPrice;
-        this.status = status;
-        this.createdAt = createdAt;
+        this.username         = username;
+        this.market           = market;
+        this.company          = company;
+        this.marketPrice      = marketPrice;
+        this.quantity         = quantity;
+        this.orderType        = orderType;
+        this.limitPrice       = limitPrice;
+        this.stopLossPrice    = stopLossPrice;
+        this.takeProfitPrice  = takeProfitPrice;
+        this.status           = status;
+        this.createdAt        = createdAt;
     }
 
     public Long getId() {
@@ -145,4 +169,43 @@ public class Order {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getMarket() {
+        return market;
+    }
+
+    public void setMarket(String market) {
+        this.market = market;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public BigDecimal getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(BigDecimal marketPrice) {
+        this.marketPrice = marketPrice;
+    }
+
+    
+    
 }
