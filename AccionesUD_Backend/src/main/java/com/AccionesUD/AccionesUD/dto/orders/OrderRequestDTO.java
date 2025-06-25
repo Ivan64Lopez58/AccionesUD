@@ -9,12 +9,48 @@ import lombok.Data;
 @Data
 public class OrderRequestDTO {
 
+    private String username;
+    private String market;
+    private String company;
     private String symbol;
+    private BigDecimal marketPrice;
     private Integer quantity;
     private OrderType orderType;
     private BigDecimal limitPrice;
     private BigDecimal stopLossPrice;
     private BigDecimal takeProfitPrice;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getMarket() {
+        return market;
+    }
+
+    public void setMarket(String market) {
+        this.market = market;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public BigDecimal getMarketPrice() {
+        return marketPrice;
+    }
+
+    public void setMarketPrice(BigDecimal marketPrice) {
+        this.marketPrice = marketPrice;
+    }
 
     public String getSymbol() {
         return symbol;
@@ -63,4 +99,5 @@ public class OrderRequestDTO {
     public void setTakeProfitPrice(BigDecimal takeProfitPrice) {
         this.takeProfitPrice = takeProfitPrice;
     }
+
 }
