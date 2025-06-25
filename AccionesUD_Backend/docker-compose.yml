@@ -48,5 +48,13 @@ services:
       - "5000:5000"
     restart: always
 
+  scraper:
+    build:
+      context: ./scraper
+    container_name: scraper-service
+    ports:
+      - "8000:8000"
+    restart: always
+
 volumes:
   postgres_data:

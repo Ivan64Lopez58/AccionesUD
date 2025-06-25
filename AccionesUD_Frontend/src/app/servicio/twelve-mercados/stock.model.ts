@@ -1,8 +1,8 @@
 export interface StockDTO {
   ticker: string;
-  name: string;
-  exchange: string;
+  companyName: string;
+  sector: string;
   price: number;
   volume: number;
-  date: string | null;
+  marketCap: number | null;
 }

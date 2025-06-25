@@ -10,7 +10,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { OrdenesPersonalizadasComponent } from './ordenes-personalizadas/ordenes-personalizadas.component';
 import { RecuperarComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
-import { StockViewComponent } from './stock-view/stock-view.component';
+import { StockViewComponent } from './stock-view-twelve/stock-view-twelve.component';
 
 export const routes: Routes = [
   { path: '', component: CuerpoPrincipalComponent },

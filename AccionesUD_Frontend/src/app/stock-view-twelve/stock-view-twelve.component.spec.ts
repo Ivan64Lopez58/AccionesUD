@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StockViewComponent } from './stock-view.component';
+import { StockViewComponent } from './stock-view-twelve.component';
 
 describe('StockViewComponent', () => {
   let component: StockViewComponent;

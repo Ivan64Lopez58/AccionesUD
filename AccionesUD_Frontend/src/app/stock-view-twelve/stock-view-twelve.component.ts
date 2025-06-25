@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { StockService } from '../services/stock.service';
-import { StockDTO } from '../models/stock.model';
+import { StockService } from '../servicio/twelve-mercados/stock.service';
+import { StockDTO } from '../servicio/twelve-mercados/stock.model';
 
 @Component({
   selector: 'app-stock-view',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './stock-view.component.html',
-  styleUrl: './stock-view.component.css',
+  templateUrl: './stock-view-twelve.component.html',
+  styleUrl: './stock-view-twelve.component.css',
 })
 export class StockViewComponent {
   symbol = 'AAPL';
