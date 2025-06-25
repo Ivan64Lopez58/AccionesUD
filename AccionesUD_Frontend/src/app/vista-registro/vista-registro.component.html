@@ -1,59 +1,60 @@
 <div class="registro">
-<div class="registro-container">
-    <button class="cerrar-btn" (click)="cancelarRegistro()" aria-label="Cancelar registro">&times;</button>
-  <h2>Formulario de Registro</h2>
-  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+      <div class="registro-container">
+        <button class="cerrar-btn" (click)="cancelarRegistro()" aria-label="Cancelar registro">&times;</button>
 
-    <div class="row">
-      <div class="form-field">
-        <label for="nombre">Nombre</label>
-        <input id="nombre" formControlName="firstname" placeholder="Ej. Juan" />
-      </div>
-      <div class="form-field">
-        <label for="apellido">Apellido</label>
-        <input id="apellido" formControlName="lastname" placeholder="Ej. Pérez" />
+        <h2>{{ 'REGISTER.TITLE' | translate }}</h2>
+
+        <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="form-field">
+              <label for="nombre">{{ 'REGISTER.FIRSTNAME_LABEL' | translate }}</label>
+              <input id="nombre" formControlName="firstname" [placeholder]="'REGISTER.FIRSTNAME_PLACEHOLDER' | translate" />
+            </div>
+            <div class="form-field">
+              <label for="apellido">{{ 'REGISTER.LASTNAME_LABEL' | translate }}</label>
+              <input id="apellido" formControlName="lastname" [placeholder]="'REGISTER.LASTNAME_PLACEHOLDER' | translate" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-field">
+              <label for="cedula">{{ 'REGISTER.ID_LABEL' | translate }}</label>
+              <input id="cedula" formControlName="id" [placeholder]="'REGISTER.ID_PLACEHOLDER' | translate" />
+            </div>
+            <div class="form-field">
+              <label for="telefono">{{ 'REGISTER.PHONE_LABEL' | translate }}</label>
+              <input id="telefono" formControlName="phone" [placeholder]="'REGISTER.PHONE_PLACEHOLDER' | translate" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-field">
+              <label for="correo">{{ 'REGISTER.EMAIL_LABEL' | translate }}</label>
+              <input id="correo" type="email" formControlName="username" [placeholder]="'REGISTER.EMAIL_PLACEHOLDER' | translate" />
+            </div>
+            <div class="form-field">
+              <label for="confirmarCorreo">{{ 'REGISTER.CONFIRM_EMAIL_LABEL' | translate }}</label>
+              <input id="confirmarCorreo" type="email" formControlName="confirmUsername" [placeholder]="'REGISTER.CONFIRM_EMAIL_PLACEHOLDER' | translate" />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="direccion">{{ 'REGISTER.ADDRESS_LABEL' | translate }}</label>
+            <textarea id="direccion" formControlName="address" [placeholder]="'REGISTER.ADDRESS_PLACEHOLDER' | translate"></textarea>
+          </div>
+
+          <div class="row">
+            <div class="form-field">
+              <label for="contrasena">{{ 'REGISTER.PASSWORD_LABEL' | translate }}</label>
+              <input id="contrasena" type="password" formControlName="password" [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate" />
+            </div>
+            <div class="form-field">
+              <label for="confirmarContrasena">{{ 'REGISTER.CONFIRM_PASSWORD_LABEL' | translate }}</label>
+              <input id="confirmarContrasena" type="password" formControlName="confirmPassword" [placeholder]="'REGISTER.CONFIRM_PASSWORD_PLACEHOLDER' | translate" />
+            </div>
+          </div>
+
+          <button type="submit">{{ 'REGISTER.SUBMIT_BUTTON' | translate }}</button>
+        </form>
       </div>
     </div>
-
-    <div class="row">
-      <div class="form-field">
-        <label for="cedula">Cédula</label>
-        <input id="cedula" formControlName="id" placeholder="Ej. 1020304050" />
-      </div>
-      <div class="form-field">
-        <label for="telefono">Teléfono</label>
-        <input id="telefono" formControlName="phone" placeholder="Ej. 3001234567" />
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-field">
-        <label for="correo">Correo</label>
-        <input id="correo" type="email" formControlName="username" placeholder="Ej. usuario@correo.com" />
-      </div>
-      <div class="form-field">
-        <label for="confirmarCorreo">Confirmar Correo</label>
-        <input id="confirmarCorreo" type="email" formControlName="confirmUsername" placeholder="Repite tu correo" />
-      </div>
-    </div>
-
-    <div class="form-field">
-      <label for="direccion">Dirección</label>
-      <textarea id="direccion" formControlName="address" placeholder="Ej. Calle 123 #45-67, Bogotá"></textarea>
-    </div>
-
-    <div class="row">
-      <div class="form-field">
-        <label for="contrasena">Contraseña</label>
-        <input id="contrasena" type="password" formControlName="password" placeholder="Mínimo 8 caracteres" />
-      </div>
-      <div class="form-field">
-        <label for="confirmarContrasena">Confirmar Contraseña</label>
-        <input id="confirmarContrasena" type="password" formControlName="confirmPassword" placeholder="Repite tu contraseña" />
-      </div>
-    </div>
-
-    <button type="submit">Registrar</button>
-  </form>
-</div>
-</div>

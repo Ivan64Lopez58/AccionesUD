@@ -45,10 +45,14 @@ public class User implements UserDetails {
     private Role role; // Por defecto será USER
 
     @Column(nullable = false)
-    private boolean otpEnabled = false;
+    private boolean otpEnabled;
 
     @Column(nullable = false)
-    private int dailyOrderLimit = 1;
+    private int dailyOrderLimit;
+
+    @Column(nullable = true)
+    private Double balance = 0.0;
+
 
     // Métodos obligatorios de UserDetails
     @Override

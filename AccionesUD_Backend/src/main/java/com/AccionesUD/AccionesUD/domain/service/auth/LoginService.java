@@ -7,15 +7,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 
 import com.AccionesUD.AccionesUD.domain.model.User;
-import com.AccionesUD.AccionesUD.dto.auth.AuthResponse;
-import com.AccionesUD.AccionesUD.dto.auth.LoginRequest;
+import com.AccionesUD.AccionesUD.domain.model.auth.LoginResult;
 import com.AccionesUD.AccionesUD.repository.UserRepository;
 import com.AccionesUD.AccionesUD.utilities.email.EmailService;
 import com.AccionesUD.AccionesUD.utilities.security.JwtService;
 
 import lombok.RequiredArgsConstructor;
-
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -27,26 +24,22 @@ public class LoginService {
     private final OtpService otpService;
     private final JwtService jwtService;
 
-    public Object login(LoginRequest request) {
-        // Autenticación básica (usuario/contraseña)
+    public LoginResult login(String username, String password) {
         authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+            new UsernamePasswordAuthenticationToken(username, password)
         );
 
-        // Obtener usuario
-        User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Si el OTP está activado
-        if (user.isOtpEnabled()) {
-            String otp = String.format("%06d", new Random().nextInt(999999));
-            otpService.storeOtp(user.getUsername(), otp);
-            emailService.sendOtpEmail(user.getUsername(), otp);
-            return Map.of("message", "OTP sent to your email");
-        }
-
-        // Si el OTP no está activado, devolver JWT directamente
-        String token = jwtService.getToken(user);
-        return AuthResponse.builder().token(token).build();
+    if (user.isOtpEnabled()) {
+        String otp = String.format("%06d", new Random().nextInt(999999));
+        otpService.storeOtp(username, otp);
+        emailService.sendOtpEmail(username, otp);
+        return new LoginResult(true, "OTP enviado al correo", null, user);
     }
+
+    String token = jwtService.getToken(user);
+    return new LoginResult(false, null, token, user);
+}
 }

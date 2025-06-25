@@ -1,5 +1,6 @@
 package com.AccionesUD.AccionesUD.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,6 +46,11 @@ public class ApplicationConfig {
     public UserDetailsService userDetailService() {
         return username -> userRepository.findByUsername(username)
         .orElseThrow(()-> new UsernameNotFoundException("User not fournd"));
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
 }

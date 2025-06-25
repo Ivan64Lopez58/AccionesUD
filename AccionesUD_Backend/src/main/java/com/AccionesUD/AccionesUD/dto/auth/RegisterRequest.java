@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class RegisterRequest {
-    Double id; //Cedula de identidad o pasaporte
+    private Double id; //Cedula de identidad o pasaporte
     private String username;
     private String password;
     private String firstname;

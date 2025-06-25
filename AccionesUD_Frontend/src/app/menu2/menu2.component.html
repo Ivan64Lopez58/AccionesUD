@@ -1,17 +1,69 @@
+<!-- Banner superior -->
 <div class="banner-superior">
-  Inverte fácil. Gana claro.
+  {{ 'BANNER_MESSAGE' | translate }}
 </div>
+
+<!-- Barra de navegación -->
 <nav class="navbar">
   <div class="logo-menu-group">
+    <!-- Sección del logo -->
     <div class="logo-section">
       <a href="">
         <img src="/logo.svg" alt="Logo Acciones UD" class="logo" />
       </a>
     </div>
+
+    <!-- Menú principal -->
     <ul class="menu">
-      <li><a href="#">Invierte</a></li>
-      <li><a href="#">Conócenos</a></li>
-      <li><a href="#">Políticas</a></li>
+      <li><a href="#">{{ 'MENU_INVEST' | translate }}</a></li>
+      <li><a href="javascript:void(0)" (click)="scrollToBottom(3000)">{{ 'MENU_ABOUT' | translate }}</a></li>
+      <li><a href="javascript:void(0)" (click)="scrollToBottom(3000)">{{ 'MENU_POLICY' | translate }}</a></li>
     </ul>
+  </div>
+
+  <!-- Acciones de usuario -->
+  <div class="user-actions">
+    <a href="#" class="premium-btn">{{ 'BTN_PREMIUM' | translate }}</a>
+
+    <!-- Botón de notificaciones -->
+    <a class="notification-btn" (click)="toggleNotifications($event)">
+      <i class="fas fa-bell"></i>
+    </a>
+
+    <!-- Dropdown de notificaciones -->
+    <div class="notification-dropdown" [class.show-notifications]="showNotifications">
+      <div class="notification-header">
+        <span>{{ 'NOTIFICATIONS_TITLE' | translate }}</span>
+      </div>
+
+      <ul class="notification-list">
+        <li *ngFor="let notif of notificaciones" [class.notificacion-leida]="notif.read">
+          <a href="/notificaciones">
+            <span class="notification-text">{{ notif.title }}</span>
+            <span class="notification-date">{{ formatFecha(notif.createdAt) }}</span>
+          </a>
+        </li>
+        <li *ngIf="notificaciones.length === 0" class="no-notificaciones">
+          <span>{{ 'NO_NOTIFICATIONS' | translate }}</span>
+        </li>
+      </ul>
+
+      <div class="notification-footer">
+        <a href="/notificaciones">{{ 'SEE_ALL_NOTIFICATIONS' | translate }}</a>
+      </div>
+    </div>
+
+    <!-- Menú de usuario -->
+    <a class="menu-btn" (click)="toggleDropdown($event)">
+      <i class="fas fa-bars"></i>
+    </a>
+
+    <div class="user-dropdown" [class.show-dropdown]="showDropdown">
+      <ul>
+        <li><a href="miperfil"><i class="fas fa-user"></i> {{ 'MY_PROFILE' | translate }}</a></li>
+        <li><a href="#" class="misOrdenes"><i class="fas fa-file-alt"></i> {{ 'MY_ORDERS' | translate }}</a></li>
+        <li><a href="" (click)="cerrarSesion()"><i class="fas fa-sign-out-alt"></i> {{ 'LOGOUT' | translate }}</a></li>
+      </ul>
+    </div>
   </div>
 </nav>

@@ -1,6 +1,6 @@
 <!-- Banner superior -->
 <div class="banner-superior">
-  Invierte fácil. Gana claro.
+  {{ 'BANNER_MESSAGE' | translate }}
 </div>
 
 <!-- Barra de navegación -->
@@ -13,34 +13,67 @@
       </a>
     </div>
     <ul class="menu">
-      <li><a href="#">Invierte</a></li>
-      <li><a href="javascript:void(0)" (click)="scrollToBottom(3000)">Conócenos</a></li>
-      <li><a href="javascript:void(0)" (click)="scrollToBottom(3000)">Políticas</a></li>
+      <li><a href="#">{{ 'MENU_INVEST' | translate }}</a></li>
+      <li><a href="javascript:void(0)" (click)="scrollToBottom(3000)">{{ 'MENU_ABOUT' | translate }}</a></li>
+      <li><a href="javascript:void(0)" (click)="scrollToBottom(3000)">{{ 'MENU_POLICY' | translate }}</a></li>
     </ul>
   </div>
+<!-- Contenedor para acciones + idiomas en una sola línea -->
+<div class="acciones-idiomas">
   <div class="actions">
-    <button class="premium-btn">Premium</button>
-    <button *ngIf="usuarioAutenticado" (click)="cerrarSesion()">Cerrar sesión</button>
-    <button *ngIf="usuarioAutenticado" (click)="verPerfil()">Mi Perfil</button>
-    <button *ngIf="!usuarioAutenticado" class="invertir-btn" (click)="abrirModal()">Invierte ya</button>
+    <button class="premium-btn">{{ 'BTN_PREMIUM' | translate }}</button>
+    <button *ngIf="usuarioAutenticado" (click)="verPerfil()">{{ 'BTN_MY_PROFILE' | translate }}</button>
+    <button *ngIf="!usuarioAutenticado" class="invertir-btn" (click)="abrirModal()">{{ 'BTN_INVEST_NOW' | translate }}</button>
   </div>
+
+<!-- Menú desplegable de idiomas -->
+<div class="dropdown-container">
+  <button class="dropdown-toggle" (click)="toggleMenuIdioma()">
+    🌐 {{ 'LANGUAGE' | translate }} ▼
+  </button>
+
+  <ul class="dropdown-menu compact-menu" *ngIf="menuIdiomaAbierto" (mouseleave)="cerrarMenuIdioma()">
+    <li (click)="switchLang('es'); cerrarMenuIdioma()">{{ 'SPANISH' | translate }}</li>
+    <li (click)="switchLang('en'); cerrarMenuIdioma()">{{ 'ENGLISH' | translate }}</li>
+    <li (click)="switchLang('de'); cerrarMenuIdioma()">{{ 'GERMAN' | translate }}</li>
+    <li (click)="switchLang('pt'); cerrarMenuIdioma()">{{ 'PORTUGUESE' | translate }}</li>
+    <li (click)="switchLang('fr'); cerrarMenuIdioma()">{{ 'FRENCH' | translate }}</li>
+    <li (click)="switchLang('zh-CN'); cerrarMenuIdioma()">{{ 'CHINESE' | translate }}</li>
+    <li (click)="switchLang('ru'); cerrarMenuIdioma()">{{ 'RUSSIAN' | translate }}</li>
+    <li (click)="switchLang('ar'); cerrarMenuIdioma()">{{ 'ARABIC' | translate }}</li>
+    <li (click)="switchLang('ja'); cerrarMenuIdioma()">{{ 'JAPANESE' | translate }}</li>
+    <li (click)="switchLang('hi'); cerrarMenuIdioma()">{{ 'HINDI' | translate }}</li>
+    <li (click)="switchLang('it'); cerrarMenuIdioma()">{{ 'ITALIAN' | translate }}</li>
+    <li (click)="switchLang('ko'); cerrarMenuIdioma()">{{ 'KOREAN' | translate }}</li>
+    <li (click)="switchLang('nl'); cerrarMenuIdioma()">{{ 'DUTCH' | translate }}</li>
+    <li (click)="switchLang('pl'); cerrarMenuIdioma()">{{ 'POLISH' | translate }}</li>
+    <li (click)="switchLang('tr'); cerrarMenuIdioma()">{{ 'TURKISH' | translate }}</li>
+  </ul>
+</div>
+
+
+
+
+</div>
+
+
+
+
+
 </nav>
 
 <!-- Modal de inicio de sesión -->
 <div class="modal-overlay" [hidden]="!mostrarModal">
   <div class="modal" [class.cerrar-anim]="animandoCerrar">
-
-    <div class="fondo-estereograma"></div>
-
     <button class="cerrar-btn" (click)="cerrarModal()" aria-label="Cerrar modal">&times;</button>
-    <img src="/logo.svg" alt="Logo Acciones UD" class="logo" />
-    <h2 class="saludo">¡Bienvenido a Acciones UD!</h2>
-    <h2 class="inicio-sesion">Iniciar sesión</h2>
+    <img src="/logo.svg" alt="Logo Acciones UD" class="logo2" />
+    <h2 class="saludo">{{ 'WELCOME' | translate }}</h2>
+    <h2 class="inicio-sesion">{{ 'LOGIN_TITLE' | translate }}</h2>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="formulario-contenedor">
-      <!-- Campo de correo con ícono -->
+      <!-- Campo de correo -->
       <div class="form-group" *ngIf="!showOtpField">
-        <label for="usuario">Correo electrónico</label>
+        <label for="usuario">{{ 'EMAIL' | translate }}</label>
         <div class="input-wrapper">
           <i class="fa-solid fa-envelope icon-left"></i>
           <input
@@ -48,19 +81,19 @@
             type="email"
             formControlName="username"
             class="custom-input"
-            placeholder="nombre@correo.com"
-            required
+            placeholder="{{ 'EMAIL_PLACEHOLDER' | translate }}"
+            [class.input-error]="formularioEnviado && loginForm.get('username')?.invalid"
           />
-        </div>
-        <div *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)" class="error">
-          <div *ngIf="loginForm.get('username')?.errors?.['required']" style="color: red;">El correo es obligatorio.</div>
-          <div *ngIf="loginForm.get('username')?.errors?.['email']" style="color: red;">Ingrese un correo válido.</div>
+          <span class="tooltip-error" *ngIf="formularioEnviado && loginForm.get('username')?.invalid">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            {{ loginForm.get('username')?.errors?.['required'] ? ('EMAIL_REQUIRED' | translate) : ('EMAIL_INVALID' | translate) }}
+          </span>
         </div>
       </div>
 
-      <!-- Campo de contraseña con íconos -->
+      <!-- Campo de contraseña -->
       <div class="form-group" *ngIf="!showOtpField">
-        <label for="contrasena">Contraseña</label>
+        <label for="contrasena">{{ 'PASSWORD' | translate }}</label>
         <div class="input-wrapper">
           <i class="fa-solid fa-lock icon-left"></i>
           <input
@@ -68,50 +101,50 @@
             [type]="mostrarContrasena ? 'text' : 'password'"
             formControlName="password"
             class="custom-input"
-            placeholder="Introduce tu contraseña"
-            required
+            placeholder="{{ 'PASSWORD_PLACEHOLDER' | translate }}"
+            [class.input-error]="formularioEnviado && loginForm.get('password')?.invalid"
           />
           <i
             class="fa-solid icon-right"
             [ngClass]="mostrarContrasena ? 'fa-eye-slash' : 'fa-eye'"
             (click)="mostrarContrasena = !mostrarContrasena"
           ></i>
-        </div>
-        <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)" class="error">
-          <div *ngIf="loginForm.get('password')?.errors?.['required']" style="color: red;">La contraseña es requerida.</div>
-          <div *ngIf="loginForm.get('password')?.errors?.['incorrect']" style="color: red;">
-            La contraseña o el correo son incorrectos.
-          </div>
+          <span class="tooltip-error" *ngIf="formularioEnviado && loginForm.get('password')?.invalid">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            {{ loginForm.get('password')?.errors?.['required'] ? ('PASSWORD_REQUIRED' | translate) : ('PASSWORD_INVALID' | translate) }}
+          </span>
         </div>
       </div>
 
       <!-- Campo OTP -->
       <div *ngIf="showOtpField" class="código-verificacion">
-        <label for="otp">Código de verificación</label>
+        <label for="otp">OTP</label>
         <input
           id="otp"
           type="text"
           formControlName="otp"
           class="custom-input"
-          placeholder="Código enviado al correo"
+          placeholder="{{ 'OTP_PLACEHOLDER' | translate }}"
           required
         />
       </div>
 
-      <!-- Mensaje de error -->
-      <div *ngIf="mensaje" class="mensaje-error">
-        {{ mensaje }}
-      </div>
-
+      <!-- Botón de acción -->
       <button type="submit" class="entrar-btn">
-        {{ showOtpField ? 'Verificar código' : 'Entrar' }}
+        {{ showOtpField ? ('VERIFY_CODE' | translate) : ('LOGIN' | translate) }}
       </button>
+
+      <span class="tooltip-error mensaje-general" *ngIf="mensaje">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        {{ mensaje }}
+      </span>
     </form>
 
+    <!-- Registro / Olvidé contraseña -->
     <div class="registro-link">
-      ¿No tienes cuenta?
-      <a href="/registro">Regístrate</a> |
-      <a (click)="abrirModalRecuperacion()" style="cursor: pointer;">Olvidé mi contraseña</a>
+      {{ 'NO_ACCOUNT' | translate }}
+      <a href="/registro">{{ 'REGISTRO' | translate }}</a> |
+      <a (click)="abrirModalRecuperacion()" style="cursor: pointer;">{{ 'FORGOT_PASSWORD' | translate }}</a>
     </div>
   </div>
 </div>
@@ -120,13 +153,12 @@
 <div class="modal-overlay" [hidden]="!mostrarModalRecuperacion">
   <div class="modal modal-recuperacion" [class.cerrar-anim]="animandoCerrar">
     <button class="cerrar-btn" (click)="cerrarModalRecuperacion()" aria-label="Cerrar modal">&times;</button>
-    <img src="/logo.svg" alt="Logo Acciones UD" class="logo" />
-    <h2 class="inicio-sesion">Recuperar contraseña</h2>
+    <img src="/logo.svg" alt="Logo Acciones UD" class="logo2" />
+    <h2 class="inicio-sesion">{{ 'RECOVER_PASSWORD' | translate }}</h2>
 
     <form (ngSubmit)="recuperarContrasena()" #recuperarForm="ngForm" class="formulario-contenedor">
-
       <div class="form-group">
-        <label for="correoRecuperacion">Correo electrónico</label>
+        <label for="correoRecuperacion">{{ 'EMAIL_RECOVERY' | translate }}</label>
         <div class="input-wrapper">
           <i class="fa-solid fa-envelope icon-left"></i>
           <input
@@ -134,14 +166,14 @@
             type="email"
             name="correoRecuperacion"
             class="custom-input"
-            placeholder="nombre@correo.com"
+            placeholder="{{ 'RECOVERY_EMAIL_PLACEHOLDER' | translate }}"
             [(ngModel)]="correoRecuperacion"
             required
           />
         </div>
       </div>
 
-      <button type="submit" class="entrar-btn">Enviar enlace</button>
+      <button type="submit" class="entrar-btn">{{ 'SEND_LINK' | translate }}</button>
     </form>
   </div>
 </div>

@@ -5,10 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.AccionesUD.AccionesUD.domain.model.Role;
 import com.AccionesUD.AccionesUD.domain.model.User;
-import com.AccionesUD.AccionesUD.dto.auth.AuthResponse;
 import com.AccionesUD.AccionesUD.dto.auth.RegisterRequest;
 import com.AccionesUD.AccionesUD.repository.UserRepository;
-import com.AccionesUD.AccionesUD.utilities.security.JwtService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,9 +16,8 @@ public class UserRegistrationService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
 
-    public AuthResponse register(RegisterRequest request) {
+    public User registerUser(RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException("El correo electrónico ya está registrado.");
         }
@@ -42,8 +39,6 @@ public class UserRegistrationService {
             .otpEnabled(request.isOtpEnabled())
             .build();
 
-        userRepository.save(user);
-
-        return AuthResponse.builder().token(jwtService.getToken(user)).build();
+        return userRepository.save(user);
     }
 }
