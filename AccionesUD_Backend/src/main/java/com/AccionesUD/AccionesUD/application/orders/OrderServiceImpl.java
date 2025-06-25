@@ -1,6 +1,8 @@
 package com.AccionesUD.AccionesUD.application.orders;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -74,7 +76,6 @@ public class OrderServiceImpl implements OrderService {
         orden.setStatus(OrderStatus.EXECUTED);
         Order actualizada = orderRepository.save(orden);
 
-        // ✅ Publicar evento
         eventPublisher.publishEvent(
             new NotificationEvent(
                 this,
@@ -96,7 +97,6 @@ public class OrderServiceImpl implements OrderService {
         orden.setStatus(OrderStatus.REJECTED);
         Order actualizada = orderRepository.save(orden);
 
-        // ✅ Publicar evento
         eventPublisher.publishEvent(
             new NotificationEvent(
                 this,
@@ -110,7 +110,14 @@ public class OrderServiceImpl implements OrderService {
         return modelMapper.map(actualizada, OrderResponseDTO.class);
     }
 
-
-
+    @Override
+    public List<OrderResponseDTO> listarTodasLasOrdenes() {
+        return orderRepository.findAll().stream()
+            .map(order -> {
+                OrderResponseDTO dto = modelMapper.map(order, OrderResponseDTO.class);
+                return dto;
+            })
+            .collect(Collectors.toList());
+    }
 
 }

@@ -12,7 +12,6 @@ public class OrderRequestDTO {
     private String symbol;
     private Integer quantity;
     private OrderType orderType;
-
     private BigDecimal limitPrice;
     private BigDecimal stopLossPrice;
     private BigDecimal takeProfitPrice;

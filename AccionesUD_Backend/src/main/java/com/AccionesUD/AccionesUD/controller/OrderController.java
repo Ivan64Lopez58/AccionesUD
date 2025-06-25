@@ -1,5 +1,7 @@
 package com.AccionesUD.AccionesUD.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.AccionesUD.AccionesUD.application.orders.OrderService;
 import com.AccionesUD.AccionesUD.dto.orders.OrderRequestDTO;
 import com.AccionesUD.AccionesUD.dto.orders.OrderResponseDTO;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/orders")
@@ -23,6 +28,12 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<OrderResponseDTO>> getAllOrders() {
+        List<OrderResponseDTO> all = orderService.listarTodasLasOrdenes();
+        return ResponseEntity.ok(all);
+    }
+    
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO requestDto) {
         try {
