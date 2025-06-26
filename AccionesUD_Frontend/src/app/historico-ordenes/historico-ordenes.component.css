@@ -10,6 +10,7 @@ h1 {
 
 .registro-orden {
     display:flex;
+    align-items: center;
     flex-direction: row;
     max-height: 100px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
@@ -23,7 +24,6 @@ h1 {
     flex: 1;
     text-align: center;
     justify-content: center;
-    align-items: center;
 }
 
 .registro-orden .accion-logo {
@@ -44,7 +44,7 @@ h1 {
     display:flex;
     flex-direction: row;    
     gap: 1rem;
-    max-width: 20%;
+    max-width: 30%;
 }
 
 .registro-orden .info-orden {
@@ -52,7 +52,8 @@ h1 {
     flex-direction: row;
     gap: 1rem;
     font-size: small;
-    color: gray
+    color: gray;
+    max-width: 20%;
 }
 
 .registro-orden .info-orden div {
@@ -63,15 +64,16 @@ h1 {
     width: 5%;
     height: 90%;
     border: none;
-    background: transparent;
     padding: 0.5rem 1rem;
     border-radius: 30%;
     cursor: pointer;
+    margin: 10px;
+    background-color: transparent;
 }
 
 .logo-detalles {
-    width: 100%;
-    height: 100%;
+    height: 50px;
+    width: 40px;
     object-fit: contain;
     border-radius: 10px;
 }

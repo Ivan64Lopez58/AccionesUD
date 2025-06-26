@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Order, OrderService } from '../servicio/acciones/order.service';
 import { CommonModule } from '@angular/common';
+import { StepperNativoComponent } from "../stepper-nativo/stepper-nativo.component";
 
 @Component({
   selector: 'app-historico-ordenes',
   templateUrl: './historico-ordenes.component.html',
   styleUrls: ['./historico-ordenes.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, StepperNativoComponent]
 })
 export class HistoricoOrdenesComponent implements OnInit {
 
