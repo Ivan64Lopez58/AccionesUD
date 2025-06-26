@@ -31,6 +31,11 @@ export class MercadosInternacionalesComponent implements OnInit {
     private http: HttpClient
   ) {}
 
+
+  private cachePorPais = new Map<string, { data: Accion[]; timestamp: number }>();
+  private readonly TIEMPO_CACHE_MS = 3 * 60 * 1000; // 3 minutos
+
+
   acciones = signal<Accion[]>([]);
   paisSeleccionado = signal<string>(''); // será dinámico
   cargando = signal<boolean>(false);
@@ -47,10 +52,12 @@ ngOnInit(): void {
         codigo,
         nombre: this.normalizarNombrePais(codigo)
       }));
-
-      // No seleccionar país por defecto
-      this.paisSeleccionado.set('');
-    },
+  if (this.paises.length > 0) {
+          const primerPais = this.paises[0].codigo;
+          this.paisSeleccionado.set(primerPais);
+          this.consultarAcciones();
+        }
+      },
     error: (err) => {
       console.error('Error al cargar enlaces:', err);
     }
@@ -81,21 +88,46 @@ consultarAcciones() {
 
   const pais = this.paisSeleccionado();
   const empresas = this.enlacesPorPais[pais] ?? [];
+  const ahora = Date.now();
+
+  const cacheKey = `acciones_${pais}`;
+  const cacheRaw = localStorage.getItem(cacheKey);
+
+  if (cacheRaw) {
+    try {
+      const { data, timestamp } = JSON.parse(cacheRaw);
+      if (ahora - timestamp < this.TIEMPO_CACHE_MS) {
+        console.log(`✅ Usando caché para ${pais}`);
+        this.acciones.set(data);
+        this.cargando.set(false);
+        return;
+      }
+    } catch (e) {
+      console.warn('⚠️ Caché inválido para', pais);
+      localStorage.removeItem(cacheKey);
+    }
+  }
+
+  // Si no hay caché válido, consultar la API
+  console.log(`🌐 Consultando API para ${pais}`);
 
   this.http.post<Accion[]>("http://localhost:8080/acciones/scrap", empresas)
     .subscribe({
       next: data => {
         this.acciones.set(data);
-        this.mensajeError.set(null); // Limpia el error si todo sale bien
+        localStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: ahora }));
+        this.mensajeError.set(null);
       },
       error: err => {
-        console.error('Error al obtener datos del backend:', err);
+        console.error('❌ Error al obtener datos del backend:', err);
         this.acciones.set([]);
         this.mensajeError.set("❌ No se pudo obtener la información de las acciones. Intenta nuevamente.");
       },
       complete: () => this.cargando.set(false)
     });
 }
+
+
 
 
   irAOrdenes(empresa: string) {
@@ -123,4 +155,7 @@ consultarAcciones() {
       .replace(/-/g, ' ')
       .replace(/\b\w/g, letra => letra.toUpperCase());
   }
+
+
+  
 }
