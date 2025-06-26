@@ -28,6 +28,11 @@ export interface Order {
   takeProfit: number;
   totalEstimado: number;
   saldoDisponible: number;
+
+  // Nuevos campos
+  fechaCreacion: string; // Fecha de creación de la orden
+  estado: string; // Estado de la orden (ej. 'pendiente', 'completada', 'cancelada')
+  operacion: string; // Operación asociada a la orden (ej. 'compra', 'venta')
 }
 @Injectable({
   providedIn: 'root'
@@ -44,60 +49,64 @@ export class OrderService {
   constructor(private http: HttpClient, private stockService: StockService) {}
 
 getOrders(): Observable<Order[]> {
-  const spread = 0.2;
-  const redondear = (valor: number): number => Number(Number(valor).toPrecision(4));
-
-  return new Observable<Order[]>((observer) => {
-    const orders: Order[] = [];
-    let processed = 0;
-
-    this.symbols.forEach((symbol, index) => {
-      this.stockService.getStock(symbol).subscribe({
-        next: (stock) => {
-          const precio = redondear(stock.price);
-          const nombreEmpresa = stock.companyName || symbol;
-
-          orders.push({
-            id: index + 1,
-            name: nombreEmpresa,
-            country: 'USA',
-            logo: './ecopetrol-logo.svg',
-            grafica: './grafica-ecopetrol.svg',
-            compraPrecio: redondear(precio + spread / 2),
-            ventaPrecio: redondear(precio - spread / 2),
-            cantidad: 1,
-            moneda: 'USD',
-            spread: redondear(spread),
-            spreadpips: redondear(spread),
-            comision: 0,
-            comisionporsentaje: 0.0,
-            valorPip: redondear(91.521), // O cámbialo dinámicamente
-            swapDiarioCompra: '-15.215,00',
-            swapDiarioVenta: '-21.452,00',
-            tipoOrden: 'market',
-            stopLoss: 0.1,
-            takeProfit: 0,
-            totalEstimado: redondear(precio),
-            saldoDisponible: 100000
-          });
-
-          processed++;
-          if (processed === this.symbols.length) {
-            observer.next(orders);
-            observer.complete();
-          }
-        },
-        error: (err) => {
-          console.error(`Error al obtener el stock de ${symbol}:`, err);
-          processed++;
-          if (processed === this.symbols.length) {
-            observer.next(orders);
-            observer.complete();
-          }
-        }
-      });
-    });
-  });
-}
+    // Datos de prueba mientras no se conecta al back end
+    const testOrders: Order[] = [
+      {
+        id: 1,
+        name: 'ECOPETROL S.A.',
+        country: 'COL',
+        logo: './ecopetrol-logo.svg',
+        grafica: './grafica-ecopetrol.svg',
+        compraPrecio: 1816,
+        ventaPrecio: 1798,
+        cantidad: 0.5,
+        moneda: 'COP',
+        spread: 32.982,
+        spreadpips: 0.02,
+        comision: 0,
+        comisionporsentaje: 0.00,
+        valorPip: 91.521,
+        swapDiarioCompra: '-15.215,00',
+        swapDiarioVenta: '-21.452,00',
+        tipoOrden: 'market',
+        stopLoss: 0.1,
+        takeProfit: 0,
+        totalEstimado: 1816,
+        saldoDisponible: 412.456,
+        fechaCreacion: '2023-10-01T12:00:00Z',
+        estado: 'Pendiente',
+        operacion: 'Comprar'
+      },
+      {
+        id: 2,
+        name: 'TESLA, INC.',
+        country: 'EE.UU.',
+        logo: './tesla-logo.svg',
+        grafica: './grafica-tesla.svg',
+        compraPrecio: 350.23,
+        ventaPrecio: 342.82,
+        cantidad: 0.3,
+        moneda: 'USD',
+        spread: 1.5,
+        spreadpips: 0.1,
+        comision: 0.5,
+        comisionporsentaje: 0.15,
+        valorPip: 0.8,
+        swapDiarioCompra: '-0.25',
+        swapDiarioVenta: '-0.30',
+        tipoOrden: 'market',
+        stopLoss: 0,
+        takeProfit: 0,
+        totalEstimado: 350.23,
+        saldoDisponible: 1000,
+        fechaCreacion: '2023-10-02T14:30:00Z',
+        estado: 'Completada',
+        operacion: 'Vender' 
+      }
+    ];
+    return of(testOrders);
+    // Cuando esté disponible el backend, utiliza:
+    // return this.http.get<Order[]>(this.apiUrl);
+  }
 
 }

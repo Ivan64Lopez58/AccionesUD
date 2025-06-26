@@ -1,4 +1,3 @@
-version: "3.8"
 
 services:
   postgres:
@@ -45,7 +44,7 @@ services:
       dockerfile: Dockerfile         # Se puede omitir si el nombre es estándar
     container_name: traductor-service
     ports:
-      - "5000:5000"
+      - "5001:5001"
     restart: always
 
 

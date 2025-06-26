@@ -1,0 +1,47 @@
+.stepper-container {
+  min-width: 250px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.step {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #ccc;
+  border: 2px solid #ccc;
+  z-index: 2;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.connector {
+  height: 4px;
+  flex: 1;
+  background-color: #ccc;
+  margin: 0 4px;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+/* Clases condicionales por color */
+.filled.success {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+.filled.error {
+  background-color: #d32f2f;
+  border-color: #d32f2f;
+}
+
+.filled.neutral {
+  background-color: #03a9f4;
+  border-color: #03a9f4;
+}
