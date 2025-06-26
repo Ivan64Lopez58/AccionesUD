@@ -18,5 +18,5 @@ public class UpdateUserProfileRequest {
     private String address;
     private boolean otpEnabled;
     private Integer dailyOrderLimit;
-    private Integer Balance;
+    private Double Balance;
 }

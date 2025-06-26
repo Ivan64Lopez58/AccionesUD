@@ -20,4 +20,5 @@ public class RegisterRequest {
     private String address;
     private boolean otpEnabled;
     private int dailyOrderLimit;
+    private Double balance = 0.0; // Balance inicial
 }
