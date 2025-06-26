@@ -3,6 +3,7 @@ package com.AccionesUD.AccionesUD.domain.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import org.apache.coyote.http11.filters.IdentityOutputFilter;
 
 import com.AccionesUD.AccionesUD.utilities.orders.OrderStatus;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderType;
@@ -45,7 +46,7 @@ public class Order {
 
     /** Cantidad de acciones */
     @Column(nullable = false)
-    private Integer quantity;
+    private Double quantity;
 
     /** Tipo de orden */
     @Enumerated(EnumType.STRING)
@@ -73,15 +74,14 @@ public class Order {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    // Constructor sin argumentos (requerido por JPA)
     public Order() {}
 
-    // Constructor completo (sin id, que se genera automáticamente)
     public Order(String username,
                  String market,
+                 String symbol,
                  String company,
                  BigDecimal marketPrice,
-                 Integer quantity,
+                 Double quantity,
                  OrderType orderType,
                  BigDecimal limitPrice,
                  BigDecimal stopLossPrice,
@@ -113,11 +113,11 @@ public class Order {
         this.symbol = symbol;
     }
 
-    public Integer getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
@@ -204,5 +204,7 @@ public class Order {
     public void setMarketPrice(BigDecimal marketPrice) {
         this.marketPrice = marketPrice;
     }
+
+
 
 }

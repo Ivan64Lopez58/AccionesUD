@@ -120,4 +120,34 @@ public class OrderServiceImpl implements OrderService {
             .collect(Collectors.toList());
     }
 
+    @Override
+    public List<OrderResponseDTO> listarOrdenesPorUsuario(String username) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listarOrdenesPorUsuario'");
+    }
+
+    @Override
+    public long contarOrdenesPorUsuario(String username) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'contarOrdenesPorUsuario'");
+    }
+
+    @Override
+    public List<OrderResponseDTO> listarOrdenesPorMercado(String market) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listarOrdenesPorMercado'");
+    }
+
+    @Override
+    public List<OrderResponseDTO> listarOrdenesPorCompany(String company) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listarOrdenesPorCompany'");
+    }
+
+    @Override
+    public OrderResponseDTO actualizarEstadoOrden(Long orderId, OrderStatus newStatus) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actualizarEstadoOrden'");
+    }
+
 }

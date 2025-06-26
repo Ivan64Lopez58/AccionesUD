@@ -5,5 +5,4 @@ public enum OrderType {
     LIMIT,
     STOP_LOSS,
     TAKE_PROFIT,
-    UNKNOWN
 }

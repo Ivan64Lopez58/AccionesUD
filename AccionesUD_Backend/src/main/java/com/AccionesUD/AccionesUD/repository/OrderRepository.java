@@ -11,4 +11,10 @@ import com.AccionesUD.AccionesUD.domain.model.Order;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByUsername(String username);
 
+    long countByUsername(String username);
+
+    List<Order> findByMarket(String market);
+
+    List<Order> findByCompany(String company);
+
 }
