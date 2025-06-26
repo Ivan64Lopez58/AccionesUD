@@ -25,6 +25,11 @@ export interface Order {
   takeProfit: number;
   totalEstimado: number;
   saldoDisponible: number;
+
+  // Nuevos campos
+  fechaCreacion: string; // Fecha de creación de la orden
+  estado: string; // Estado de la orden (ej. 'pendiente', 'completada', 'cancelada')
+  operacion: string; // Operación asociada a la orden (ej. 'compra', 'venta')
 }
 
 @Injectable({
@@ -59,7 +64,10 @@ export class OrderService {
         stopLoss: 0.1,
         takeProfit: 0,
         totalEstimado: 1816,
-        saldoDisponible: 412.456
+        saldoDisponible: 412.456,
+        fechaCreacion: '2023-10-01T12:00:00Z',
+        estado: 'Pendiente',
+        operacion: 'Comprar'
       },
       {
         id: 2,
@@ -82,7 +90,10 @@ export class OrderService {
         stopLoss: 0,
         takeProfit: 0,
         totalEstimado: 350.23,
-        saldoDisponible: 1000
+        saldoDisponible: 1000,
+        fechaCreacion: '2023-10-02T14:30:00Z',
+        estado: 'Completada',
+        operacion: 'Vender' 
       }
     ];
     return of(testOrders);
