@@ -2,18 +2,21 @@ import { Component } from '@angular/core';
 import { StockItem } from './portafolio-acciones.model';
 import { CommonModule } from '@angular/common';
 import { PiePaginaPrincipalComponent } from '../pie-pagina-principal/pie-pagina-principal.component';
-import { MenuComponent } from '../menu/menu.component';
 import { Menu2Component } from "../menu2/menu2.component";
-
 
 @Component({
   selector: 'app-portafolio-acciones',
   standalone: true,
-  imports: [CommonModule, PiePaginaPrincipalComponent, Menu2Component],
+  imports: [
+    CommonModule,
+    PiePaginaPrincipalComponent,
+    Menu2Component,
+  ],
   templateUrl: './portafolio-acciones.component.html',
   styleUrl: './portafolio-acciones.component.css',
 })
 export class PortafolioAccionesComponent {
+
   portfolio: StockItem[] = [
     {
       name: 'TESLA',
@@ -33,6 +36,7 @@ export class PortafolioAccionesComponent {
   ];
   sortBy: string = '';
   filterSector: string = '';
+
 
   onSortChange(event: Event) {
     this.sortBy = (event.target as HTMLSelectElement).value;
