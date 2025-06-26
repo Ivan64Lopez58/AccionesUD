@@ -1,5 +1,4 @@
 .stepper-container {
-  min-width: 250px;
   padding: 10px;
   box-sizing: border-box;
 }
@@ -9,6 +8,7 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .step {
@@ -28,6 +28,11 @@
   margin: 0 4px;
   z-index: 1;
   transition: background-color 0.3s ease;
+}
+
+.cantidad-label {
+  font-size: small;
+  color: var(--color-text);
 }
 
 /* Clases condicionales por color */

@@ -322,8 +322,7 @@
       <button class="cerrar-btn" (click)="toggleHistorial()" aria-label="Contraer tarjeta">▲</button>
       <h2>{{ 'ORDER_HISTORY' | translate }}</h2>
       <div class="historial-contenido">
-        <p class="mensaje-vacio">{{ 'NO_ORDERS' | translate }}</p>
-        <!-- Aquí se podría agregar una tabla o lista de órdenes cuando existan -->
+        <app-historico-ordenes></app-historico-ordenes>
       </div>
     </div>
   </div>

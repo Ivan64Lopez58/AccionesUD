@@ -1,11 +1,8 @@
-h1 {
-    margin: 30px;
-}
-
 .historico-ordenes-lista {
-    background-color: #CF4E4E;
+    background-color: var(--tarjeta-item-bg);
     padding-top: 20px;
     padding-bottom: 20px;
+    border-radius: 10px;
 }
 
 .registro-orden {
@@ -16,7 +13,7 @@ h1 {
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     margin: 15px;
     border-radius: 15px;
-    background-color: #EAEAEA;
+    background-color: var(--tarjeta-chart-grid);
 }
 
 .registro-orden div {
@@ -24,36 +21,49 @@ h1 {
     flex: 1;
     text-align: center;
     justify-content: center;
+    align-items: center;
 }
 
 .registro-orden .accion-logo {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
     border-radius: 10px;
 }
 
 .registro-orden .operacion-orden {
-    display: flex;
-    max-width: 100px;
-    min-width: 100px;
+    max-width: 50px;
+    min-width: 50px;
     font-weight: bold;
+    font-size: small;
 }
 
 .registro-orden .info-accion {
     display:flex;
     flex-direction: row;    
     gap: 1rem;
-    max-width: 30%;
+    max-width: 20%;
+    min-width: 20%;
+    color: var(--color-text);
+    font-size: 0.8rem;
 }
 
 .registro-orden .info-orden {
     display:flex;
     flex-direction: row;
     gap: 1rem;
-    font-size: small;
-    color: gray;
+    color: var(--color-text);
     max-width: 20%;
+}
+
+.info-orden .valor {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.info-orden .valor-label {
+    margin: 0;
+    font-size: 0.5rem;
 }
 
 .registro-orden .info-orden div {
@@ -61,18 +71,19 @@ h1 {
 }
 
 .boton-detalles {
-    width: 5%;
-    height: 90%;
     border: none;
-    padding: 0.5rem 1rem;
     border-radius: 30%;
     cursor: pointer;
-    margin: 10px;
+    margin: 15px;
     background-color: transparent;
 }
 
+.barra-estado {
+    min-width: 150px;
+}
+
 .logo-detalles {
-    height: 50px;
+    height: 70px;
     width: 40px;
     object-fit: contain;
     border-radius: 10px;

@@ -1,4 +1,3 @@
-<h1 class="titulo"> Mis ordenes </h1>
 <div class="historico-ordenes-lista">
 
 <div class="registro-orden" *ngFor ="let registro of historicoOrdenes">
@@ -11,15 +10,15 @@
 
   <div class="info-orden">
     <div class="cantidad-orden">
-      <div class="cantidad">{{registro.cantidad}}</div>
-      <div class="cantidad-label">Cantidad</div>
+      <div class="valor">{{registro.cantidad}}</div>
+      <div class="valor-label">Cantidad</div>
     </div>
     <div class="precio-orden">
       <div>
         <span class="valor">{{registro.operacion === 'Compra' ? registro.compraPrecio : registro.ventaPrecio}}</span>
-        <span class="moneda"> {{registro.moneda}}</span>
+        <span class="valor moneda"> {{registro.moneda}}</span>
       </div>
-      <div class="precio-label">{{registro.operacion === 'Compra' ? 'Precio de compra' : 'Precio de venta'}}</div>
+      <div class="valor-label">{{registro.operacion === 'Compra' ? 'Precio de compra' : 'Precio de venta'}}</div>
     </div>
   </div>
   <div class="barra-estado">
