@@ -13,6 +13,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationRequest } from '../servicio/notificaciones/notification-request.model';
 import { NotificacionesService } from '../servicio/notificaciones/notificaciones.service';
+import { AuthModalService } from '../servicio/auth-modal.service';
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -50,7 +52,8 @@ export class MenuComponent {
     private http: HttpClient,
     private router: Router,
     private translate: TranslateService,
-  private notificacionesService: NotificacionesService
+  private notificacionesService: NotificacionesService,
+    private authModalService: AuthModalService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -251,6 +254,10 @@ cargarNotificacionesTraducidas(): void {
 
 ngOnInit(): void {
   this.cargarNotificacionesTraducidas();
+
+    this.authModalService.abrirModal$.subscribe(() => {
+    this.abrirModal(); // ← muestra el modal de login
+  });
 }
 
 

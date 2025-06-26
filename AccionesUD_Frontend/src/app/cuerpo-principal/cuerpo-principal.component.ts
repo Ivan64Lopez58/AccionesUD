@@ -6,6 +6,8 @@ import { RelojesComponent } from '../relojes/relojes.component';
 import { Menu2Component } from '../menu2/menu2.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈 importa TranslateModule y TranslateService
+import { MercadosInternacionalesComponent } from '../mercados-internacionales/mercados-internacionales.component'; // ajusta la ruta
+
 
 @Component({
   selector: 'app-cuerpo-principal',
@@ -16,7 +18,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈
     PiePaginaPrincipalComponent,
     RelojesComponent,
     Menu2Component,
-    TranslateModule // 👈 agrega esto para que funcione el pipe "translate"
+    TranslateModule,
+    MercadosInternacionalesComponent // 👈 agrega esto para que funcione el pipe "translate"
   ],
   templateUrl: './cuerpo-principal.component.html',
   styleUrl: './cuerpo-principal.component.css',
@@ -36,6 +39,10 @@ export class CuerpoPrincipalComponent implements OnInit {
       this.showMenu1 = data['showMenu1'] ?? true;
       this.showMenu2 = data['showMenu2'] ?? false;
     });
+
+   /* this.route.queryParams.subscribe(params => {
+      this.empresaSeleccionada = params['empresa'] || null;
+    });*/
   }
 
   isLoggedIn(): boolean {
@@ -46,4 +53,8 @@ export class CuerpoPrincipalComponent implements OnInit {
   switchLang(lang: string) {
     this.translate.use(lang);
   }
+
+
+
+  
 }

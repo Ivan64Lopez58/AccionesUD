@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,10 +23,18 @@ public class AccionController {
         this.accionService = accionService;
     }
 
-    @GetMapping("/scrap")
-    public ResponseEntity<List<Map<String, Object>>> scrapearEmpresas() {
-        List<Map<String, Object>> resultado = accionService.scrapearEmpresasEjemplo();
-        return ResponseEntity.ok(resultado);
+@PostMapping("/scrap")
+public ResponseEntity<List<Map<String, Object>>> scrapearDesdeFront(@RequestBody List<Map<String, String>> empresas) {
+
+    // ✅ Imprimir las empresas recibidas desde el frontend
+    System.out.println("📥 Empresas recibidas desde el frontend:");
+    for (Map<String, String> empresa : empresas) {
+        System.out.println(empresa);
     }
+
+    List<Map<String, Object>> resultado = accionService.scrapearDesdeFrontend(empresas);
+    return ResponseEntity.ok(resultado);
+}
+
 
 }

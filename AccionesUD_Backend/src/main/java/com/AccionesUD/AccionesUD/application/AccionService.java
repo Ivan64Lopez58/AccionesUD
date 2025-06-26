@@ -15,13 +15,17 @@ public class AccionService {
     public AccionService(ScraperClient scraperClient) {
         this.scraperClient = scraperClient;
     }
+public List<Map<String, Object>> scrapearDesdeFrontend(List<Map<String, String>> empresas) {
+    List<Map<String, Object>> resultado = scraperClient.obtenerDatosScraper(empresas);
 
-    public List<Map<String, Object>> scrapearEmpresasEjemplo() {
-        List<Map<String, String>> empresas = List.of(
-            Map.of("empresa", "Apple", "url", "https://www.investing.com/equities/apple-drc"),
-            Map.of("empresa", "Microsoft", "url", "https://www.investing.com/equities/microsoft-corp")
-        );
-        return scraperClient.obtenerDatosScraper(empresas);
+    // ✅ Imprimir resultado en consola
+    System.out.println("✅ Resultado del scraping:");
+    for (Map<String, Object> accion : resultado) {
+        System.out.println(accion);
     }
+
+    return resultado;
+}
+
 
 }
