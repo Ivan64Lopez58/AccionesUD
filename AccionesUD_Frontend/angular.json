@@ -60,18 +60,21 @@
           },
           "defaultConfiguration": "production"
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "acciones-ud:build:production"
-            },
-            "development": {
-              "buildTarget": "acciones-ud:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
+"serve": {
+  "builder": "@angular-devkit/build-angular:dev-server",
+  "options": {
+    "proxyConfig": "proxy.conf.json"
+  },
+  "configurations": {
+    "production": {
+      "buildTarget": "acciones-ud:build:production"
+    },
+    "development": {
+      "buildTarget": "acciones-ud:build:development"
+    }
+  },
+  "defaultConfiguration": "development"
+},
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
         },

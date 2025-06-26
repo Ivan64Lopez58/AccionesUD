@@ -5,7 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Menu2Component } from '../menu2/menu2.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈 importa TranslateModule y TranslateService
-
+import { StockService } from '../servicio/twelve-mercados/stock.service';
+import { StockDTO } from '../servicio/twelve-mercados/stock.model';
 
 
 @Component({
@@ -23,6 +24,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈
 })
 export class OrdenesPersonalizadasComponent implements OnInit {
   ordenes: Order[] = [];
+  symbol = 'AAPL';
+  stock: StockDTO | null = null;
+  error: string | null = null;
 
   mostrarModal: boolean = false; // Controla la visibilidad del modal
   mostrarModalConfirmacion: boolean = false;
@@ -48,18 +52,37 @@ export class OrdenesPersonalizadasComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private translate: TranslateModule
+    private translate: TranslateModule,
+    private stockService: StockService
   ) {}
 
-  ngOnInit(): void {
-    this.orderService.getOrders().subscribe({
+  buscarStock(): void {
+    this.stockService.getStock(this.symbol).subscribe({
       next: (data) => {
-        this.ordenes = data;
-        console.log('Órdenes recibidas:', this.ordenes);
+        this.stock = data;
+        this.error = null;
       },
-      error: (err) => console.error('Error al cargar las órdenes', err),
+      error: (err) => {
+        this.error = 'Error al obtener el stock.';
+        this.stock = null;
+        console.error(err);
+      }
     });
   }
+ngOnInit(): void {
+  // Cargar órdenes al iniciar
+  this.orderService.getOrders().subscribe({
+    next: (data) => {
+      this.ordenes = data;
+      console.log('Órdenes recibidas:', this.ordenes);
+    },
+    error: (err) => console.error('Error al cargar las órdenes', err),
+  });
+
+  // Cargar el stock al iniciar
+  this.buscarStock();
+}
+
 
   abrirModal(orden: Order, operacion: string): void {
     this.ordenSeleccionada = orden;

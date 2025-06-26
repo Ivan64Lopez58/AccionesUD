@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { StockDTO } from '../twelve-mercados/stock.model';
+import { StockService } from '../twelve-mercados/stock.service';
+
 
 export interface Order {
   id: number;
@@ -31,16 +34,21 @@ export interface Order {
   estado: string; // Estado de la orden (ej. 'pendiente', 'completada', 'cancelada')
   operacion: string; // Operación asociada a la orden (ej. 'compra', 'venta')
 }
-
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
   private apiUrl = ''; // URL de tu API
+  private symbols = [
+    'AAPL'/*, 'GOOGL', 'MSFT', 'AMZN', 'TSLA',
+    'META', 'NVDA', 'NFLX', 'JPM', 'BRK.B',
+    'DIS', 'NKE', 'INTC', 'AMD', 'V',
+    'MA', 'BAC', 'KO', 'PEP'*/
+  ];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private stockService: StockService) {}
 
-  getOrders(): Observable<Order[]> {
+getOrders(): Observable<Order[]> {
     // Datos de prueba mientras no se conecta al back end
     const testOrders: Order[] = [
       {
@@ -100,4 +108,5 @@ export class OrderService {
     // Cuando esté disponible el backend, utiliza:
     // return this.http.get<Order[]>(this.apiUrl);
   }
+
 }

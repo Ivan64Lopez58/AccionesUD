@@ -1,0 +1,61 @@
+<div class="modal w-[1100px] mx-auto mt-10 p-6 bg-white shadow-xl rounded-2xl border border-gray-200">
+  <h2 class="text-3xl font-bold mb-6 flex items-center gap-2 text-gray-800">
+    🌍 Mercados Internacionales
+  </h2>
+
+  <div class="select-wrapper mb-6">
+    <label for="pais" class="block text-lg font-medium text-gray-700 mb-2">
+      🌐 Selecciona un país:
+    </label>
+<select id="pais"
+  class="w-[300px] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 truncate"
+  [value]="paisSeleccionado()" (change)="onPaisChange($event)">
+  
+  <option value="" disabled selected>🌐 Selecciona el país que deseas explorar</option>
+  <option *ngFor="let p of paises" [value]="p.codigo">
+    {{ p.nombre }}
+  </option>
+</select>
+
+  </div>
+
+  <div *ngIf="cargando()" class="text-blue-600 text-lg animate-pulse">
+    ⏳ Cargando datos del mercado...
+  </div>
+
+  <div *ngIf="!cargando() && acciones().length > 0" class="rounded-lg border border-gray-200 shadow-inner">
+    <table class="w-full table-auto text-sm text-gray-800">
+      <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+        <tr>
+          <th class="px-4 py-3 text-left">📈 Empresa</th>
+          <th class="px-4 py-3 text-left">💵 Precio</th>
+          <th class="px-4 py-3 text-left">📉 Cambio</th>
+          <th class="px-4 py-3 text-left">% Cambio</th>
+          <th class="px-4 py-3 text-left">🕒 Cierre</th>
+          <th class="px-4 py-3 text-left">🕘 Apertura</th>
+          <th class="px-4 py-3 text-left">🌆 Bolsa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let accion of acciones()" class="hover:bg-gray-50 transition duration-200">
+          <td class="px-4 py-3">
+            <a href="#" (click)="irAOrdenes(accion.nombre_empresa); $event.preventDefault()"
+               class="text-blue-600 hover:underline font-medium transition">
+              {{ accion.nombre_empresa }}
+            </a>
+          </td>
+          <td class="px-4 py-3">{{ accion.precio }}</td>
+          <td class="px-4 py-3">{{ accion.cambio }}</td>
+          <td class="px-4 py-3">{{ accion.cambio_pct }}</td>
+          <td class="px-4 py-3">{{ accion.hora_cierre }}/2025</td>
+          <td class="px-4 py-3">{{ accion.hora_cierre }}/2025</td>
+          <td class="px-4 py-3">{{ accion.pais }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!cargando() && acciones().length === 0" class="text-gray-600 text-center mt-6">
+    ⚠️ No se encontraron acciones para el país seleccionado.
+  </div>
+</div>

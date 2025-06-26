@@ -20,31 +20,31 @@ public class TwelveDataStockService {
         this.apiClient = apiClient;
     }
 
-    public StockDTO getStockInfo(String symbol) {
-        // Revisa el caché primero
-        CachedStockData cached = cache.get(symbol);
-        if (cached != null && !cached.isExpired()) {
-            System.out.println("[CACHE HIT] TwelveData: " + symbol);
-            return cached.getData();
-        }
-
-        System.out.println("[CACHE MISS] TwelveData: " + symbol);
-        JSONObject quote = apiClient.fetchQuote(symbol);
-
-        if (quote.has("code")) {
-            throw new RuntimeException("Error al obtener cotización: " + quote.optString("message"));
-        }
-
-        String name = quote.optString("name", "N/A");
-        String ticker = quote.optString("symbol", symbol);
-        String exchange = quote.optString("exchange", "N/A");
-        Double price = quote.has("close") ? Double.parseDouble(quote.getString("close")) : null;
-        Long volume = quote.has("volume") ? Long.parseLong(quote.getString("volume")) : null;
-
-        StockDTO dto = new StockDTO(ticker, name, exchange, price, volume, null);
-
-        // Guarda en caché
-        cache.put(symbol, new CachedStockData(dto, ttlMillis));
-        return dto;
+public StockDTO getStockInfo(String symbol) {
+    CachedStockData cached = cache.get(symbol);
+    if (cached != null && !cached.isExpired()) {
+        System.out.println("[CACHE HIT] TwelveData: " + symbol);
+        return cached.getData();
     }
+
+    System.out.println("[CACHE MISS] TwelveData: " + symbol);
+    JSONObject quote = apiClient.fetchQuote(symbol);
+
+    if (quote.has("code")) {
+        throw new RuntimeException("Error al obtener cotización: " + quote.optString("message"));
+    }
+
+    String ticker = quote.optString("symbol", symbol);
+    String companyName = quote.optString("name", "N/A");
+    String sector = quote.optString("exchange", "N/A"); // Usa exchange como sector si no hay uno mejor
+    Double price = quote.has("close") ? Double.parseDouble(quote.getString("close")) : null;
+    Long volume = quote.has("volume") ? Long.parseLong(quote.getString("volume")) : null;
+    Double marketCap = quote.has("market_cap") ? Double.parseDouble(quote.getString("market_cap")) : null;
+
+    StockDTO dto = new StockDTO(ticker, companyName, sector, price, volume, marketCap);
+
+    cache.put(symbol, new CachedStockData(dto, ttlMillis));
+    return dto;
+}
+
 }

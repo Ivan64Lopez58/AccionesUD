@@ -47,5 +47,6 @@ services:
       - "5001:5001"
     restart: always
 
+
 volumes:
   postgres_data:
