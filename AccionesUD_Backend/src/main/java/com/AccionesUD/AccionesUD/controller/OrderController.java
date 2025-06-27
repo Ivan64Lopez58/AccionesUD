@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class OrderController {
 
     private final OrderService orderService;
+    
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
@@ -48,6 +50,7 @@ public class OrderController {
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO dto, Principal principal) {
         try {
             String username = principal.getName();
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
             OrderResponseDTO resp = orderService.createOrder(dto, username);
             return ResponseEntity.status(HttpStatus.CREATED).body(resp);
         } catch (IllegalArgumentException ex) {
@@ -59,9 +62,10 @@ public class OrderController {
                                  
     }
 
-    @GetMapping("/user/{username}")
-    public ResponseEntity<?> listarPorUsuario(@PathVariable String username) {
+    @GetMapping("/user")
+    public ResponseEntity<?> listarPorUsuario() {
         try {
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
             List<OrderResponseDTO> list = orderService.listarOrdenesPorUsuario(username);
             return ResponseEntity.ok(list);
         } catch (IllegalArgumentException ex) {
