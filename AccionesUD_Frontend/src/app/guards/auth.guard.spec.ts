@@ -1,16 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthGuard } from './auth.guard';
-import { Router, UrlTree } from '@angular/router';
+import { Router } from '@angular/router';
+import { UrlTree } from '@angular/router';
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;
   let routerSpy: jasmine.SpyObj<Router>;
-  let mockUrlTree: UrlTree;
 
   beforeEach(() => {
-    mockUrlTree = new UrlTree();
     const spy = jasmine.createSpyObj('Router', ['parseUrl']);
-    spy.parseUrl.and.returnValue(mockUrlTree);
 
     TestBed.configureTestingModule({
       providers: [AuthGuard, { provide: Router, useValue: spy }],
@@ -24,14 +22,14 @@ describe('AuthGuard', () => {
     localStorage.clear();
   });
 
-  it('should redirect if there is no token', () => {
+  it('debería redirigir si no hay token', () => {
     localStorage.removeItem('jwt');
     const result = guard.canActivate();
     expect(routerSpy.parseUrl).toHaveBeenCalledWith('/');
     expect(result instanceof UrlTree).toBeTrue();
   });
 
-  it('should redirect if the token is expired', () => {
+  it('debería redirigir si el token está expirado', () => {
     // Token expirado: fecha de expiración pasada
     const expiredToken = generarTokenConExpiracion(-60); // hace 1 minuto
     localStorage.setItem('jwt', expiredToken);
@@ -42,7 +40,7 @@ describe('AuthGuard', () => {
     expect(result instanceof UrlTree).toBeTrue();
   });
 
-  it('should allow access if the token is valid', () => {
+  it('debería permitir el acceso si el token es válido', () => {
     const validToken = generarTokenConExpiracion(60); // 1 minuto en el futuro
     localStorage.setItem('jwt', validToken);
 

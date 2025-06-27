@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap');
 
 .relojes-container {
-  background-color: var(--relojes-container-bg);
+  background-color: #eccbcb;
   border-radius: 20px;
   display: flex;
   flex-wrap: nowrap;
@@ -21,12 +21,12 @@
 }
 
 .reloj {
-  background: var(--relojes-reloj-gradient);
+  background: linear-gradient(145deg, #f0f0f0, #cacaca);
   border-radius: 1.5rem;
   padding: 2rem 2.5rem;
-  box-shadow: 10px 10px 30px var(--relojes-reloj-shadow-1), -10px -10px 30px var(--relojes-reloj-shadow-2);
+  box-shadow: 10px 10px 30px #bebebe, -10px -10px 30px #ffffff;
   text-align: center;
-  color: var(--relojes-texto);
+  color: #333;
   min-width: 180px;
   transition: all 0.3s ease-in-out;
   font-family: 'Inter', sans-serif;
@@ -43,20 +43,20 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at 30% 30%, var(--relojes-efecto-radial), transparent 60%);
+  background: radial-gradient(circle at 30% 30%, rgba(255, 60, 60, 0.15), transparent 60%);
   z-index: 0;
   transform: rotate(25deg);
 }
 
 .reloj:hover {
   transform: translateY(-5px) scale(1.03);
-  box-shadow: 15px 15px 35px var(--relojes-reloj-hover-shadow-1), -15px -15px 35px var(--relojes-reloj-hover-shadow-2);
+  box-shadow: 15px 15px 35px #b0b0b0, -15px -15px 35px #ffffff;
 }
 
 .nombre-ciudad {
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--relojes-ciudad-color);
+  color: #ff3c3c;
   margin-bottom: 1rem;
   letter-spacing: 1px;
   z-index: 1;
@@ -67,7 +67,7 @@
   font-size: 2.4rem;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 600;
-  color: var(--relojes-hora-color);
+  color: #222;
   z-index: 1;
   position: relative;
 }

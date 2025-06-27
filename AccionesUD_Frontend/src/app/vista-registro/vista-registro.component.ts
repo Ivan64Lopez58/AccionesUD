@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vista-registro',
@@ -11,14 +10,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    HttpClientModule,
-    TranslateModule
+    HttpClientModule
   ]
 })
 export class VistaRegistroComponent {
   registroForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private translate: TranslateService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.registroForm = this.fb.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],

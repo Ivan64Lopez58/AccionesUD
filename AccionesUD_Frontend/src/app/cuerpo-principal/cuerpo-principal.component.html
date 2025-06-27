@@ -1,44 +1,50 @@
-<app-menu *ngIf="showMenu1" style="position: fixed; top: 0; left: 0; width: 100vw; z-index: 1000;"></app-menu>
-<app-menu2 *ngIf="showMenu2" style="position: fixed; top: 0; left: 0; width: 100vw; z-index: 1000;"></app-menu2>
-
+<app-menu style="position: fixed; top: 0; left: 0; width: 100vw; z-index: 1000;"></app-menu>
 <div class="cuerpo-principal">
+  <div class="imagen-principal">
+    <img src="banner.svg" alt="Imagen principal" />
+  </div>
+  <h2 class="titulo-seccion">Tú decides en qué invertir</h2>
 
-  <!-- Título traducible -->
-  <h2 class="titulo-seccion">{{ 'TITLE' | translate }}</h2>
-
-  <!-- Cuadros de ciudades -->
   <div class="cuadros-graficos">
     <div class="cuadro">
-      <h3>USA</h3>
+      <h3>New York</h3>
       <div class="contenido-cuadro">
-        <img src="/USA.png" alt="New York" />
+        <img src="logo.svg" alt="New York" />
       </div>
     </div>
     <div class="cuadro">
-      <h3>ARGENTINA</h3>
+      <h3>Sydney</h3>
       <div class="contenido-cuadro">
-        <img src="/ARGENTINA.png" alt="Sydney" />
+        <img src="logo.svg" alt="Sydney" />
       </div>
     </div>
     <div class="cuadro">
-      <h3>BRASIL</h3>
+      <h3>Tokio</h3>
       <div class="contenido-cuadro">
-        <img src="/BRASIL.png" alt="Tokyo" />
+        <img src="logo.svg" alt="Tokio" />
       </div>
     </div>
   </div>
 
-
-    <!-- Botón para abrir el modal -->
-  <div style="margin-bottom: 3rem;">
-    <app-mercados-internacionales></app-mercados-internacionales>
+  <div class="cuadros-graficos-2">
+    <div class="cuadro">
+      <h3>Londres</h3>
+      <div class="contenido-cuadro">
+        <img src="logo.svg" alt="Londres" />
+      </div>
+    </div>
+    <div class="cuadro">
+      <h3>París</h3>
+      <div class="contenido-cuadro">
+        <img src="logo.svg" alt="París" />
+      </div>
+    </div>
   </div>
-  
-  <!-- Relojes -->
+
+  <!-- RELOJES EN VIVO (reemplazo de imágenes) -->
   <div class="relojes">
     <app-relojes></app-relojes>
   </div>
 
-  <!-- Pie de página -->
-  <app-pie-pagina-principal style="width: 99vw;"></app-pie-pagina-principal>
+  <app-pie-pagina-principal></app-pie-pagina-principal>
 </div>
