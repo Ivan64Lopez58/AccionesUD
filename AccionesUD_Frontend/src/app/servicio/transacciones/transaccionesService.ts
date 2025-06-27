@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface BalanceInfo {
   availableBalance: number;
@@ -38,7 +39,7 @@ export interface ChartData {
 
 @Injectable({ providedIn: 'root' })
 export class TransaccionesService {
-  private baseUrl = '';
+  private baseUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
 

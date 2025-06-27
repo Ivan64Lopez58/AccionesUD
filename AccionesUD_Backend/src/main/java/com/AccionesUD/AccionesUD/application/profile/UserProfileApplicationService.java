@@ -46,6 +46,7 @@ public UserProfileResponse getProfile(String username) {
             .address(user.getAddress())
             .otpEnabled(user.isOtpEnabled())
             .dailyOrderLimit(user.getDailyOrderLimit())
+            .Balance(user.getBalance())
             .build();
 }
 

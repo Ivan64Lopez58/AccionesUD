@@ -1,5 +1,6 @@
 package com.AccionesUD.AccionesUD.balance.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,7 @@ import com.AccionesUD.AccionesUD.balance.application.BalanceService;
 import com.AccionesUD.AccionesUD.domain.model.User;
 
 @RestController
-@RequestMapping("/balance")
+@RequestMapping("/api/balance")
 public class BalanceController {
     private final BalanceService balanceService;
 
@@ -19,24 +20,16 @@ public class BalanceController {
         this.balanceService = balanceService;
     }
 
-    @GetMapping("/{userId}")
-    public Double getBalance(@PathVariable Double userId) {
-        return balanceService.getBalance(userId);
+    @GetMapping
+    public Double getBalance() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return balanceService.getBalance(username);
     }
 
-    @PostMapping("/{userId}/update")
-    public User updateBalance(
-            @PathVariable Double userId,
-            @RequestParam Double amount) {
-        return balanceService.updateBalance(userId, amount);
+    @PostMapping("/update")
+    public User updateBalance(@RequestParam Double amount) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return balanceService.updateBalance(username, amount);
     }
 
-
-    @PostMapping("/{userId}/update-profile")
-    public User updateBalanceWithProfileResponse(
-            @PathVariable Double userId,
-            @RequestParam Double amount) {
-        User updatedUser = balanceService.updateBalance(userId, amount);
-        return updatedUser;
-    }
 }

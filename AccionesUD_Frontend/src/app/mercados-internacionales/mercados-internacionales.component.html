@@ -1,0 +1,74 @@
+<div class="modal">
+  <h2>
+    🌍 Mercados Internacionales
+  </h2>
+
+  <div class="select-wrapper">
+    <label for="pais">
+      🌐 Selecciona un país:
+    </label>
+
+    <select id="pais" [value]="paisSeleccionado()" (change)="onPaisChange($event)">
+      <option value="" disabled selected>🌐 Selecciona el mercado que deseas explorar</option>
+      <option *ngFor="let p of paises" [value]="p.codigo">
+        {{ p.nombre }}
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="cargando()">
+    ⏳ Cargando datos del mercado...
+  </div>
+
+  <div *ngIf="!cargando() && acciones().length > 0">
+    <table>
+      <thead>
+    <tr>
+      <th style="text-align: center;">📈 Empresa</th>
+      <th style="text-align: center;">💵 Precio</th>
+      <th style="text-align: center;">📉 Cambio</th>
+      <th style="text-align: center;">% Cambio</th>
+      <th style="text-align: center;">🕒 Cierre</th>
+      <th style="text-align: center;">🌆 Bolsa</th>
+    </tr>
+
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let accion of acciones()">
+          <td>
+            <a href="#" (click)="irAOrdenes(accion.nombre_empresa); $event.preventDefault()">
+              {{ accion.nombre_empresa }}
+            </a>
+          </td>
+          <td>$ {{ accion.precio }}</td>
+
+          <!-- CAMBIO -->
+          <td>
+            <span class="cambio-con-icono" [ngClass]="{'negativo': accion.cambio.startsWith('-'), 'positivo': !accion.cambio.startsWith('-')}">
+              {{ accion.cambio }}
+              <img *ngIf="accion.cambio.startsWith('-')" src="/flecha_abajo.png" alt="baja" class="icono-flecha">
+              <img *ngIf="!accion.cambio.startsWith('-')" src="/flecha_arriba.png" alt="sube" class="icono-flecha">
+            </span>
+          </td>
+
+          <!-- % CAMBIO -->
+          <td>
+            <span class="cambio-con-icono" [ngClass]="{'negativo': accion.cambio_pct.startsWith('-'), 'positivo': !accion.cambio_pct.startsWith('-')}">
+              {{ accion.cambio_pct }}
+              <img *ngIf="accion.cambio_pct.startsWith('-')" src="/flecha_abajo.png" alt="baja" class="icono-flecha">
+              <img *ngIf="!accion.cambio_pct.startsWith('-')" src="/flecha_arriba.png" alt="sube" class="icono-flecha">
+            </span>
+          </td>
+
+          <td>{{ accion.hora_cierre }}</td>
+          <td>{{ accion.pais }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!cargando() && acciones().length === 0">
+    ⚠️ No se encontraron acciones para el país seleccionado.
+  </div>
+</div>
