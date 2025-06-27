@@ -122,13 +122,15 @@
   <!-- Tarjeta de Saldo -->
   <div class="tarjeta saldo-container" [class.contraido]="isSaldoContraido">
     <div *ngIf="isSaldoContraido" class="tarjeta-header" (click)="toggleSaldo()">
-      <img src="Saldo.svg" alt="Icono saldo" class="tarjeta-icono" />
-      <div class="tarjeta-info">
-        <p class="tarjeta-titulo">{{ 'MY_BALANCE' | translate }}</p>
-        <p class="tarjeta-subtitulo">{{ 'TOTAL' | translate }}: {{ formatCurrency(balanceInfo.totalBalance) }}</p>
-      </div>
-      <span class="tarjeta-toggle">▼</span>
-    </div>
+  <img src="Saldo.svg" alt="Icono saldo" class="tarjeta-icono" />
+  <div class="tarjeta-info">
+    <p class="tarjeta-titulo">{{ 'MY_BALANCE' | translate }}</p>
+    <p class="tarjeta-subtitulo">
+      {{ 'Total' | translate }}: {{ formatCurrency(balanceInfo.availableBalance) }}
+    </p>
+  </div>
+  <span class="tarjeta-toggle">▼</span>
+</div>
     <div *ngIf="!isSaldoContraido" class="saldo-expanded">
       <button class="cerrar-btn" (click)="toggleSaldo()" aria-label="Contraer tarjeta">▲</button>
       <h2>{{ 'MY_BALANCE' | translate }}</h2>
