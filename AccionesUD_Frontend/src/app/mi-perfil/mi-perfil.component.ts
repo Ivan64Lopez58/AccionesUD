@@ -45,9 +45,7 @@ import { HistoricoOrdenesComponent } from "../historico-ordenes/historico-ordene
     CommonModule,
     PiePaginaPrincipalComponent,
     TranslateModule,
-    HistoricoOrdenesComponent
-],
-=======
+    HistoricoOrdenesComponent,
   ],
 })
 export class MiPerfilComponent implements OnInit, OnDestroy {
