@@ -12,6 +12,7 @@ import com.AccionesUD.AccionesUD.domain.model.Order;
 import com.AccionesUD.AccionesUD.dto.orders.OrderRequestDTO;
 import com.AccionesUD.AccionesUD.dto.orders.OrderResponseDTO;
 import com.AccionesUD.AccionesUD.repository.OrderRepository;
+import com.AccionesUD.AccionesUD.repository.UserRepository;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderStatus;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderValidator;
 
@@ -29,23 +30,24 @@ public class OrderServiceImpl implements OrderService {
     private final ModelMapper modelMapper;
     private final ApplicationEventPublisher eventPublisher;
     private final StockService stockService;
+    private final UserRepository userRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher, StockService stockService) {
+    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper, 
+    ApplicationEventPublisher eventPublisher, StockService stockService, UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.modelMapper = modelMapper;
         this.eventPublisher = eventPublisher;
         this.stockService = stockService;
+        this.userRepository = userRepository;
     }
 
       @Override
-    public OrderResponseDTO createOrder(OrderRequestDTO requestDTO) {
+    public OrderResponseDTO createOrder(OrderRequestDTO requestDTO, String username) {
 
         OrderValidator.validate(requestDTO);
         StockInfo quote = stockService.getLatestTrade(requestDTO.getSymbol());
         Order orderEntity = modelMapper.map(requestDTO, Order.class);
-        String username = SecurityContextHolder.getContext()
-                                               .getAuthentication()
-                                               .getName();
+    
         orderEntity.setUsername(username);
         orderEntity.setMarketPrice(quote.getPrice());
         orderEntity.setMarket(quote.getSymbol());
