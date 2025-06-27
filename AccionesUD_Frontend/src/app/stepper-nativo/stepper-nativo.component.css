@@ -1,5 +1,4 @@
 .stepper-container {
-  min-width: 250px;
   padding: 10px;
   box-sizing: border-box;
 }
@@ -9,14 +8,15 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .step {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: #ccc;
-  border: 2px solid #ccc;
+  background-color: #aaa;
+  border: 2px solid #aaa;
   z-index: 2;
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
@@ -24,10 +24,15 @@
 .connector {
   height: 4px;
   flex: 1;
-  background-color: #ccc;
+  background-color: #aaa;
   margin: 0 4px;
   z-index: 1;
   transition: background-color 0.3s ease;
+}
+
+.cantidad-label {
+  font-size: small;
+  color: var(--color-text);
 }
 
 /* Clases condicionales por color */

@@ -27,7 +27,8 @@ import {
 import { finalize, catchError } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { ThemeService } from '../servicio/tema/theme.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈 importa TranslateModule y TranslateService
+import { TranslateModule, TranslateService } from '@ngx-translate/core';// 👈 importa TranslateModule y TranslateService
+import { HistoricoOrdenesComponent } from "../historico-ordenes/historico-ordenes.component"; 
 
 
 
@@ -44,6 +45,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈
     CommonModule,
     PiePaginaPrincipalComponent,
     TranslateModule,
+    HistoricoOrdenesComponent
+],
+=======
   ],
 })
 export class MiPerfilComponent implements OnInit, OnDestroy {

@@ -1,7 +1,19 @@
-<h1 class="titulo"> Mis ordenes </h1>
 <div class="historico-ordenes-lista">
 
-<div class="registro-orden" *ngFor ="let registro of historicoOrdenes">
+<div class="filtros">
+  <div class="dropdown-filtro">
+    <button class="btn-filtro" (click)="mostrarOpciones = !mostrarOpciones">
+      <i class="fas fa-filter"></i>{{ tipoFiltro }}
+    </button>
+    <ul class="filtro-opciones" *ngIf="mostrarOpciones">
+      <li (click)="seleccionarFiltro()">{{ 'Todos' }}</li>
+      <li (click)="seleccionarFiltro('Ejecutada')">{{ 'Ejecutada' }}</li>
+      <li (click)="seleccionarFiltro('Pendiente')">{{ 'Pendiente' }}</li>
+    </ul>
+  </div>
+</div>
+
+<div class="registro-orden" *ngFor ="let registro of historicoOrdenesFiltrado">
   <div class="operacion-orden" [ngStyle]="{'color':registro.operacion === 'Comprar' ? 'green': 'red'}">{{registro.operacion}}</div>
 
   <div class="info-accion">
@@ -11,22 +23,24 @@
 
   <div class="info-orden">
     <div class="cantidad-orden">
-      <div class="cantidad">{{registro.cantidad}}</div>
-      <div class="cantidad-label">Cantidad</div>
+      <div class="valor">{{registro.cantidad}}</div>
+      <div class="valor-label">Cantidad</div>
     </div>
     <div class="precio-orden">
       <div>
         <span class="valor">{{registro.operacion === 'Compra' ? registro.compraPrecio : registro.ventaPrecio}}</span>
-        <span class="moneda"> {{registro.moneda}}</span>
+        <span class="valor moneda"> {{registro.moneda}}</span>
       </div>
-      <div class="precio-label">{{registro.operacion === 'Compra' ? 'Precio de compra' : 'Precio de venta'}}</div>
+      <div class="valor-label">{{registro.operacion === 'Compra' ? 'Precio de compra' : 'Precio de venta'}}</div>
     </div>
   </div>
   <div class="barra-estado">
-    <app-stepper-nativo [estado]="'Ejecutada'"></app-stepper-nativo>
+    <app-stepper-nativo [estado]=registro.estado></app-stepper-nativo>
   </div>
   <button class="boton-detalles">
     <img src="detalles-icon.svg" alt="Icono Detalles" class="logo-detalles" />
   </button>
+
+</div>
 
 </div>

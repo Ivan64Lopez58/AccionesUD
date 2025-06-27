@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OrderState } from '../servicio/acciones/order.service';
 
 @Component({
   selector: 'app-stepper-nativo',
@@ -11,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class StepperNativoComponent implements OnInit {
 
-  @Input() estado: string = 'Procesando';
+  @Input() estado: OrderState = OrderState.PROCESANDO;
 
   totalSteps: number = 3;
   filledSteps: number = 0;
@@ -25,33 +26,33 @@ export class StepperNativoComponent implements OnInit {
     this.mapEstadoToSteps(this.estado);
   }
 
-  private mapEstadoToSteps(estado: string): void {
+  private mapEstadoToSteps(estado: OrderState): void {
     switch (estado) {
-      case 'Procesando':
+      case OrderState.PROCESANDO:
         this.filledSteps = 1;
         this.colorClass = 'neutral';
         break;
-      case 'Aceptada':
+      case OrderState.ACEPTADA:
         this.filledSteps = 1;
         this.colorClass = 'success';
         break;
-      case 'Pendiente':
+      case OrderState.PENDIENTE:
         this.filledSteps = 2;
         this.colorClass = 'success';
         break;
-      case 'En cola':
+      case OrderState.EN_COLA:
         this.filledSteps = 2;
         this.colorClass = 'neutral';
         break;
-      case 'Rechazada':
+      case OrderState.RECHAZADA:
         this.filledSteps = 2;
         this.colorClass = 'error';
         break;
-      case 'Cancelada':
+      case OrderState.CANCELADA:
         this.filledSteps = 2;
         this.colorClass = 'error';
         break;
-      case 'Ejecutada':
+      case OrderState.EJECUTADA:
         this.filledSteps = 3;
         this.colorClass = 'success';
         break;
