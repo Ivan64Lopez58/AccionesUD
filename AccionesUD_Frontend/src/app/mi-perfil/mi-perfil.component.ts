@@ -47,6 +47,8 @@ import { HistoricoOrdenesComponent } from "../historico-ordenes/historico-ordene
     TranslateModule,
     HistoricoOrdenesComponent
 ],
+=======
+  ],
 })
 export class MiPerfilComponent implements OnInit, OnDestroy {
   perfilForm!: FormGroup;
@@ -56,6 +58,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
   isPerfilContraido: boolean = true;
   isSaldoContraido: boolean = true;
   isHistorialContraido: boolean = true;
+  isPortafolioContraido: boolean = true;
 
   // Control de pestañas en la tarjeta de saldo
   activeTab: 'resumen' | 'historial' = 'resumen';
@@ -77,7 +80,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     availableBalance: 0,
     pendingBalance: 0,
     totalBalance: 0,
-    currency: 'COP'
+    currency: 'COP',
   };
 
   // Datos del gráfico
@@ -96,7 +99,12 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
   processingDeposit: boolean = false;
 
   // Propiedades para el manejo del modal de depósito
-  currentDepositStep: 'method-selection' | 'wallet' | 'visa' | 'pse' | 'mastercard' = 'method-selection';
+  currentDepositStep:
+    | 'method-selection'
+    | 'wallet'
+    | 'visa'
+    | 'pse'
+    | 'mastercard' = 'method-selection';
   selectedPaymentMethod: string = '';
 
   // Formularios para cada método de pago
@@ -135,32 +143,29 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
 
     // Inicializar formulario de depósito (el existente)
     this.depositForm = this.fb.group({
-      amount: [null, [Validators.required, Validators.min(10000)]]
+      amount: [null, [Validators.required, Validators.min(10000)]],
     });
 
     // Inicializar formulario de billetera virtual
     this.walletForm = this.fb.group({
       amount: [null, [Validators.required, Validators.min(10000)]],
       address: ['', Validators.required],
-      terms: [false, Validators.requiredTrue]
+      terms: [false, Validators.requiredTrue],
     });
 
     // Inicializar formulario de tarjeta de crédito
     this.cardForm = this.fb.group({
       amount: [null, [Validators.required, Validators.min(10000)]],
-      cardNumber: ['', [
-        Validators.required,
-        Validators.pattern(/^\d{4}(\s\d{4}){3}|\d{16}$/)
-      ]],
-      expiry: ['', [
-        Validators.required,
-        Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)
-      ]],
-      cvv: ['', [
-        Validators.required,
-        Validators.pattern(/^\d{3,4}$/)
-      ]],
-      terms: [false, Validators.requiredTrue]
+      cardNumber: [
+        '',
+        [Validators.required, Validators.pattern(/^\d{4}(\s\d{4}){3}|\d{16}$/)],
+      ],
+      expiry: [
+        '',
+        [Validators.required, Validators.pattern(/^(0[1-9]|1[0-2])\/\d{2}$/)],
+      ],
+      cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]],
+      terms: [false, Validators.requiredTrue],
     });
 
     // Inicializar formulario de transferencia bancaria
@@ -174,7 +179,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
       phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       email: ['', [Validators.required, Validators.email]],
       bank: ['', Validators.required],
-      terms: [false, Validators.requiredTrue]
+      terms: [false, Validators.requiredTrue],
     });
 
     this.addEmail();
@@ -196,7 +201,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     }
 
     // Obtener el tema del servicio
-    this.themeService.darkMode$.subscribe(isDark => {
+    this.themeService.darkMode$.subscribe((isDark) => {
       this.selectedTheme = isDark ? 'dark' : 'light';
     });
   }
@@ -248,22 +253,23 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
   // Cargar información del saldo
   loadBalanceInfo(): void {
     this.loadingBalance = true;
-    this.transaccionesService.getUserBalance()
+    this.transaccionesService
+      .getUserBalance()
       .pipe(
         finalize(() => {
           this.loadingBalance = false;
         }),
-        catchError(err => {
+        catchError((err) => {
           console.error('Error al cargar información de saldo:', err);
           return of({
             availableBalance: 200000,
             pendingBalance: 10000,
             totalBalance: 210000,
-            currency: 'COP'
+            currency: 'COP',
           } as BalanceInfo);
         })
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         this.balanceInfo = data;
       });
   }
@@ -275,32 +281,40 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
 
     // Usar forkJoin para hacer ambas peticiones en paralelo
     forkJoin({
-      transactions: this.transaccionesService.getUserTransactions(this.selectedPeriod)
-        .pipe(catchError(err => {
-          console.error('Error al cargar transacciones:', err);
-          return of(this.getDummyTransactions());
-        })),
-      chartData: this.transaccionesService.getChartData(this.selectedPeriod)
-        .pipe(catchError(err => {
-          console.error('Error al cargar datos del gráfico:', err);
-          return of(this.getDummyChartData());
-        }))
-    }).pipe(
-      finalize(() => {
-        this.loadingTransactions = false;
-        this.loadingChartData = false;
-      })
-    ).subscribe({
-      next: ({transactions, chartData}) => {
-        this.transactions = transactions;
-        this.filteredTransactions = transactions;
-        this.chartData = chartData.data;
-        // Aplicar búsqueda si está activa
-        if (this.isSearchActive) {
-          this.searchTransactions();
-        }
-      }
-    });
+      transactions: this.transaccionesService
+        .getUserTransactions(this.selectedPeriod)
+        .pipe(
+          catchError((err) => {
+            console.error('Error al cargar transacciones:', err);
+            return of(this.getDummyTransactions());
+          })
+        ),
+      chartData: this.transaccionesService
+        .getChartData(this.selectedPeriod)
+        .pipe(
+          catchError((err) => {
+            console.error('Error al cargar datos del gráfico:', err);
+            return of(this.getDummyChartData());
+          })
+        ),
+    })
+      .pipe(
+        finalize(() => {
+          this.loadingTransactions = false;
+          this.loadingChartData = false;
+        })
+      )
+      .subscribe({
+        next: ({ transactions, chartData }) => {
+          this.transactions = transactions;
+          this.filteredTransactions = transactions;
+          this.chartData = chartData.data;
+          // Aplicar búsqueda si está activa
+          if (this.isSearchActive) {
+            this.searchTransactions();
+          }
+        },
+      });
   }
 
   // Datos dummy por si falla la conexión al backend
@@ -316,7 +330,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
           rawAmount: 200000,
           status: 'success',
           type: 'Ingreso de',
-          reference: 'M14541466'
+          reference: 'M14541466',
         },
         {
           id: '2',
@@ -327,8 +341,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
           rawAmount: 200000,
           status: 'success',
           type: 'Ingreso de',
-          reference: 'B78921355'
-        }
+          reference: 'B78921355',
+        },
       ];
     } else if (this.selectedPeriod === 'week') {
       return [
@@ -341,8 +355,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
           rawAmount: 200000,
           status: 'success',
           type: 'Ingreso de',
-          reference: 'M14541466'
-        }
+          reference: 'M14541466',
+        },
       ];
     } else {
       return [
@@ -355,8 +369,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
           rawAmount: 75000,
           status: 'success',
           type: 'Transferencia de',
-          reference: 'N98765432'
-        }
+          reference: 'N98765432',
+        },
       ];
     }
   }
@@ -371,7 +385,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
         { value: 65, label: '2', rawValue: 150000, date: '02/06/2023' },
         { value: 75, label: '3', rawValue: 180000, date: '03/06/2023' },
         { value: 70, label: '4', rawValue: 165000, date: '04/06/2023' },
-        { value: 60, label: '5', rawValue: 140000, date: '05/06/2023' }
+        { value: 60, label: '5', rawValue: 140000, date: '05/06/2023' },
       ];
     } else if (this.selectedPeriod === 'week') {
       data = [
@@ -381,7 +395,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
         { value: 75, label: 'Jue', rawValue: 175000, date: '08/06/2023' },
         { value: 90, label: 'Vie', rawValue: 210000, date: '09/06/2023' },
         { value: 50, label: 'Sáb', rawValue: 120000, date: '10/06/2023' },
-        { value: 40, label: 'Dom', rawValue: 100000, date: '11/06/2023' }
+        { value: 40, label: 'Dom', rawValue: 100000, date: '11/06/2023' },
       ];
     } else {
       data = [
@@ -389,7 +403,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
         { value: 75, label: '12h', rawValue: 175000, date: '10/06/2023 12:00' },
         { value: 50, label: '15h', rawValue: 120000, date: '10/06/2023 15:00' },
         { value: 80, label: '18h', rawValue: 190000, date: '10/06/2023 18:00' },
-        { value: 40, label: '21h', rawValue: 100000, date: '10/06/2023 21:00' }
+        { value: 40, label: '21h', rawValue: 100000, date: '10/06/2023 21:00' },
       ];
     }
 
@@ -397,7 +411,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
       data: data,
       maxValue: 210000,
       minValue: 100000,
-      avgValue: 155000
+      avgValue: 155000,
     };
   }
 
@@ -408,22 +422,23 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     if (this.isSearchActive) {
       this.loadingTransactions = true;
 
-      this.transaccionesService.getUserTransactions(this.selectedPeriod, this.bankSearchTerm.trim())
+      this.transaccionesService
+        .getUserTransactions(this.selectedPeriod, this.bankSearchTerm.trim())
         .pipe(
           finalize(() => {
             this.loadingTransactions = false;
           }),
-          catchError(err => {
+          catchError((err) => {
             console.error('Error al buscar transacciones:', err);
             // Búsqueda local como fallback
             const searchTerm = this.bankSearchTerm.trim().toLowerCase();
-            const filtered = this.transactions.filter(transaction =>
+            const filtered = this.transactions.filter((transaction) =>
               transaction.bank.toLowerCase().includes(searchTerm)
             );
             return of(filtered);
           })
         )
-        .subscribe(data => {
+        .subscribe((data) => {
           this.filteredTransactions = data;
         });
     } else {
@@ -457,6 +472,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     this.isPerfilContraido = true;
     this.isSaldoContraido = true;
     this.isHistorialContraido = true;
+    this.isPortafolioContraido = true;
   }
 
   // Métodos para expandir/contraer cada tarjeta
@@ -471,6 +487,16 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     }
   }
 
+  togglePortafolio(): void {
+    if (!this.isPortafolioContraido) {
+      // Si ya está expandida, solo la contrae
+      this.isPortafolioContraido = true;
+    } else {
+      // Si está contraída, contrae todas y luego expande esta
+      this.contraerTodasLasTarjetas();
+      this.isPortafolioContraido = false;
+    }
+  }
   toggleSaldo(): void {
     if (!this.isSaldoContraido) {
       // Si ya está expandida, solo la contrae
@@ -512,15 +538,15 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     this.currentDepositStep = 'method-selection';
     this.selectedPaymentMethod = '';
     this.walletForm.reset({
-      terms: false
+      terms: false,
     });
     this.cardForm.reset({
-      terms: false
+      terms: false,
     });
     this.bankTransferForm.reset({
       clientType: 'natural',
       docType: 'cc',
-      terms: false
+      terms: false,
     });
   }
 
@@ -531,7 +557,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     this.processingDeposit = true;
     const amount = this.depositForm.value.amount;
 
-    this.transaccionesService.depositFunds(amount)
+    this.transaccionesService
+      .depositFunds(amount)
       .pipe(
         finalize(() => {
           this.processingDeposit = false;
@@ -550,8 +577,10 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.error('Error al procesar el depósito:', err);
-          alert('Error al procesar la solicitud de depósito. Por favor intente de nuevo.');
-        }
+          alert(
+            'Error al procesar la solicitud de depósito. Por favor intente de nuevo.'
+          );
+        },
       });
   }
 
@@ -563,7 +592,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
 
   // Método para ir al formulario del método de pago seleccionado
   goToPaymentForm(): void {
-    switch(this.selectedPaymentMethod) {
+    switch (this.selectedPaymentMethod) {
       case 'wallet':
         this.currentDepositStep = 'wallet';
         break;
@@ -611,7 +640,9 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.processingDeposit = false;
       this.closeDepositModal();
-      alert(`Pago con tarjeta ${this.selectedPaymentMethod.toUpperCase()} procesado correctamente`);
+      alert(
+        `Pago con tarjeta ${this.selectedPaymentMethod.toUpperCase()} procesado correctamente`
+      );
       this.loadBalanceInfo(); // Recargar saldo
     }, 1500);
   }
@@ -634,7 +665,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     if (this.perfilForm.valid) {
-      const updatedProfile: UpdateUserProfileRequest = this.perfilForm.getRawValue();
+      const updatedProfile: UpdateUserProfileRequest =
+        this.perfilForm.getRawValue();
 
       this.userProfileService.updateUserProfile(updatedProfile).subscribe({
         next: (res) => {
@@ -668,11 +700,15 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
 
   // Método para formatear valores monetarios
   formatCurrency(amount: number): string {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'decimal',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(amount) + ' ' + this.balanceInfo.currency;
+    return (
+      new Intl.NumberFormat('es-CO', {
+        style: 'decimal',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(amount) +
+      ' ' +
+      this.balanceInfo.currency
+    );
   }
 
   // Método para resaltar el término de búsqueda
@@ -684,8 +720,9 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     const searchTerm = this.bankSearchTerm.trim();
     const regex = new RegExp(searchTerm, 'gi');
 
-    return text.replace(regex, match =>
-      `<span class="search-highlight">${match}</span>`
+    return text.replace(
+      regex,
+      (match) => `<span class="search-highlight">${match}</span>`
     );
   }
 

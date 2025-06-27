@@ -18,6 +18,6 @@ public class UserProfileResponse {
     private String address;
     private boolean otpEnabled;
     private Integer dailyOrderLimit;
-    private Integer Balance;
+    private Double Balance;
     private String idiomaPreferido;
 }

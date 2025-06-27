@@ -10,7 +10,11 @@ import { AuthGuard } from './guards/auth.guard';
 import { OrdenesPersonalizadasComponent } from './ordenes-personalizadas/ordenes-personalizadas.component';
 import { RecuperarComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+
+import { PortafolioAccionesComponent } from './portafolio-acciones/portafolio-acciones.component';
+
 import { StockViewComponent } from './stock-view-twelve/stock-view-twelve.component';
+
 
 export const routes: Routes = [
   { path: '', component: CuerpoPrincipalComponent },
@@ -19,15 +23,14 @@ export const routes: Routes = [
     path: 'logged',
     component: CuerpoPrincipalComponent,
     canActivate: [AuthGuard],
-    data: { showMenu1: false, showMenu2: true }
+    data: { showMenu1: false, showMenu2: true },
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'miperfil',
-    component: MiPerfilComponent,
+  { path: 'miperfil', component: MiPerfilComponent,
     canActivate: [AuthGuard]
   },
   { path: 'reset-password', component: RecuperarComponent },
@@ -36,11 +39,20 @@ export const routes: Routes = [
     component: NotificacionesComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'ordenes',
+  {
+    path: 'ordenes',
     component: OrdenesPersonalizadasComponent,
     canActivate: [AuthGuard],
   },
+
+  {
+    path: 'portafolio',
+    component: PortafolioAccionesComponent,
+    canActivate: [AuthGuard],
+  },
+
     { path: 'stock', component: StockViewComponent },
+
 
 ];
 /*

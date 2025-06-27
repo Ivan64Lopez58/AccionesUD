@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.AccionesUD.AccionesUD.balance.application.BalanceService;
+import com.AccionesUD.AccionesUD.balance.dto.BalanceSummaryResponse;
 import com.AccionesUD.AccionesUD.domain.model.User;
 
 @RestController
@@ -21,9 +22,9 @@ public class BalanceController {
     }
 
     @GetMapping
-    public Double getBalance() {
+    public BalanceSummaryResponse getBalanceSummary() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return balanceService.getBalance(username);
+        return balanceService.getBalanceSummary(username);
     }
 
     @PostMapping("/update")

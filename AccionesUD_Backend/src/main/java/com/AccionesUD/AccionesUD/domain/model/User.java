@@ -50,7 +50,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private int dailyOrderLimit;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Double balance = 0.0;
 
 

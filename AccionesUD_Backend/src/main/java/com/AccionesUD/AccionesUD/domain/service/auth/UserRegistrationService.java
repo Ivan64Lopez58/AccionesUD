@@ -34,6 +34,7 @@ public class UserRegistrationService {
             .id(request.getId())
             .phone(request.getPhone())
             .address(request.getAddress())
+            .balance(request.getBalance() != null ? request.getBalance() : 0.0)
             .role(Role.USER)
             .dailyOrderLimit(request.getDailyOrderLimit())
             .otpEnabled(request.isOtpEnabled())

@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { RelojesComponent } from './relojes/relojes.component'; // 👈 importa el componente
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpInterceptorFn } from '@angular/common/http';
@@ -13,7 +14,6 @@ import {
 } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './translate.config';
 import { ThemeService } from './servicio/tema/theme.service';
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -22,7 +22,7 @@ import { ThemeService } from './servicio/tema/theme.service';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    TranslateModule // 
+    TranslateModule, //
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -30,17 +30,16 @@ import { ThemeService } from './servicio/tema/theme.service';
 export class AppComponent implements OnInit {
   title = 'acciones-ud';
 
-constructor(
-  private themeService: ThemeService,
-  private translate: TranslateService
-) {
-  translate.addLangs(['en', 'es']);
-  translate.setDefaultLang('es');
+  constructor(
+    private themeService: ThemeService,
+    private translate: TranslateService
+  ) {
+    translate.addLangs(['en', 'es']);
+    translate.setDefaultLang('es');
 
-  const savedLang = localStorage.getItem('idioma');
-  const lang = savedLang ?? 'es';
-  translate.use(lang);
-
+    const savedLang = localStorage.getItem('idioma');
+    const lang = savedLang ?? 'es';
+    translate.use(lang);
   }
 
   ngOnInit(): void {}
