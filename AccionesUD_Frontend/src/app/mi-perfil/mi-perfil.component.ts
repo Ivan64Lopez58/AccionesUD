@@ -28,7 +28,7 @@ import { finalize, catchError } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { ThemeService } from '../servicio/tema/theme.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';// 👈 importa TranslateModule y TranslateService
-import { HistoricoOrdenesComponent } from "../historico-ordenes/historico-ordenes.component"; 
+import { HistoricoOrdenesComponent } from "../historico-ordenes/historico-ordenes.component";
 
 
 
@@ -251,6 +251,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
   // Cargar información del saldo
   loadBalanceInfo(): void {
     this.loadingBalance = true;
+
     this.transaccionesService
       .getUserBalance()
       .pipe(
@@ -259,6 +260,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
         }),
         catchError((err) => {
           console.error('Error al cargar información de saldo:', err);
+          // Mostrar un mensaje al usuario
+          alert('No se pudo cargar la información del saldo. Usando valores predeterminados.');
           return of({
             availableBalance: 200000,
             pendingBalance: 10000,
@@ -268,6 +271,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((data) => {
+        console.log('Datos de saldo recibidos:', data);
         this.balanceInfo = data;
       });
   }
@@ -549,37 +553,33 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
   }
 
   // Procesar solicitud de depósito
-  processDeposit(): void {
-    if (this.depositForm.invalid) return;
+  processDeposit(amount: number): void {
+  this.processingDeposit = true;
 
-    this.processingDeposit = true;
-    const amount = this.depositForm.value.amount;
+  this.transaccionesService
+    .depositFunds(amount)
+    .pipe(
+      finalize(() => {
+        this.processingDeposit = false;
+      })
+    )
+    .subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response);
+        // Cerrar modal y recargar saldo
+        this.closeDepositModal();
+        this.loadBalanceInfo();
 
-    this.transaccionesService
-      .depositFunds(amount)
-      .pipe(
-        finalize(() => {
-          this.processingDeposit = false;
-        })
-      )
-      .subscribe({
-        next: (response) => {
-          // Redirigir a la página de pago proporcionada por el backend
-          if (response && response.redirectUrl) {
-            window.location.href = response.redirectUrl;
-          } else {
-            // Si no hay URL, cerrar y mostrar mensaje
-            this.closeDepositModal();
-            alert('Solicitud de depósito enviada correctamente');
-          }
-        },
-        error: (err) => {
-          console.error('Error al procesar el depósito:', err);
-          alert(
-            'Error al procesar la solicitud de depósito. Por favor intente de nuevo.'
-          );
-        },
-      });
+        // Mostrar mensaje de éxito
+        alert('Depósito procesado correctamente. Se ha actualizado su saldo.');
+      },
+      error: (err) => {
+        console.error('Error al procesar el depósito:', err);
+        alert(
+          'Error al procesar la solicitud de depósito. Por favor intente de nuevo.'
+        );
+      },
+    });
   }
 
   // Método para cambiar el método de pago seleccionado
@@ -611,54 +611,42 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     this.currentDepositStep = 'method-selection';
   }
 
+  validateDepositAmount(amount: number): boolean {
+    if (!amount || amount <= 0) {
+      alert('Por favor ingrese un monto válido mayor a 0.');
+      return false;
+    }
+
+    if (amount < 10000) {
+      alert('El monto mínimo de depósito es de 10.000 COP.');
+      return false;
+    }
+
+    return true;
+  }
+
   // Método para procesar pago con billetera virtual
   processWalletPayment(): void {
     if (this.walletForm.invalid) return;
 
-    this.processingDeposit = true;
-    const formData = this.walletForm.value;
-
-    // Simulación de procesamiento
-    setTimeout(() => {
-      this.processingDeposit = false;
-      this.closeDepositModal();
-      alert('Pago con billetera virtual procesado correctamente');
-      this.loadBalanceInfo(); // Recargar saldo
-    }, 1500);
+    const amount = this.walletForm.value.amount;
+    this.processDeposit(amount);
   }
 
   // Método para procesar pago con tarjeta
   processCardPayment(): void {
     if (this.cardForm.invalid) return;
 
-    this.processingDeposit = true;
-    const formData = this.cardForm.value;
-
-    // Simulación de procesamiento
-    setTimeout(() => {
-      this.processingDeposit = false;
-      this.closeDepositModal();
-      alert(
-        `Pago con tarjeta ${this.selectedPaymentMethod.toUpperCase()} procesado correctamente`
-      );
-      this.loadBalanceInfo(); // Recargar saldo
-    }, 1500);
+    const amount = this.cardForm.value.amount;
+    this.processDeposit(amount);
   }
 
   // Método para procesar transferencia bancaria
   processBankTransfer(): void {
     if (this.bankTransferForm.invalid) return;
 
-    this.processingDeposit = true;
-    const formData = this.bankTransferForm.value;
-
-    // Simulación de procesamiento
-    setTimeout(() => {
-      this.processingDeposit = false;
-      this.closeDepositModal();
-      alert(`Transferencia bancaria a través de PSE procesada correctamente`);
-      this.loadBalanceInfo(); // Recargar saldo
-    }, 1500);
+    const amount = this.bankTransferForm.value.amount;
+    this.processDeposit(amount);
   }
 
   onSubmit(): void {
