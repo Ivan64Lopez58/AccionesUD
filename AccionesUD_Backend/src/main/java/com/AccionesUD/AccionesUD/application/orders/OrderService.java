@@ -11,7 +11,7 @@ public interface OrderService {
     
     List<OrderResponseDTO> listarTodasLasOrdenes();
 
-    OrderResponseDTO createOrder(OrderRequestDTO requestDTO);
+    OrderResponseDTO createOrder(OrderRequestDTO requestDTO, String username);
 
     OrderResponseDTO ejecutarOrden(Long orderId);
 
