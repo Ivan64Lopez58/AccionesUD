@@ -45,18 +45,18 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<?> createOrder(@RequestBody OrderRequestDTO dto) {
-       // try {
+        try {
             OrderResponseDTO resp = orderService.createOrder(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(resp);
            
-        //} 
-         /* catch (IllegalArgumentException ex) {
+        } 
+         catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                  .body("Error interno al crear orden.");
         }
-                                 */
+                                 
     }
 
     @GetMapping("/user/{username}")
