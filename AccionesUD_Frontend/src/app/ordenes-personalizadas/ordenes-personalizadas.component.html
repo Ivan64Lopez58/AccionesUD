@@ -5,10 +5,10 @@
     <div class="orden-tarjeta" *ngFor="let orden of ordenes">
       <div class="orden-info">
         <div class="orden-header">
-          <img 
-            [src]="orden.logo" 
-            [alt]="orden.name" 
-            class="orden-logo" 
+          <img
+            [src]="orden.logo"
+            [alt]="orden.name"
+            class="orden-logo"
             [class.logo-oculto]="orden.logo === 'N/A'"
           >
           <div>
@@ -94,7 +94,7 @@
         <label>
           <label for="marketOrder">Market Order</label>
           <label class="switch">
-            <input type="radio" name="orderType" value="market">
+            <input type="radio" name="orderType" value="MARKET">
             <span class="slider"></span>
             <span class="visually-hidden">{{ 'MARKET_ORDER' | translate }}</span>
           </label>
@@ -102,7 +102,7 @@
         <label>
           <label for="limitOrder">Limit Order</label>
           <label class="switch">
-            <input type="radio" name="orderType" value="market">
+            <input type="radio" name="orderType" value="MARKET">
             <span class="slider"></span>
             <span class="visually-hidden">{{ 'LIMIT_ORDER' | translate }}</span>
           </label>
@@ -119,19 +119,19 @@
         <label>
           <label for="stopLoss">Stop Loss:</label>
           <label class="switch">
-            <input type="checkbox" name="stop-loss" value="stop">
+            <input type="checkbox" name="stop-loss" value="STOP_LOSS">
             <span class="slider"></span>
             <span class="visually-hidden">{{ 'ENABLE_STOP_LOSS' | translate }}</span>
           </label>
         </label>
-        <input type="number" id="stopLoss" step="0.01" min="0.01" max="{{ordenSeleccionada?.compraPrecio}}" [value]="0.01">
+        <input type="number" id="stopLoss" step="0.01" min="0.0" max="{{ordenSeleccionada?.compraPrecio}}" [value]="">
       </label>
 
       <label class="take-profit">
         <label>
           <label for="takeProfit">Take Profit:</label>
           <label class="switch">
-            <input type="checkbox" name="take-profit" value="take">
+            <input type="checkbox" name="take-profit" value="TAKE_PROFIT">
             <span class="slider"></span>
             <span class="visually-hidden">{{ 'ENABLE_TAKE_PROFIT' | translate }}</span>
           </label>

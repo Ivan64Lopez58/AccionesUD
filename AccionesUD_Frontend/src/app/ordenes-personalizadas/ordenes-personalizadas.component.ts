@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PiePaginaPrincipalComponent } from '../pie-pagina-principal/pie-pagina-principal.component';
-import { OrderService, Order } from '../servicio/acciones/order.service';
+import { OrderService, Order, OrderRequest } from '../servicio/acciones/order.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Menu2Component } from '../menu2/menu2.component';
@@ -141,15 +141,53 @@ abrirModal(orden: Order, operacion: 'BUY' | 'SELL') {
   }
 
   enviarOrden(): void {
-    console.log('Orden enviada:', {
-      cantidad: this.cantidad,
-      precio: this.precio,
-      tipoOrden: this.tipoOrden,
-      stopLoss: this.stopLoss,
-      takeProfit: this.takeProfit,
+    if (!this.ordenSeleccionada || !this.tipoOperacion) {
+      console.error('No hay orden seleccionada o tipo de operación');
+      return;
+    }
+
+    // Preparar la solicitud de orden
+    const orderRequest: OrderRequest = {
+      symbol: this.ordenSeleccionada.name, // O usar un símbolo específico si lo tienes
+      quantity: this.cantidad,
+      orderType: this.tipoOrden.toUpperCase(),
+      price: this.tipoOrden === 'limit' ? this.precio : undefined,
+      stopLoss: this.stopLoss || undefined,
+      takeProfit: this.takeProfit || undefined,
+      side: this.tipoOperacion,
+      company: this.ordenSeleccionada.name
+    };
+
+    // Llamar al servicio para crear la orden
+    this.orderService.createOrder(orderRequest).subscribe({
+      next: (response) => {
+        console.log('Orden creada exitosamente:', response);
+        // Mostrar mensaje de éxito al usuario
+        alert('Orden creada exitosamente');
+        // Cerrar los modales
+        this.cerrarModal();
+        this.cerrarModalConfirmacion();
+
+        // Opcional: Refrescar la lista de órdenes
+        this.cargarOrdenes();
+      },
+      error: (error) => {
+        console.error('Error al crear la orden:', error);
+        // Mostrar mensaje de error al usuario
+        alert('Error al crear la orden: ' + (error.message || 'Intente nuevamente más tarde'));
+      }
     });
-    this.cerrarModal();
-    this.cerrarModalConfirmacion();
+  }
+
+  // Método para recargar las órdenes
+  cargarOrdenes(): void {
+    this.orderService.getOrders().subscribe({
+      next: (data) => {
+        this.ordenes = data;
+        console.log('Órdenes actualizadas:', this.ordenes);
+      },
+      error: (err) => console.error('Error al recargar las órdenes', err),
+    });
   }
 
 
