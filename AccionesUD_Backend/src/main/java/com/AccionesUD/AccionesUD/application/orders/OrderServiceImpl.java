@@ -1,6 +1,8 @@
 package com.AccionesUD.AccionesUD.application.orders;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,9 +14,12 @@ import com.AccionesUD.AccionesUD.dto.orders.OrderResponseDTO;
 import com.AccionesUD.AccionesUD.repository.OrderRepository;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderStatus;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderValidator;
+
 import org.springframework.context.ApplicationEventPublisher;
 import com.AccionesUD.AccionesUD.domain.model.notification.NotificationEvent;
 import com.AccionesUD.AccionesUD.domain.model.notification.NotificationType;
+import com.AccionesUD.AccionesUD.alpacaStock.application.StockService;
+import com.AccionesUD.AccionesUD.alpacaStock.domain.model.StockInfo;
 
 
 @Service
@@ -23,47 +28,39 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ModelMapper modelMapper;
     private final ApplicationEventPublisher eventPublisher;
+    private final StockService stockService;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher) {
+    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher, StockService stockService) {
         this.orderRepository = orderRepository;
         this.modelMapper = modelMapper;
         this.eventPublisher = eventPublisher;
+        this.stockService = stockService;
     }
 
-    @Override
+      @Override
     public OrderResponseDTO createOrder(OrderRequestDTO requestDTO) {
-        
-        // 1) Validar los datos de entrada según el tipo de orden
+
         OrderValidator.validate(requestDTO);
-
-        // 2) Mapear DTO → entidad Order (se usarán campos comunes)
+        StockInfo quote = stockService.getLatestTrade(requestDTO.getSymbol());
         Order orderEntity = modelMapper.map(requestDTO, Order.class);
-
-
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        //System.out.println("-----------------------------"+username);
+        String username = SecurityContextHolder.getContext()
+                                               .getAuthentication()
+                                               .getName();
         orderEntity.setUsername(username);
-
-        // 3) Inicializar campos técnicos
+        orderEntity.setMarketPrice(quote.getPrice());
+        orderEntity.setMarket(quote.getSymbol());
         orderEntity.setStatus(OrderStatus.PENDING);
         orderEntity.setCreatedAt(LocalDateTime.now());
-
-        // 4) Persistir en BD
         Order saved = orderRepository.save(orderEntity);
+        eventPublisher.publishEvent(new NotificationEvent(
+            this,
+            username,
+            NotificationType.ORDEN_CREADA,
+            "Orden creada",
+            "Has creado una orden del tipo " + requestDTO.getOrderType()
+        ));
 
-        eventPublisher.publishEvent(
-            new NotificationEvent(
-                this,
-                username,
-                NotificationType.ORDEN_CREADA, // Asegúrate de que exista en el enum
-                "Orden creada",
-                "Has creado una orden del tipo " + requestDTO.getOrderType()
-            )
-        );
-
-        // 5) Mapear entidad guardada → DTO de respuesta
-        OrderResponseDTO responseDTO = modelMapper.map(saved, OrderResponseDTO.class);
-        return responseDTO;
+        return modelMapper.map(saved, OrderResponseDTO.class);
     }
 
     @Override
@@ -74,7 +71,6 @@ public class OrderServiceImpl implements OrderService {
         orden.setStatus(OrderStatus.EXECUTED);
         Order actualizada = orderRepository.save(orden);
 
-        // ✅ Publicar evento
         eventPublisher.publishEvent(
             new NotificationEvent(
                 this,
@@ -96,7 +92,6 @@ public class OrderServiceImpl implements OrderService {
         orden.setStatus(OrderStatus.REJECTED);
         Order actualizada = orderRepository.save(orden);
 
-        // ✅ Publicar evento
         eventPublisher.publishEvent(
             new NotificationEvent(
                 this,
@@ -110,7 +105,64 @@ public class OrderServiceImpl implements OrderService {
         return modelMapper.map(actualizada, OrderResponseDTO.class);
     }
 
+   @Override
+    public List<OrderResponseDTO> listarTodasLasOrdenes() {
+        return orderRepository.findAll()
+            .stream()
+            .map(o -> modelMapper.map(o, OrderResponseDTO.class))
+            .collect(Collectors.toList());
+    }
 
+    @Override
+    public List<OrderResponseDTO> listarOrdenesPorUsuario(String username) {
+        return orderRepository.findByUsername(username)
+            .stream()
+            .map(o -> modelMapper.map(o, OrderResponseDTO.class))
+            .collect(Collectors.toList());
+    }
 
+    @Override
+    public long contarOrdenesPorUsuario(String username) {
+        return orderRepository.countByUsername(username);
+    }
+
+    @Override
+    public List<OrderResponseDTO> listarOrdenesPorMercado(String market) {
+        return orderRepository.findByMarket(market)
+            .stream()
+            .map(o -> modelMapper.map(o, OrderResponseDTO.class))
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResponseDTO> listarOrdenesPorCompany(String company) {
+        return orderRepository.findByCompany(company)
+            .stream()
+            .map(o -> modelMapper.map(o, OrderResponseDTO.class))
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderResponseDTO actualizarEstadoOrden(Long orderId, OrderStatus newStatus) {
+        Order o = orderRepository.findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException("Orden no encontrada: " + orderId));
+        OrderStatus current = o.getStatus();
+        if (current == OrderStatus.PENDING || current == OrderStatus.SENT) {
+            if (newStatus != OrderStatus.EXECUTED
+             && newStatus != OrderStatus.CANCELLED
+             && newStatus != OrderStatus.REJECTED
+             && newStatus != OrderStatus.EXPIRED) {
+                throw new IllegalArgumentException(
+                    "Transición no válida: no se puede cambiar de " 
+                    + current + " a " + newStatus);
+            }
+        } else {
+            throw new IllegalArgumentException(
+                "No se puede cambiar el estado desde " + current);
+        }
+        o.setStatus(newStatus);
+        Order saved = orderRepository.save(o);
+        return modelMapper.map(saved, OrderResponseDTO.class);
+    }
 
 }
