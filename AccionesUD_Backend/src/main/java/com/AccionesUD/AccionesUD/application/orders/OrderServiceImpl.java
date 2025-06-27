@@ -38,14 +38,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
       @Override
-    public OrderResponseDTO createOrder(OrderRequestDTO requestDTO) {
+    public OrderResponseDTO createOrder(OrderRequestDTO requestDTO, String username) {
 
         OrderValidator.validate(requestDTO);
         StockInfo quote = stockService.getLatestTrade(requestDTO.getSymbol());
         Order orderEntity = modelMapper.map(requestDTO, Order.class);
-        String username = SecurityContextHolder.getContext()
-                                               .getAuthentication()
-                                               .getName();
         orderEntity.setUsername(username);
         orderEntity.setMarketPrice(quote.getPrice());
         orderEntity.setMarket(quote.getSymbol());
