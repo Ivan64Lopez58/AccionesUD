@@ -1,18 +1,34 @@
 package com.AccionesUD.AccionesUD.utilities.orders;
 
+import java.math.BigDecimal;
+
 import com.AccionesUD.AccionesUD.dto.orders.OrderRequestDTO;
 
 public class OrderValidator {
 
     public static void validate(OrderRequestDTO dto) {
+        if (dto.getUsername() == null || dto.getUsername().trim().isEmpty()) {
+            throw new IllegalArgumentException("El campo 'username' es obligatorio y no puede estar vacío.");
+        }
+        if (dto.getMarket() == null || dto.getMarket().trim().isEmpty()) {
+            throw new IllegalArgumentException("El campo 'market' es obligatorio y no puede estar vacío.");
+        }
+        if (dto.getCompany() == null || dto.getCompany().trim().isEmpty()) {
+            throw new IllegalArgumentException("El campo 'company' es obligatorio y no puede estar vacío.");
+        }
         if (dto.getSymbol() == null || dto.getSymbol().trim().isEmpty()) {
             throw new IllegalArgumentException("El campo 'symbol' es obligatorio y no puede estar vacío.");
         }
         if (dto.getQuantity() == null || dto.getQuantity() <= 0) {
-            throw new IllegalArgumentException("La cantidad ('quantity') debe ser mayor que cero.");
+            throw new IllegalArgumentException("La 'quantity' debe ser un entero mayor que cero.");
         }
         if (dto.getOrderType() == null) {
             throw new IllegalArgumentException("El campo 'orderType' es obligatorio.");
+        }
+        
+         BigDecimal mp = dto.getMarketPrice();
+        if (mp != null && mp.doubleValue() <= 0) {
+            throw new IllegalArgumentException("'marketPrice', si se proporciona, debe ser mayor que cero.");
         }
 
         switch (dto.getOrderType()) {

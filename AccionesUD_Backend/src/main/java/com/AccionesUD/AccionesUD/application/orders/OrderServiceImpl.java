@@ -34,36 +34,26 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponseDTO createOrder(OrderRequestDTO requestDTO) {
-        
-        // 1) Validar los datos de entrada según el tipo de orden
+    
         OrderValidator.validate(requestDTO);
-
-        // 2) Mapear DTO → entidad Order (se usarán campos comunes)
         Order orderEntity = modelMapper.map(requestDTO, Order.class);
-
-
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        //System.out.println("-----------------------------"+username);
         orderEntity.setUsername(username);
 
-        // 3) Inicializar campos técnicos
         orderEntity.setStatus(OrderStatus.PENDING);
         orderEntity.setCreatedAt(LocalDateTime.now());
 
-        // 4) Persistir en BD
         Order saved = orderRepository.save(orderEntity);
 
         eventPublisher.publishEvent(
             new NotificationEvent(
                 this,
                 username,
-                NotificationType.ORDEN_CREADA, // Asegúrate de que exista en el enum
+                NotificationType.ORDEN_CREADA,
                 "Orden creada",
                 "Has creado una orden del tipo " + requestDTO.getOrderType()
             )
         );
-
-        // 5) Mapear entidad guardada → DTO de respuesta
         OrderResponseDTO responseDTO = modelMapper.map(saved, OrderResponseDTO.class);
         return responseDTO;
     }
@@ -110,44 +100,64 @@ public class OrderServiceImpl implements OrderService {
         return modelMapper.map(actualizada, OrderResponseDTO.class);
     }
 
-    @Override
+   @Override
     public List<OrderResponseDTO> listarTodasLasOrdenes() {
-        return orderRepository.findAll().stream()
-            .map(order -> {
-                OrderResponseDTO dto = modelMapper.map(order, OrderResponseDTO.class);
-                return dto;
-            })
+        return orderRepository.findAll()
+            .stream()
+            .map(o -> modelMapper.map(o, OrderResponseDTO.class))
             .collect(Collectors.toList());
     }
 
     @Override
     public List<OrderResponseDTO> listarOrdenesPorUsuario(String username) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarOrdenesPorUsuario'");
+        return orderRepository.findByUsername(username)
+            .stream()
+            .map(o -> modelMapper.map(o, OrderResponseDTO.class))
+            .collect(Collectors.toList());
     }
 
     @Override
     public long contarOrdenesPorUsuario(String username) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contarOrdenesPorUsuario'");
+        return orderRepository.countByUsername(username);
     }
 
     @Override
     public List<OrderResponseDTO> listarOrdenesPorMercado(String market) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarOrdenesPorMercado'");
+        return orderRepository.findByMarket(market)
+            .stream()
+            .map(o -> modelMapper.map(o, OrderResponseDTO.class))
+            .collect(Collectors.toList());
     }
 
     @Override
     public List<OrderResponseDTO> listarOrdenesPorCompany(String company) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarOrdenesPorCompany'");
+        return orderRepository.findByCompany(company)
+            .stream()
+            .map(o -> modelMapper.map(o, OrderResponseDTO.class))
+            .collect(Collectors.toList());
     }
 
     @Override
     public OrderResponseDTO actualizarEstadoOrden(Long orderId, OrderStatus newStatus) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizarEstadoOrden'");
+        Order o = orderRepository.findById(orderId)
+            .orElseThrow(() -> new IllegalArgumentException("Orden no encontrada: " + orderId));
+        OrderStatus current = o.getStatus();
+        if (current == OrderStatus.PENDING || current == OrderStatus.SENT) {
+            if (newStatus != OrderStatus.EXECUTED
+             && newStatus != OrderStatus.CANCELLED
+             && newStatus != OrderStatus.REJECTED
+             && newStatus != OrderStatus.EXPIRED) {
+                throw new IllegalArgumentException(
+                    "Transición no válida: no se puede cambiar de " 
+                    + current + " a " + newStatus);
+            }
+        } else {
+            throw new IllegalArgumentException(
+                "No se puede cambiar el estado desde " + current);
+        }
+        o.setStatus(newStatus);
+        Order saved = orderRepository.save(o);
+        return modelMapper.map(saved, OrderResponseDTO.class);
     }
 
 }
