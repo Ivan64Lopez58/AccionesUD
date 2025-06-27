@@ -12,7 +12,7 @@
   z-index: 10;
   margin-top: 100px;
   padding-top: 100px;
-  background: linear-gradient(to right, rgb(247, 200, 200), #ffffff);
+  background: var(--notif-background);
   height: 100%;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -27,7 +27,7 @@
 }
 
 .notificaciones-header {
-  background: linear-gradient(to right, #ffffff, rgb(247, 200, 200));
+  background: var(--notif-header-bg);
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
@@ -41,17 +41,17 @@
 .search-container {
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: var(--notif-search-bg);
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(230, 122, 117, 0.3);
+  border: 1px solid var(--notif-search-border);
   transition: all 0.2s ease;
 }
 
 .search-container:focus-within {
-  box-shadow: 0 0 0 2px rgba(230, 87, 79, 0.3);
-  border-color: #e67a75;
+  box-shadow: 0 0 0 2px var(--notif-search-focus-shadow);
+  border-color: var(--notif-search-focus-border);
 }
 
 .input-buscar {
@@ -61,17 +61,17 @@
   width: 220px;
   outline: none;
   font-family: 'Poppins', sans-serif;
-  color: #ffffff;
+  color: var(--notif-search-text);
   background: transparent;
 }
 
 .input-buscar::placeholder {
-  color: #ffffff;
+  color: var(--notif-search-placeholder);
   font-size: 0.9rem;
 }
 
 .btn-buscar {
-  background-color: #e67a75;
+  background-color: var(--notif-button-bg);
   color: white;
   border: none;
   height: 100%;
@@ -83,12 +83,12 @@
 }
 
 .btn-buscar:hover {
-  background-color: #d36560;
+  background-color: var(--notif-button-hover);
 }
 
 .btn-filtrar {
   height: 55px;
-  background-color: #e67a75;
+  background-color: var(--notif-button-bg);
   color: white;
   border: none;
   padding: 8px 20px;
@@ -102,7 +102,7 @@
 }
 
 .btn-filtrar:hover {
-  background-color: #d36560;
+  background-color: var(--notif-button-hover);
 }
 
 .notificaciones-actions {
@@ -137,7 +137,7 @@
   margin: 0;
   font-size: 1.8rem;
   font-weight: 600;
-  color: #333;
+  color: var(--notif-title-color);
 }
 
 .notificaciones-actions {
@@ -147,7 +147,7 @@
 
 .btn-buscar,
 .btn-filtrar {
-  background-color: #e67a75;
+  background-color: var(--notif-button-bg);
   color: white;
   border: none;
   padding: 8px 20px;
@@ -162,7 +162,7 @@
 
 .btn-buscar:hover,
 .btn-filtrar:hover {
-  background-color: #d36560;
+  background-color: var(--notif-button-hover);
 }
 
 .notificaciones-list {
@@ -172,9 +172,9 @@
 }
 
 .notificacion-item {
-  background: linear-gradient(to right, #ffffff, rgb(233, 115, 115));
+  background: var(--notif-item-bg);
   padding: 20px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--notif-item-border);
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -184,12 +184,12 @@
 }
 
 .notificacion-item:hover {
-  background: linear-gradient(to right, #ffffff, rgb(248, 174, 174));
+  background: var(--notif-item-hover);
   scale: 1.01;
 }
 
 .notificacion-item.leida {
-  background: linear-gradient(to right, #ffffff, rgb(232, 226, 245));
+  background: var(--notif-item-leida);
   opacity: 0.6;
 }
 
@@ -213,23 +213,23 @@
   font-size: 1.2rem;
   font-weight: 600;
   margin: 0;
-  color: #333;
+  color: var(--notif-title-color);
 }
 
 .notificacion-fecha {
-  color: #e63946;
+  color: var(--notif-fecha-color);
   font-size: 0.9rem;
 }
 
 .notificacion-descripcion {
-  color: #555;
+  color: var(--notif-descripcion-color);
   margin: 0;
   font-size: 1rem;
   line-height: 1.5;
 }
 
 .notificacion-toggle {
-  color: #555;
+  color: var(--notif-toggle-color);
   font-size: 1.2rem;
   cursor: pointer;
   margin-left: 15px;
@@ -237,15 +237,15 @@
 }
 
 .notificacion-toggle:hover {
-  color: #333;
+  color: var(--notif-toggle-hover);
 }
 
 .no-notificaciones {
   text-align: center;
   padding: 40px 20px;
-  color: #777;
+  color: var(--notif-empty-color);
   font-size: 1.1rem;
-  background: linear-gradient(to right, #ffffff, rgb(247, 200, 200));
+  background: var(--notif-header-bg);
   border-radius: 10px;
 }
 
@@ -293,7 +293,7 @@
 }
 
 .btn-filtrar:hover {
-  background-color: #2980b9;
+  background-color: var(--notif-button-hover);
 }
 
 .filtro-opciones {
@@ -301,10 +301,10 @@
   top: 100%;
   left: 0;
   margin-top: 4px;
-  background: white;
-  border: 1px solid #ccc;
+  background: var(--notif-dropdown-bg);
+  border: 1px solid var(--notif-dropdown-border);
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px var(--notif-dropdown-shadow);
   list-style: none;
   padding: 8px 0;
   width: 180px;
@@ -320,7 +320,7 @@
 
 
 .filtro-opciones li:hover {
-  background-color: #f0f0f0;
+  background-color: var(--notif-dropdown-item-hover);
 }
 
 .dropdown-filtro {
@@ -335,10 +335,10 @@
   top: 100%;
   left: 0;
   margin-top: 4px;
-  background: white;
-  border: 1px solid #ccc;
+  background: var(--notif-dropdown-bg);
+  border: 1px solid var(--notif-dropdown-border);
   border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px var(--notif-dropdown-shadow);
   list-style: none;
   padding: 8px 0;
   width: 180px;

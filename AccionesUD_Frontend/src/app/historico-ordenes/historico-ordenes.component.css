@@ -1,0 +1,79 @@
+h1 {
+    margin: 30px;
+}
+
+.historico-ordenes-lista {
+    background-color: #CF4E4E;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.registro-orden {
+    display:flex;
+    align-items: center;
+    flex-direction: row;
+    max-height: 100px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    margin: 15px;
+    border-radius: 15px;
+    background-color: #EAEAEA;
+}
+
+.registro-orden div {
+    padding: 1rem;
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+}
+
+.registro-orden .accion-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.registro-orden .operacion-orden {
+    display: flex;
+    max-width: 100px;
+    min-width: 100px;
+    font-weight: bold;
+}
+
+.registro-orden .info-accion {
+    display:flex;
+    flex-direction: row;    
+    gap: 1rem;
+    max-width: 30%;
+}
+
+.registro-orden .info-orden {
+    display:flex;
+    flex-direction: row;
+    gap: 1rem;
+    font-size: small;
+    color: gray;
+    max-width: 20%;
+}
+
+.registro-orden .info-orden div {
+    padding: 0px;
+}
+
+.boton-detalles {
+    width: 5%;
+    height: 90%;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 30%;
+    cursor: pointer;
+    margin: 10px;
+    background-color: transparent;
+}
+
+.logo-detalles {
+    height: 50px;
+    width: 40px;
+    object-fit: contain;
+    border-radius: 10px;
+}

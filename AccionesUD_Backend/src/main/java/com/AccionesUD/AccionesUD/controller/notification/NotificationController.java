@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.AccionesUD.AccionesUD.application.NotificationApplicationService;
 import com.AccionesUD.AccionesUD.domain.model.notification.Notification;
 import com.AccionesUD.AccionesUD.dto.notification.NotificationRequest;
+import com.AccionesUD.AccionesUD.dto.notification.NotificationResponse;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -21,7 +22,7 @@ public class NotificationController {
         this.service = service;
     }
 
-    // controller/notification/NotificationController.java
+    //  POST /api/notifications - Guardar notificación
     @PostMapping
     public ResponseEntity<Notification> sendNotification(@RequestBody NotificationRequest request) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -29,8 +30,7 @@ public class NotificationController {
         return ResponseEntity.ok(saved);
     }
 
-   
-        // controller/notification/NotificationController.java
+    //  GET /api/notifications - Obtener notificaciones originales
     @GetMapping
     public ResponseEntity<List<Notification>> getUserNotifications(
         @RequestParam(required = false) String type,
@@ -42,11 +42,22 @@ public class NotificationController {
         return ResponseEntity.ok(results);
     }
 
+    //  PATCH /api/notifications/{id}/read - Marcar como leída
     @PatchMapping("/{id}/read")
-        public ResponseEntity<Void> markAsRead(@PathVariable Long id) {
+    public ResponseEntity<Void> markAsRead(@PathVariable Long id) {
         service.markAsRead(id);
         return ResponseEntity.ok().build();
+    }
+
+// NUEVO: GET /api/notifications/translated?idioma=en
+@GetMapping("/translated")
+public ResponseEntity<List<NotificationResponse>> getTranslatedNotifications(
+    @RequestParam(defaultValue = "es") String idioma
+) {
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    List<NotificationResponse> translated = service.getNotificationsForUser(username, idioma);
+    return ResponseEntity.ok(translated);
 }
 
-
+    
 }

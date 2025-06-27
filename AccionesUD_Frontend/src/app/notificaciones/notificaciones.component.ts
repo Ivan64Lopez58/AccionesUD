@@ -8,6 +8,8 @@ import {
 } from '../servicio/notificaciones/notificaciones.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈 importa TranslateModule y TranslateService
+
 
 @Component({
   selector: 'app-notificaciones',
@@ -16,6 +18,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     Menu2Component,
     PiePaginaPrincipalComponent,
+    TranslateModule
   ],
   templateUrl: './notificaciones.component.html',
   styleUrl: './notificaciones.component.css',
@@ -27,28 +30,44 @@ export class NotificacionesComponent implements OnInit {
   notificaciones: Notificacion[] = [];
   expandedNotifications: { [key: number]: boolean } = {};
   busqueda: string = '';
-  tipoFiltro: string = 'Sin leer';
+  tipoFiltro: string = 'FILTER_UNREAD';
+
 
   constructor(
     private notificacionesService: NotificacionesService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private translate: TranslateModule
   ) {}
 
-  ngOnInit(): void {
-    this.cargarNotificaciones();
-  }
+ngOnInit(): void {
+  this.cargarNotificaciones();
+}
 
-  cargarNotificaciones(): void {
-  this.notificacionesService.getNotificaciones().subscribe({
-    next: (data) => {
-      this.notificacionesOriginales = data;
-      this.filtrarYBuscar(); // Aplica el filtro 'Sin leer'
+
+cargarNotificaciones(): void {
+  const idioma = localStorage.getItem('idioma') || 'es';
+
+  this.notificacionesService.getNotificacionesTraducidas(idioma).subscribe({
+    next: (data: any[]) => {
+      // Adaptamos las traducidas a la forma de Notificacion para mantener compatibilidad
+      this.notificacionesOriginales = data.map((n, index) => ({
+        id: index, // No viene con id real, puedes ajustar esto si lo tienes
+        title: n.title,
+        message: n.message,
+        type: n.type,
+        createdAt: n.createdAt,
+        read: false,
+        recipient: '',
+      }));
+      this.filtrarYBuscar();
     },
     error: (error) => {
-      console.error('Error al cargar notificaciones:', error);
+      console.error('Error al cargar notificaciones traducidas:', error);
     },
   });
 }
+
+
 
 
   formatFecha(fecha: string): string {
@@ -117,10 +136,10 @@ export class NotificacionesComponent implements OnInit {
       const coincideTexto = titulo.includes(texto) || mensaje.includes(texto);
 
       const coincideTipo =
-        this.tipoFiltro === 'TODAS' ||
+        this.tipoFiltro === 'FILTER_ALL' ||
         notif.type === this.tipoFiltro ||
-        (this.tipoFiltro === 'Leídas' && notif.read) ||
-        (this.tipoFiltro === 'Sin leer' && !notif.read);
+        (this.tipoFiltro === 'FILTER_READ' && notif.read) ||
+        (this.tipoFiltro === 'FILTER_UNREAD' && !notif.read);
 
       return coincideTexto && coincideTipo;
     });
@@ -135,8 +154,9 @@ export class NotificacionesComponent implements OnInit {
   mostrarOpciones: boolean = false;
 
   seleccionarFiltro(tipo: string): void {
-    this.tipoFiltro = tipo;
+    this.tipoFiltro = tipo; // ahora recibe claves como 'FILTER_READ', etc.
     this.mostrarOpciones = false;
     this.filtrarYBuscar();
   }
+
 }

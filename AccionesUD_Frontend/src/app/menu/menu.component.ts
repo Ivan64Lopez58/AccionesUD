@@ -9,15 +9,36 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationRequest } from '../servicio/notificaciones/notification-request.model';
+import { NotificacionesService } from '../servicio/notificaciones/notificaciones.service';
+import { AuthModalService } from '../servicio/auth-modal.service';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, TranslateModule],
 })
 export class MenuComponent {
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem('jwt');
+    if (!token) return false;
+
+    try {
+      // Decodificar el token (formato: header.payload.signature)
+      const payload = token.split('.')[1];
+      const decoded = JSON.parse(atob(payload));
+
+      // Verificar expiración
+      const currentTime = Math.floor(Date.now() / 1000);
+      return decoded.exp > currentTime;
+    } catch (e) {
+      return false;
+    }
+  }
   mostrarModal = false;
   animandoCerrar = false;
   loginForm: FormGroup;
@@ -29,7 +50,10 @@ export class MenuComponent {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService,
+  private notificacionesService: NotificacionesService,
+    private authModalService: AuthModalService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
@@ -203,5 +227,48 @@ export class MenuComponent {
           alert('Hubo un problema al procesar la solicitud.');
         },
       });
+  }
+
+  switchLang(lang: string): void {
+    this.translate.use(lang);                      // Cambia idioma del frontend
+    localStorage.setItem('idioma', lang);          // Guarda la preferencia
+    this.idiomaActual = lang;                      // Actualiza variable
+    this.cargarNotificacionesTraducidas();         // Llama al backend traducido
+  }
+
+idiomaActual: string = localStorage.getItem('idioma') || 'es';
+
+
+notificacionesTraducidas: NotificationRequest[] = [];
+
+cargarNotificacionesTraducidas(): void {
+  this.notificacionesService.getNotificacionesTraducidas(this.idiomaActual).subscribe({
+    next: (data) => {
+      this.notificacionesTraducidas = data;
+    },
+    error: (err) => {
+      console.error('Error al obtener notificaciones traducidas:', err);
+    }
+  });
+}
+
+ngOnInit(): void {
+  this.cargarNotificacionesTraducidas();
+
+    this.authModalService.abrirModal$.subscribe(() => {
+    this.abrirModal(); // ← muestra el modal de login
+  });
+}
+
+
+
+  menuIdiomaAbierto: boolean = false;
+
+  toggleMenuIdioma(): void {
+    this.menuIdiomaAbierto = !this.menuIdiomaAbierto;
+  }
+
+  cerrarMenuIdioma(): void {
+    this.menuIdiomaAbierto = false;
   }
 }

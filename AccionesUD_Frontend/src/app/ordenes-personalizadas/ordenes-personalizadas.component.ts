@@ -1,27 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuComponent } from '../menu/menu.component';
 import { PiePaginaPrincipalComponent } from '../pie-pagina-principal/pie-pagina-principal.component';
 import { OrderService, Order } from '../servicio/acciones/order.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Menu2Component } from '../menu2/menu2.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈 importa TranslateModule y TranslateService
+import { StockService } from '../servicio/twelve-mercados/stock.service';
+import { StockDTO } from '../servicio/twelve-mercados/stock.model';
 
 
 @Component({
   selector: 'app-ordenes-personalizadas',
-  imports: [ MenuComponent, PiePaginaPrincipalComponent , CommonModule, FormsModule],
+  imports: [
+    PiePaginaPrincipalComponent,
+    CommonModule,
+    FormsModule,
+    Menu2Component,
+    TranslateModule,
+  ],
   templateUrl: './ordenes-personalizadas.component.html',
   styleUrls: ['./ordenes-personalizadas.component.css'],
   standalone: true,
 })
 export class OrdenesPersonalizadasComponent implements OnInit {
-
   ordenes: Order[] = [];
+  symbol = 'AAPL';
+  stock: StockDTO | null = null;
+  error: string | null = null;
 
   mostrarModal: boolean = false; // Controla la visibilidad del modal
   mostrarModalConfirmacion: boolean = false;
   ordenSeleccionada: Order | null = null; // Almacena la orden seleccionada
   modalTitulo: string = '';
-
 
   // Estas propiedades ya no se inicializan con valores fijos, se asignarán desde la orden:
   cantidad!: number;
@@ -40,17 +50,39 @@ export class OrdenesPersonalizadasComponent implements OnInit {
   saldoDisponible!: number;
   aceptoTerminos: boolean = false;
 
-  constructor(private orderService: OrderService) { }
+  constructor(
+    private orderService: OrderService,
+    private translate: TranslateModule,
+    private stockService: StockService
+  ) {}
 
-  ngOnInit(): void {
+  buscarStock(): void {
+    this.stockService.getStock(this.symbol).subscribe({
+      next: (data) => {
+        this.stock = data;
+        this.error = null;
+      },
+      error: (err) => {
+        this.error = 'Error al obtener el stock.';
+        this.stock = null;
+        console.error(err);
+      }
+    });
+  }
+ngOnInit(): void {
+  // Cargar órdenes al iniciar
   this.orderService.getOrders().subscribe({
     next: (data) => {
       this.ordenes = data;
       console.log('Órdenes recibidas:', this.ordenes);
     },
-    error: (err) => console.error('Error al cargar las órdenes', err)
+    error: (err) => console.error('Error al cargar las órdenes', err),
   });
- }
+
+  // Cargar el stock al iniciar
+  this.buscarStock();
+}
+
 
   abrirModal(orden: Order, operacion: string): void {
     this.ordenSeleccionada = orden;
@@ -111,9 +143,10 @@ export class OrdenesPersonalizadasComponent implements OnInit {
       precio: this.precio,
       tipoOrden: this.tipoOrden,
       stopLoss: this.stopLoss,
-      takeProfit: this.takeProfit
+      takeProfit: this.takeProfit,
     });
     this.cerrarModal();
     this.cerrarModalConfirmacion();
   }
+
 }

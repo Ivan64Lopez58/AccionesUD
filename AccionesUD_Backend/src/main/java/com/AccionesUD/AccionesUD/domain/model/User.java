@@ -50,6 +50,10 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private int dailyOrderLimit;
 
+    @Column(nullable = false)
+    private Double balance = 0.0;
+
+
     // Métodos obligatorios de UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

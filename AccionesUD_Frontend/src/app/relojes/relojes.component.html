@@ -1,6 +1,6 @@
 <div class="relojes-container">
   <div *ngFor="let ciudad of ciudades" class="reloj">
-    <div class="nombre-ciudad">{{ ciudad.nombre }}</div>
+    <div class="nombre-ciudad">{{ ('CLOCKS.CITY.' + ciudad.nombreClave) | translate }}</div>
     <div class="hora-ciudad">{{ ciudad.hora }}</div>
   </div>
 </div>

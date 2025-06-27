@@ -34,6 +34,7 @@ public class SecurityConfig {
               authRequest
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/acciones/scrap").permitAll()
                 .anyRequest().authenticated()
                 )
             .sessionManagement(sessionManager->

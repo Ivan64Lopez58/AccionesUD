@@ -1,7 +1,7 @@
 <footer>
   <div class="footer-container">
     <div class="footer-section logo-social">
-      <img src="LogoReducido.svg" alt="Logo Empresa" class="footer-logo">
+      <img src="LogoReducido.svg" alt="{{ 'FOOTER.LOGO_ALT' | translate }}" class="footer-logo">
       <div class="social-icons">
         <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
           <img src="Youtube.svg" alt="YouTube" style="width: 40px; height: 40px;">
@@ -22,36 +22,36 @@
     </div>
 
     <div class="footer-section links">
-      <h2>Invertir</h2>
+      <h2>{{ 'FOOTER.INVEST' | translate }}</h2>
       <ul>
-        <li><a href="#">Bolsas</a></li>
+        <li><a href="#">{{ 'FOOTER.MARKETS' | translate }}</a></li>
       </ul>
     </div>
 
     <div class="footer-section links">
-      <h2>Sobre Acciones UD</h2>
+      <h2>{{ 'FOOTER.ABOUT' | translate }}</h2>
       <ul>
         <!-- Al hacer click se mostrará el modal para "La empresa" -->
-        <li><a (click)="openModal('empresa')">La empresa</a></li>
+        <li><a (click)="openModal('empresa')">{{ 'FOOTER.COMPANY' | translate }}</a></li>
         <!-- Aquí también se podría agregar otro enlace, si fuera necesario -->
-        <li><a (click)="openModal('contacto')">Contacto</a></li>
+        <li><a (click)="openModal('contacto')">{{ 'FOOTER.CONTACT' | translate }}</a></li>
       </ul>
     </div>
 
     <div class="footer-section links">
-      <h2>Inversores</h2>
+      <h2>{{ 'FOOTER.INVESTORS' | translate }}</h2>
       <ul>
-        <li><a href="#">Informes</a></li>
-        <li><a href="#">Precios de costización</a></li>
+        <li><a href="#">{{ 'FOOTER.REPORTS' | translate }}</a></li>
+        <li><a href="#">{{ 'FOOTER.PRICES' | translate }}</a></li>
       </ul>
     </div>
 
     <div class="footer-section links">
-      <h2>Legal</h2>
+      <h2>{{ 'FOOTER.LEGAL' | translate }}</h2>
       <ul>
-        <li><a (click)="openModal('documentacion')">Documentación y normativas</a></li>
-        <li><a (click)="openModal('avisoLegal')">Aviso Legal</a></li>
-        <li><a (click)="openModal('privacidad')">Política de privacidad</a></li>
+        <li><a (click)="openModal('documentacion')">{{ 'FOOTER.DOCUMENTATION' | translate }}</a></li>
+        <li><a (click)="openModal('avisoLegal')">{{ 'FOOTER.LEGAL_NOTICE' | translate }}</a></li>
+        <li><a (click)="openModal('privacidad')">{{ 'FOOTER.PRIVACY_POLICY' | translate }}</a></li>
       </ul>
     </div>
   </div>
@@ -64,69 +64,41 @@
     <div class="modal-content">
       <span class="close-btn" (click)="closeModal()">&times;</span>
       <div *ngIf="modalType === 'empresa'">
-       <h2>Acerca de la Empresa</h2>
-        <h3>Misión</h3>
-        <p>
-          Nuestra misión es diseñar y ofrecer soluciones financieras innovadoras y seguras que faciliten el acceso al crédito, impulsando el crecimiento económico de nuestros clientes y fomentando la inclusión financiera.
-        </p>
-        <h3>Visión</h3>
-        <p>
-          Aspiramos a ser líderes en el desarrollo de instrumentos financieros transformadores, estableciendo nuevos estándares de excelencia y generando valor a largo plazo para todos nuestros stakeholders.
-        </p>
-        <h3>Política de Calidad</h3>
-        <p>
-          Nos comprometemos a mantener una política de calidad basada en la mejora continua, la transparencia y la capacitación constante, asegurando servicios confiables y relaciones basadas en la confianza y la ética profesional.
-        </p>
+       <h2>{{ 'MODAL.COMPANY.TITLE' | translate }}</h2>
+       <h3>{{ 'MODAL.COMPANY.MISSION_TITLE' | translate }}</h3>
+       <p>{{ 'MODAL.COMPANY.MISSION' | translate }}</p>
+       <h3>{{ 'MODAL.COMPANY.VISION_TITLE' | translate }}</h3>
+       <p>{{ 'MODAL.COMPANY.VISION' | translate }}</p>
+       <h3>{{ 'MODAL.COMPANY.QUALITY_TITLE' | translate }}</h3>
+       <p>{{ 'MODAL.COMPANY.QUALITY' | translate }}</p>
       </div>
       <div *ngIf="modalType === 'contacto'">
-       <h2>Contacto</h2>
+       <h2>{{ 'MODAL.CONTACT.TITLE' | translate }}</h2>
         <p>
-          Dirección: Calle Falsa 123, Bogotá<br>
-          Teléfono: +57 300 1234567<br>
-          Correo: contacto&#64;accionesud.com<br>
+          {{ 'MODAL.CONTACT.ADDRESS' | translate }}<br>
+          {{ 'MODAL.CONTACT.PHONE' | translate }}<br>
+          {{ 'MODAL.CONTACT.EMAIL' | translate }}<br>
         </p>
       </div>
       <div *ngIf="modalType === 'documentacion'">
-       <h2>Documentación y normativas</h2>
-        <p>
-          En este apartado se recopila la documentación y las normativas que rigen nuestras operaciones. Nuestro compromiso es garantizar la transparencia y el cumplimiento de los estándares legales y de calidad establecidos por las autoridades correspondientes.
-        </p>
-        <p>
-          La documentación interna abarca procedimientos operativos, políticas de seguridad, lineamientos de calidad, protocolos de auditoría y cumplimiento normativo. Cada documento ha sido diseñado para asegurar la integridad, la eficiencia y la responsabilidad en todos nuestros procesos.
-        </p>
-        <p>
-          Nos comprometemos a mantener esta documentación actualizada y disponible para nuestros colaboradores y clientes, garantizando que todas las áreas de la empresa operen bajo los más altos estándares de excelencia y ética profesional.
-        </p>
+        <h2>{{ 'MODAL.DOCUMENTATION.TITLE' | translate }}</h2>
+        <p>{{ 'MODAL.DOCUMENTATION.P1' | translate }}</p>
+        <p>{{ 'MODAL.DOCUMENTATION.P2' | translate }}</p>
+        <p>{{ 'MODAL.DOCUMENTATION.P3' | translate }}</p>
       </div>
       <div *ngIf="modalType === 'avisoLegal'">
-        <h2>Aviso Legal</h2>
-        <p>
-          El presente Aviso Legal regula el acceso y uso del sitio web, así como de los servicios que en él se ofrecen. El usuario se compromete a utilizar la información y los contenidos del sitio conforme a la legalidad vigente y a las condiciones establecidas.
-        </p>
-        <p>
-          La empresa no se hace responsable de los daños o perjuicios que puedan derivarse del uso indebido de la información contenida en este sitio. Asimismo, queda prohibida la reproducción total o parcial de su contenido sin la debida autorización.
-        </p>
-        <p>
-          El acceso al sitio web implica la aceptación plena y sin reservas de este Aviso Legal y de los términos y condiciones que pudieran complementarlo, quedando el usuario obligado a respetar todas las normativas y disposiciones legales aplicables.
-        </p>
+        <h2>{{ 'MODAL.LEGAL_NOTICE.TITLE' | translate }}</h2>
+        <p>{{ 'MODAL.LEGAL_NOTICE.P1' | translate }}</p>
+        <p>{{ 'MODAL.LEGAL_NOTICE.P2' | translate }}</p>
+        <p>{{ 'MODAL.LEGAL_NOTICE.P3' | translate }}</p>
       </div>
       <div *ngIf="modalType === 'privacidad'">
-        <h2>Política de privacidad</h2>
-        <p>
-          En cumplimiento de lo establecido en la Ley 1581 de 2012 y demás normas complementarias en Colombia, esta Política de Privacidad tiene como finalidad proteger y garantizar la adecuada administración de la información personal de nuestros usuarios.
-        </p>
-        <p>
-          La información que usted nos proporciona, ya sea de forma directa o a través de la navegación en nuestro sitio web, se recopila, utiliza y almacena de manera confidencial, única y exclusivamente para los fines autorizados, tales como mejorar los servicios, personalizar la experiencia del usuario y cumplir con obligaciones legales.
-        </p>
-        <p>
-          Implementamos medidas de seguridad administrativas, técnicas y físicas para proteger sus datos personales contra el acceso no autorizado, divulgación, alteración o destrucción. Sus datos no serán compartidos con terceros sin su consentimiento, salvo cuando la ley lo exija.
-        </p>
-        <p>
-          Usted tiene el derecho de conocer, actualizar, rectificar y solicitar la supresión de sus datos personales. Para ejercer estos derechos, puede contactarnos a través de los medios que ponemos a su disposición en nuestro sitio web.
-        </p>
-        <p>
-          Al utilizar nuestro sitio web, usted acepta los términos de esta Política de Privacidad, reconociendo que se reserva el derecho de efectuar modificaciones a la misma. Le recomendamos revisar periódicamente este apartado para estar informado sobre posibles cambios.
-        </p>
+        <h2>{{ 'MODAL.PRIVACY.TITLE' | translate }}</h2>
+        <p>{{ 'MODAL.PRIVACY.P1' | translate }}</p>
+        <p>{{ 'MODAL.PRIVACY.P2' | translate }}</p>
+        <p>{{ 'MODAL.PRIVACY.P3' | translate }}</p>
+        <p>{{ 'MODAL.PRIVACY.P4' | translate }}</p>
+        <p>{{ 'MODAL.PRIVACY.P5' | translate }}</p>
       </div>
     </div>
   </div>
