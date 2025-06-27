@@ -1,0 +1,127 @@
+/* Contenedor de filtros */
+.controls .filters {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.controls label {
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.controls select {
+  margin-right: 20px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+
+/* Contenedor general de tarjetas */
+.portfolio-cards {
+  background-color: #4c4c5d;
+  padding: 20px;
+  border: 2px dashed #b67fd0;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* Cada tarjeta individual de acción */
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #eee;
+  border-radius: 15px;
+  padding: 10px 20px;
+  margin-bottom: 15px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón vender */
+.card .sell-btn {
+  background-color: #666;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Imagen de la acción */
+.card .logo {
+  width: 40px;
+  height: 40px;
+  margin: 0 15px;
+}
+
+/* Nombre de la empresa */
+.card .name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  flex: 1;
+  padding: 10px;
+}
+
+/* Valores: cantidad, precios */
+.card .values {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.card .values div {
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.card .values div span {
+  display: block;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Botón de más opciones */
+.card .options {
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 20px;
+}
+
+/* Encabezado de filtros y título */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.controls h1 {
+  padding-left: 50px;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+.filters{
+  padding: 1rem;
+  background-color: #eaeaea;
+  border-radius: 5px;
+
+}
+.sell-btn {
+  background-color: #8c8c8c;
+  color: #000;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
