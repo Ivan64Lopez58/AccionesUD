@@ -126,6 +126,7 @@ abrirModal(orden: Order, operacion: 'BUY' | 'SELL') {
     this.takeProfit = orden.takeProfit;
     this.totalEstimado = orden.totalEstimado;
     this.saldoDisponible = orden.saldoDisponible;
+symbol: this.symbol, // ← o this.stock?.simbolo
 
     this.modalTitulo = operacion;
     this.mostrarModalConfirmacion = true;
@@ -147,18 +148,28 @@ abrirModal(orden: Order, operacion: 'BUY' | 'SELL') {
     }
 
     // Preparar la solicitud de orden
-    const orderRequest: OrderRequest = {
-      symbol: this.ordenSeleccionada.name, // O usar un símbolo específico si lo tienes
-      quantity: this.cantidad,
-      orderType: this.tipoOrden.toUpperCase(),
-      price: this.tipoOrden === 'limit' ? this.precio : undefined,
-      stopLoss: this.stopLoss || undefined,
-      takeProfit: this.takeProfit || undefined,
-      side: this.tipoOperacion,
-      company: this.ordenSeleccionada.name
-    };
+const orderType = this.tipoOrden.toUpperCase();
+
+const orderRequest: any = {
+  symbol: this.stock?.ticker ?? this.symbol,
+  quantity: this.cantidad,
+  orderType,
+  marketPrice: this.precio,
+  company: this.ordenSeleccionada.name,
+  market: 'NASDAQ',
+  username: 'demo_user'
+};
+
+// Solo agregar los campos si NO es MARKET
+if (orderType !== 'MARKET') {
+  orderRequest.stopLossPrice = this.stopLoss;
+  orderRequest.takeProfitPrice = this.takeProfit;
+}
+
+
 
     // Llamar al servicio para crear la orden
+    console.log('🟡 Enviando orden:', orderRequest);
     this.orderService.createOrder(orderRequest).subscribe({
       next: (response) => {
         console.log('Orden creada exitosamente:', response);

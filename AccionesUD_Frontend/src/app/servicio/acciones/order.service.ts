@@ -61,13 +61,14 @@ export interface Order {
 export interface OrderRequest {
   symbol: string;
   quantity: number;
-  orderType: string;
-  price?: number;
-  stopLoss?: number;
-  takeProfit?: number;
-  side: 'BUY' | 'SELL';
+  orderType: 'MARKET' | 'LIMIT'; 
+  marketPrice: number;
+  stopLossPrice?: number;
+  takeProfitPrice?: number;
   company: string;
+  market: string;
 }
+
 
 @Injectable({
   providedIn: 'root'
@@ -143,6 +144,8 @@ getOrders(): Observable<Order[]> {
 
 // Método para crear una orden en el backend
   createOrder(orderRequest: OrderRequest): Observable<any> {
+    console.log("🟡 Enviando orden:", JSON.stringify(orderRequest, null, 2));
+
     return this.http.post<any>(this.apiUrl, orderRequest);
   }
 }
