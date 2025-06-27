@@ -59,11 +59,13 @@ public class BalanceServiceImpl implements BalanceService {
 
         double saldoProyectado = saldo + totalPendientes; // O restar si así lo prefieres
 
+        String currency = "COP"; // Puedes cambiar la moneda si es necesario
+
         return BalanceSummaryResponse.builder()
             .availableBalance(saldo)
             .pendingBalance(totalPendientes)
             .totalBalance(saldoProyectado)
-            .currency("COP") // Puedes cambiar la moneda si es necesario
+            .currency(currency)// Puedes cambiar la moneda si es necesario
             .build();
     }
 }

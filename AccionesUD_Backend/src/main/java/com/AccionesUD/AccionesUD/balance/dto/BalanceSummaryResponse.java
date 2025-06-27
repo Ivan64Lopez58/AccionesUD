@@ -9,6 +9,6 @@ public class BalanceSummaryResponse {
     private Double availableBalance;
     private Double pendingBalance;
     private Double totalBalance;
-    private String currency = "COP";
+    private String currency;
 }
 
