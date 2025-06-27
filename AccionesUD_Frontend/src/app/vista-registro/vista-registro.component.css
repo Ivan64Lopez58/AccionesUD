@@ -1,22 +1,33 @@
+.registro{
+  background: var(--registro-bg-gradient);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .registro-container {
   position: relative;
-  max-width: 700px;
+  width: 100%;
+  max-width: 900px;
   margin: 3rem auto;
   padding: 2.5rem;
-  background: linear-gradient(to right, #ffffff, #fef6f4);
+  background: var(--registro-container-bg);
   border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px var(--registro-container-shadow);
   font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
   transition: transform 0.3s ease;
 }
 
 .registro-container:hover {
-  transform: scale(1.01);
+  transform: scale(1.02);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border: var(--registro-container-border) 1px solid;
 }
 
 h2 {
   text-align: center;
-  color: #E6574F;
+  color: var(--registro-titulo);
   margin-bottom: 2rem;
   font-size: 1.8rem;
 }
@@ -30,14 +41,14 @@ form {
 label {
   font-weight: 600;
   margin-bottom: 0.4rem;
-  color: #2A3448;
+  color: var(--registro-label);
   font-size: 0.95rem;
 }
 
 input,
 textarea {
   padding: 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--registro-input-border);
   border-radius: 10px;
   font-size: 1rem;
   font-family: inherit;
@@ -46,19 +57,19 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: #aaa;
+  color: var(--registro-input-placeholder);
 }
 
 input:focus,
 textarea:focus {
-  border-color: #E6574F;
-  box-shadow: 0 0 0 3px rgba(230, 87, 79, 0.2);
+  border-color: var(--registro-input-focus-border);
+  box-shadow: 0 0 0 3px var(--registro-input-focus-shadow);
   outline: none;
 }
 
 button[type="submit"] {
-  background: linear-gradient(135deg, #e6574f, #ff725e);
-  color: white;
+  background: var(--registro-btn-gradient);
+  color: var(--registro-btn-text);
   border: none;
   padding: 0.9rem;
   border-radius: 10px;
@@ -70,9 +81,9 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background: linear-gradient(135deg, #cc4a44, #ff4e39);
+  background: var(--registro-btn-hover-gradient);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(230, 87, 79, 0.4);
+  box-shadow: 0 4px 12px var(--registro-btn-hover-shadow);
 }
 
 .row {
@@ -94,7 +105,7 @@ button[type="submit"]:hover {
   top: 12px;
   right: 16px;
   background: transparent;
-  color: #e74c3c;
+  color: var(--registro-cerrar-btn);
   border: none;
   font-size: 2rem;
   font-weight: bold;
@@ -105,5 +116,5 @@ button[type="submit"]:hover {
 
 
 .cerrar-btn:hover {
-  color: #ff3b2e;
+  color: var(--registro-cerrar-btn-hover);
 }

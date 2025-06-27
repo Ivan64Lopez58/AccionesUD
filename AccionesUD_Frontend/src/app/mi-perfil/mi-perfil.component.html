@@ -1,0 +1,607 @@
+<app-menu2 style="position: fixed; top: 0; left: 0; width: 101vw; z-index: 1000;"></app-menu2>
+<div class="perfil">
+  <!-- Tarjeta de Perfil -->
+  <div class="tarjeta perfil-container" [class.contraido]="isPerfilContraido">
+    <div *ngIf="isPerfilContraido" class="tarjeta-header" (click)="togglePerfil()">
+      <img src="persona.svg" alt="Icono perfil" class="tarjeta-icono" />
+      <div class="tarjeta-info">
+        <p class="tarjeta-titulo">{{ perfilForm.get('firstname')?.value }} {{ perfilForm.get('lastname')?.value }}</p>
+        <p class="tarjeta-subtitulo">{{ perfilForm.get('username')?.value }}</p>
+      </div>
+      <span class="tarjeta-toggle">▼</span>
+    </div>
+    <div *ngIf="!isPerfilContraido">
+      <button class="cerrar-btn" (click)="togglePerfil()" aria-label="Contraer tarjeta">▲</button>
+      <h2>{{ 'MY_PROFILE' | translate }}</h2>
+
+      <!-- Selectores de idioma y tema -->
+    <div class="preferencias-container">
+      <div class="preferencia-item">
+        <label for="idioma">{{ 'LANGUAGE' | translate }}</label>
+        <div class="custom-select">
+          <select id="idioma" [(ngModel)]="selectedLanguage" (change)="changeLanguage()">
+            <option value="es">{{ 'SPANISH' | translate }}</option>
+            <option value="en">{{ 'ENGLISH' | translate }}</option>
+          </select>
+          <div class="select-arrow">▼</div>
+        </div>
+      </div>
+
+      <div class="preferencia-item">
+        <label for="tema">{{ 'THEME' | translate }}</label>
+        <div class="custom-select">
+          <select id="tema" [(ngModel)]="selectedTheme" (change)="changeTheme()">
+            <option value="light">{{ 'THEME_LIGHT' | translate }}</option>
+            <option value="dark">{{ 'THEME_DARK' | translate }}</option>
+          </select>
+          <div class="select-arrow">▼</div>
+        </div>
+      </div>
+    </div>
+
+      <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="form-field">
+            <label for="firstname">{{ 'FIRST_NAME' | translate }}</label>
+            <input id="firstname" formControlName="firstname" placeholder="{{ 'FIRST_NAME_EXAMPLE' | translate }}" />
+          </div>
+          <div class="form-field">
+            <label for="lastname">{{ 'LAST_NAME' | translate }}</label>
+            <input id="lastname" formControlName="lastname" placeholder="{{ 'LAST_NAME_EXAMPLE' | translate }}" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-field">
+            <label for="id">{{ 'ID_NUMBER' | translate }}</label>
+            <input id="id" formControlName="id" placeholder="{{ 'ID_EXAMPLE' | translate }}" />
+          </div>
+          <div class="form-field">
+            <label for="phone">{{ 'PHONE' | translate }}</label>
+            <input id="phone" formControlName="phone" placeholder="{{ 'PHONE_EXAMPLE' | translate }}" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-field">
+            <label for="username">{{ 'EMAIL' | translate }}</label>
+            <input id="username" type="email" formControlName="username" placeholder="{{ 'EMAIL_EXAMPLE' | translate }}" />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>{{ 'ADDITIONAL_EMAILS' | translate }}</label>
+          <div formArrayName="emails">
+            <ng-container *ngFor="let email of emails.controls; let i = index">
+              <div [formGroupName]="i" class="email-row">
+                <input type="email" formControlName="value" placeholder="{{ 'ADDITIONAL_EMAIL' | translate }}" />
+                <button type="button" class="btn-remove" (click)="removeEmail(i)">−</button>
+              </div>
+            </ng-container>
+
+            <button
+              type="button"
+              class="btn-add"
+              (click)="addEmail()"
+              [disabled]="emails.length >= 2">
+              + {{ 'ADD_EMAIL' | translate }}
+            </button>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="address">{{ 'ADDRESS' | translate }}</label>
+          <textarea id="address" formControlName="address" placeholder="{{ 'ADDRESS_EXAMPLE' | translate }}"></textarea>
+        </div>
+
+        <div class="row">
+          <label for="otpToggle" class="activarotp">{{ 'ENABLE_OTP' | translate }}</label>
+          <label class="switch">
+            <input type="checkbox" id="otpToggle" formControlName="otpEnabled" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="form-field">
+          <label for="dailyOrderLimit">{{ 'DAILY_ORDER_LIMIT' | translate }}</label>
+          <div class="number-input">
+            <input
+              type="number"
+              id="dailyOrderLimit"
+              formControlName="dailyOrderLimit"
+              min="1"
+            />
+          </div>
+        </div>
+
+        <button type="submit">{{ 'SAVE_CHANGES' | translate }}</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tarjeta de Saldo -->
+  <div class="tarjeta saldo-container" [class.contraido]="isSaldoContraido">
+    <div *ngIf="isSaldoContraido" class="tarjeta-header" (click)="toggleSaldo()">
+  <img src="Saldo.svg" alt="Icono saldo" class="tarjeta-icono" />
+  <div class="tarjeta-info">
+    <p class="tarjeta-titulo">{{ 'MY_BALANCE' | translate }}</p>
+    <p class="tarjeta-subtitulo">
+      {{ 'Total' | translate }}: {{ formatCurrency(balanceInfo.availableBalance) }}
+    </p>
+  </div>
+  <span class="tarjeta-toggle">▼</span>
+</div>
+    <div *ngIf="!isSaldoContraido" class="saldo-expanded">
+      <button class="cerrar-btn" (click)="toggleSaldo()" aria-label="Contraer tarjeta">▲</button>
+      <h2>{{ 'MY_BALANCE' | translate }}</h2>
+
+      <!-- Spinner de carga para saldo -->
+      <div *ngIf="loadingBalance" class="loading-spinner-container">
+        <div class="loading-spinner"></div>
+        <p>{{ 'LOADING_BALANCE' | translate }}</p>
+      </div>
+
+      <div *ngIf="!loadingBalance" class="saldo-resumen">
+        <div class="saldo-info">
+          <div class="saldo-item">
+            <span>{{ 'AVAILABLE_BALANCE' | translate }}:</span>
+            <span class="saldo-valor">{{ formatCurrency(balanceInfo.availableBalance) }}</span>
+          </div>
+          <div class="saldo-item">
+            <span>{{ 'PENDING_BALANCE' | translate }}:</span>
+            <span class="saldo-valor">{{ formatCurrency(balanceInfo.pendingBalance) }}</span>
+          </div>
+          <div class="saldo-item total">
+            <span>{{ 'TOTAL' | translate }}:</span>
+            <span class="saldo-valor">{{ formatCurrency(balanceInfo.totalBalance) }}</span>
+          </div>
+        </div>
+
+        <!-- Pestañas de navegación -->
+        <div class="saldo-tabs">
+          <div class="tabs-container">
+            <button
+              [class.active]="activeTab === 'resumen'"
+              (click)="setActiveTab('resumen')"
+              class="tab-btn">
+              {{ 'SUMMARY' | translate }}
+            </button>
+            <button
+              [class.active]="activeTab === 'historial'"
+              (click)="setActiveTab('historial')"
+              class="tab-btn">
+              {{ 'HISTORY' | translate }}
+            </button>
+          </div>
+
+          <!-- Contenido de la pestaña Resumen -->
+          <div *ngIf="activeTab === 'resumen'" class="tab-content resumen-tab">
+            <div class="chart-container">
+              <div class="chart-filter">
+                <button
+                  class="filter-btn"
+                  [class.selected]="selectedPeriod === 'month'"
+                  (click)="changePeriod('month')">
+                  {{ 'MONTH' | translate }}
+                </button>
+                <button
+                  class="filter-btn"
+                  [class.selected]="selectedPeriod === 'week'"
+                  (click)="changePeriod('week')">
+                  {{ 'WEEK' | translate }}
+                </button>
+                <button
+                  class="filter-btn"
+                  [class.selected]="selectedPeriod === 'day'"
+                  (click)="changePeriod('day')">
+                  {{ 'DAY' | translate }}
+                </button>
+              </div>
+
+              <!-- Spinner de carga para el gráfico -->
+              <div *ngIf="loadingChartData" class="loading-spinner-container chart-loading">
+                <div class="loading-spinner"></div>
+                <p>{{ 'LOADING_CHART_DATA' | translate }}</p>
+              </div>
+
+              <div *ngIf="!loadingChartData" class="chart">
+                <!-- Gráfico de barras simulado -->
+                <div class="chart-wrapper">
+                  <div class="chart-grid">
+                    <div class="grid-line">250.000</div>
+                    <div class="grid-line">200.000</div>
+                    <div class="grid-line">150.000</div>
+                    <div class="grid-line">100.000</div>
+                    <div class="grid-line">50.000</div>
+                    <div class="grid-line">0</div>
+                  </div>
+
+                  <!-- Gráfico de barras -->
+                  <div class="chart-bars">
+                    <ng-container *ngFor="let item of chartData">
+                      <div class="bar-container">
+                        <div class="bar" [style.height.%]="item.value"></div>
+                        <span class="bar-label">{{ item.label }}</span>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <div class="chart-line"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contenido de la pestaña Historial -->
+          <div *ngIf="activeTab === 'historial'" class="tab-content historial-tab">
+            <div class="historial-header">
+              <div class="search-container">
+                <div class="search-input-wrapper">
+                  <input
+                    type="text"
+                    class="search-input"
+                    placeholder="{{ 'SEARCH_BANK_PLACEHOLDER' | translate }}"
+                    [(ngModel)]="bankSearchTerm"
+                    (keyup.enter)="searchTransactions()"
+                  />
+                  <button class="search-btn" (click)="searchTransactions()" [disabled]="loadingTransactions">
+                    <i class="fa fa-search"></i> {{ 'SEARCH' | translate }}
+                  </button>
+                </div>
+                <div class="filter-buttons">
+                  <button
+                    class="filter-btn"
+                    [class.selected]="selectedPeriod === 'month'"
+                    (click)="changePeriod('month')">
+                    {{ 'MONTH' | translate }}
+                  </button>
+                  <button
+                    class="filter-btn"
+                    [class.selected]="selectedPeriod === 'week'"
+                    (click)="changePeriod('week')">
+                    {{ 'WEEK' | translate }}
+                  </button>
+                  <button
+                    class="filter-btn"
+                    [class.selected]="selectedPeriod === 'day'"
+                    (click)="changePeriod('day')">
+                    {{ 'DAY' | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Spinner de carga para transacciones -->
+            <div *ngIf="loadingTransactions" class="loading-spinner-container">
+              <div class="loading-spinner"></div>
+              <p>{{ 'LOADING_TRANSACTIONS' | translate }}</p>
+            </div>
+
+            <!-- Lista de transacciones filtradas -->
+            <div *ngIf="!loadingTransactions" class="historial-list">
+              <ng-container *ngIf="filteredTransactions.length > 0; else noResults">
+                <div class="historial-item" *ngFor="let transaction of filteredTransactions" (click)="showTransactionDetails(transaction)">
+                  <div class="item-status" [ngClass]="transaction.status">
+                    <i class="fa"
+                       [class.fa-check-circle]="transaction.status === 'success'"
+                       [class.fa-clock-o]="transaction.status === 'pending'"
+                       [class.fa-times-circle]="transaction.status === 'failed'">
+                    </i>
+                  </div>
+                  <div class="item-details">
+                    <div class="item-title" [innerHtml]="isSearchActive ? highlightSearchTerm(transaction.bank) : transaction.bank"></div>
+                    <div class="item-date">{{ transaction.date }}</div>
+                  </div>
+                  <div class="item-amount">{{ transaction.amount }}</div>
+                </div>
+              </ng-container>
+              <ng-template #noResults>
+                <div class="no-results">
+                  <p>{{ 'NO_RESULTS_FOUND' | translate:{bank: bankSearchTerm} }}"</p>
+                  <button class="btn-secondary" (click)="clearSearch()">{{ 'SHOW_ALL' | translate }}</button>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-ingresar" (click)="openDepositModal()">{{ 'DEPOSIT_MONEY' | translate }}</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tarjeta de Historial de Órdenes -->
+  <div class="tarjeta historial-container" [class.contraido]="isHistorialContraido">
+    <div *ngIf="isHistorialContraido" class="tarjeta-header" (click)="toggleHistorial()">
+      <img src="historialsaldo.svg" alt="Icono historial" class="tarjeta-icono" />
+      <div class="tarjeta-info">
+        <p class="tarjeta-titulo">{{ 'ORDER_HISTORY' | translate }}</p>
+        <p class="tarjeta-subtitulo">{{ 'ORDER_SUMMARY' | translate }}</p>
+      </div>
+      <span class="tarjeta-toggle">▼</span>
+    </div>
+    <div *ngIf="!isHistorialContraido">
+      <button class="cerrar-btn" (click)="toggleHistorial()" aria-label="Contraer tarjeta">▲</button>
+      <h2>{{ 'ORDER_HISTORY' | translate }}</h2>
+      <div class="historial-contenido">
+        <app-historico-ordenes></app-historico-ordenes>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para los detalles de la transacción -->
+<div *ngIf="showTransactionModal" class="modal-overlay" (click)="closeModal($event)">
+  <div class="modal-content transaction-modal">
+    <span class="close-btn" (click)="closeTransactionModal()">&times;</span>
+    <h2>{{ selectedTransaction?.type || ('DEPOSIT_OF' | translate) }} {{ selectedTransaction?.bank }}</h2>
+
+    <div class="transaction-details">
+      <div class="detail-group">
+        <p class="detail-question">{{ 'TO_WHERE' | translate }}</p>
+        <p class="detail-answer">{{ selectedTransaction?.bank }}</p>
+      </div>
+
+      <div class="detail-group">
+        <p class="detail-question">{{ 'HOW_MUCH' | translate }}</p>
+        <p class="detail-answer">{{ selectedTransaction?.amount }}</p>
+      </div>
+
+      <div class="detail-group">
+        <p class="detail-question">{{ 'DATE' | translate }}</p>
+        <p class="detail-answer">{{ selectedTransaction?.fullDate || selectedTransaction?.date }}</p>
+      </div>
+
+      <div class="detail-group">
+        <p class="detail-question">{{ 'REFERENCE' | translate }}</p>
+        <p class="detail-answer">{{ selectedTransaction?.reference || 'Sin referencia' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para selección de método de pago -->
+<div *ngIf="showDepositModal" class="modal-overlay" (click)="closeModal($event)">
+  <div class="modal-content payment-modal">
+    <span class="close-btn" (click)="closeDepositModal()">×</span>
+    <h2>{{ 'DEPOSIT_MONEY' | translate }}</h2>
+
+    <!-- Formulario de selección de método de pago -->
+    <div *ngIf="currentDepositStep === 'method-selection'">
+      <div class="payment-selection">
+        <label for="paymentMethod">{{ 'SELECT_PAYMENT_METHOD' | translate }}</label>
+        <div class="custom-select">
+          <select
+            id="paymentMethod"
+            [(ngModel)]="selectedPaymentMethod"
+            (change)="onPaymentMethodChange()">
+            <option value="" disabled selected>{{ 'SELECT_ONE' | translate }}</option>
+            <option value="pse">PSE</option>
+            <option value="visa">Visa</option>
+            <option value="mastercard">Mastercard</option>
+            <option value="wallet">{{ 'VIRTUAL_WALLET' | translate }}</option>
+          </select>
+          <div class="select-arrow">▼</div>
+        </div>
+      </div>
+
+      <button
+        class="deposit-btn"
+        [disabled]="!selectedPaymentMethod"
+        (click)="goToPaymentForm()">
+        {{ 'CONTINUE' | translate }}
+      </button>
+    </div>
+
+    <!-- Formulario de billetera virtual -->
+    <div *ngIf="currentDepositStep === 'wallet'">
+      <form [formGroup]="walletForm" (ngSubmit)="processWalletPayment()">
+        <div class="form-field">
+          <label for="walletAmount">{{ 'AMOUNT' | translate }}</label>
+          <input
+            type="number"
+            id="walletAmount"
+            formControlName="amount"
+            placeholder="{{ 'ENTER_AMOUNT' | translate }}"
+            min="10000">
+        </div>
+
+        <div class="form-field">
+          <label for="walletAddress">{{ 'WALLET_ADDRESS' | translate }}</label>
+          <input
+            type="text"
+            id="walletAddress"
+            formControlName="address"
+            placeholder="{{ 'ENTER_ADDRESS' | translate }}">
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="walletTerms" formControlName="terms">
+          <label for="walletTerms">{{ 'TERMS_AND_PRIVACY' | translate }}</label>
+        </div>
+
+        <button
+          type="submit"
+          class="deposit-btn"
+          [disabled]="walletForm.invalid || processingDeposit">
+          <span *ngIf="!processingDeposit">{{ 'DEPOSIT_MONEY' | translate }}</span>
+          <span *ngIf="processingDeposit">{{ 'PROCESSING' | translate }}</span>
+        </button>
+      </form>
+
+      <button class="btn-back" (click)="backToMethodSelection()">{{ 'GO_BACK' | translate }}</button>
+    </div>
+
+    <!-- Formulario de tarjeta Visa -->
+    <div *ngIf="currentDepositStep === 'visa'">
+      <form [formGroup]="cardForm" (ngSubmit)="processCardPayment()">
+        <div class="form-field">
+          <label for="cardAmount">{{ 'AMOUNT' | translate }}</label>
+          <input
+            type="number"
+            id="cardAmount"
+            formControlName="amount"
+            placeholder="{{ 'ENTER_AMOUNT' | translate }}"
+            min="10000">
+        </div>
+
+        <div class="form-field">
+          <label for="cardNumber">{{ 'CARD_NUMBER' | translate }}</label>
+          <input
+            type="text"
+            id="cardNumber"
+            formControlName="cardNumber"
+            placeholder="XXXX XXXX XXXX XXXX"
+            maxlength="19">
+        </div>
+
+        <div class="form-row">
+          <div class="form-field half">
+            <label for="cardExpiry">{{ 'EXPIRY' | translate }}</label>
+            <input
+              type="text"
+              id="cardExpiry"
+              formControlName="expiry"
+              placeholder="MM/YY"
+              maxlength="5">
+          </div>
+
+          <div class="form-field half">
+            <label for="cardCvv">{{ 'CVV_CODE' | translate }}</label>
+            <input
+              type="password"
+              id="cardCvv"
+              formControlName="cvv"
+              placeholder="XXX"
+              maxlength="4">
+          </div>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="cardTerms" formControlName="terms">
+          <label for="cardTerms">{{ 'TERMS_AND_PRIVACY' | translate }}</label>
+        </div>
+
+        <button
+          type="submit"
+          class="deposit-btn"
+          [disabled]="cardForm.invalid || processingDeposit">
+          <span *ngIf="!processingDeposit">{{ 'DEPOSIT_MONEY' | translate }}</span>
+          <span *ngIf="processingDeposit">{{ 'PROCESSING' | translate }}</span>
+        </button>
+      </form>
+
+      <button class="btn-back" (click)="backToMethodSelection()">Volver</button>
+    </div>
+
+    <!-- Formulario de transferencia bancaria -->
+    <div *ngIf="currentDepositStep === 'pse'">
+      <form [formGroup]="bankTransferForm" (ngSubmit)="processBankTransfer()">
+        <div class="form-field">
+          <label for="transferAmount">{{ 'AMOUNT' | translate }}</label>
+          <input
+            type="number"
+            id="transferAmount"
+            formControlName="amount"
+            placeholder="{{ 'ENTER_AMOUNT' | translate }}"
+            min="10000">
+        </div>
+
+        <div class="form-field">
+          <label for="firstName">{{ 'FIRST_NAME' | translate }}</label>
+          <input
+            type="text"
+            id="firstName"
+            formControlName="firstName"
+            placeholder="{{ 'ENTER_FIRST_NAME' | translate }}">
+        </div>
+
+        <div class="form-field">
+          <label for="lastName">{{ 'LAST_NAME' | translate }}</label>
+          <input
+            type="text"
+            id="lastName"
+            formControlName="lastName"
+            placeholder="{{ 'ENTER_LAST_NAME' | translate }}">
+        </div>
+
+        <div class="form-field">
+          <label for="clientType">{{ 'CLIENT_TYPE' | translate }}</label>
+          <div class="custom-select">
+            <select id="clientType" formControlName="clientType">
+              <option value="natural">{{ 'INDIVIDUAL' | translate }}</option>
+              <option value="juridica">{{ 'COMPANY' | translate }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field half">
+            <label for="docType">{{ 'DOCUMENT_TYPE' | translate }}</label>
+            <div class="custom-select">
+              <select id="docType" formControlName="docType">
+                <option value="cc">C.C.</option>
+                <option value="ce">C.E.</option>
+                <option value="nit">NIT</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field half">
+            <label for="docNumber">{{ 'DOCUMENT_NUMBER' | translate }}</label>
+            <input
+              type="text"
+              id="docNumber"
+              formControlName="docNumber"
+              placeholder="{{ 'ENTER_DOCUMENT' | translate }}">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="phone">{{ 'MOBILE' | translate }}</label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            placeholder="{{ 'ENTER_MOBILE' | translate }}">
+        </div>
+
+        <div class="form-field">
+          <label for="email">{{ 'EMAIL' | translate }}</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="{{ 'ENTER_EMAIL' | translate }}">
+        </div>
+
+        <div class="form-field">
+          <label for="bank">{{ 'BANK_LIST' | translate }}</label>
+          <div class="custom-select">
+            <select id="bank" formControlName="bank">
+              <option value="" disabled selected>{{ 'SELECT_BANK' | translate }}</option>
+              <option value="bancolombia">Bancolombia</option>
+              <option value="nequi">Nequi</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="transferTerms" formControlName="terms">
+          <label for="transferTerms">{{ 'TERMS_AND_PRIVACY' | translate }}</label>
+        </div>
+
+        <button
+          type="submit"
+          class="deposit-btn"
+          [disabled]="bankTransferForm.invalid || processingDeposit">
+          <span *ngIf="!processingDeposit">{{ 'DEPOSIT_MONEY' | translate }}</span>
+          <span *ngIf="processingDeposit">{{ 'PROCESSING' | translate }}</span>
+        </button>
+      </form>
+
+      <button class="btn-back" (click)="backToMethodSelection()">Volver</button>
+    </div>
+  </div>
+</div>
+<app-pie-pagina-principal style="position: flex; width: 99vw;"></app-pie-pagina-principal>

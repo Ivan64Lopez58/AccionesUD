@@ -1,1 +1,105 @@
-<p>pie-pagina-principal works!</p>
+<footer>
+  <div class="footer-container">
+    <div class="footer-section logo-social">
+      <img src="LogoReducido.svg" alt="{{ 'FOOTER.LOGO_ALT' | translate }}" class="footer-logo">
+      <div class="social-icons">
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+          <img src="Youtube.svg" alt="YouTube" style="width: 40px; height: 40px;">
+        </a>
+        <a href="https://co.linkedin.com/" target="_blank" rel="noopener noreferrer">
+          <img src="linkedin.svg" alt="linkedin" style="width: 40px; height: 40px;" >
+        </a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+          <img src="facebook.svg" alt="facebook" style="width: 40px; height: 40px;">
+        </a>
+        <a href="https://x.com/" target="_blank" rel="noopener noreferrer">
+          <img src="twitter.svg" alt="twitter" style="width: 40px; height: 40px;">
+        </a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+          <img src="instagram.svg" alt="instagram" style="width: 40px; height: 40px;">
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-section links">
+      <h2>{{ 'FOOTER.INVEST' | translate }}</h2>
+      <ul>
+        <li><a href="#">{{ 'FOOTER.MARKETS' | translate }}</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section links">
+      <h2>{{ 'FOOTER.ABOUT' | translate }}</h2>
+      <ul>
+        <!-- Al hacer click se mostrará el modal para "La empresa" -->
+        <li><a (click)="openModal('empresa')">{{ 'FOOTER.COMPANY' | translate }}</a></li>
+        <!-- Aquí también se podría agregar otro enlace, si fuera necesario -->
+        <li><a (click)="openModal('contacto')">{{ 'FOOTER.CONTACT' | translate }}</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section links">
+      <h2>{{ 'FOOTER.INVESTORS' | translate }}</h2>
+      <ul>
+        <li><a href="#">{{ 'FOOTER.REPORTS' | translate }}</a></li>
+        <li><a href="#">{{ 'FOOTER.PRICES' | translate }}</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section links">
+      <h2>{{ 'FOOTER.LEGAL' | translate }}</h2>
+      <ul>
+        <li><a (click)="openModal('documentacion')">{{ 'FOOTER.DOCUMENTATION' | translate }}</a></li>
+        <li><a (click)="openModal('avisoLegal')">{{ 'FOOTER.LEGAL_NOTICE' | translate }}</a></li>
+        <li><a (click)="openModal('privacidad')">{{ 'FOOTER.PRIVACY_POLICY' | translate }}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <!-- Puedes agregar aquí información de copyright o similar si es necesario -->
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" *ngIf="modalVisible">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+      <div *ngIf="modalType === 'empresa'">
+       <h2>{{ 'MODAL.COMPANY.TITLE' | translate }}</h2>
+       <h3>{{ 'MODAL.COMPANY.MISSION_TITLE' | translate }}</h3>
+       <p>{{ 'MODAL.COMPANY.MISSION' | translate }}</p>
+       <h3>{{ 'MODAL.COMPANY.VISION_TITLE' | translate }}</h3>
+       <p>{{ 'MODAL.COMPANY.VISION' | translate }}</p>
+       <h3>{{ 'MODAL.COMPANY.QUALITY_TITLE' | translate }}</h3>
+       <p>{{ 'MODAL.COMPANY.QUALITY' | translate }}</p>
+      </div>
+      <div *ngIf="modalType === 'contacto'">
+       <h2>{{ 'MODAL.CONTACT.TITLE' | translate }}</h2>
+        <p>
+          {{ 'MODAL.CONTACT.ADDRESS' | translate }}<br>
+          {{ 'MODAL.CONTACT.PHONE' | translate }}<br>
+          {{ 'MODAL.CONTACT.EMAIL' | translate }}<br>
+        </p>
+      </div>
+      <div *ngIf="modalType === 'documentacion'">
+        <h2>{{ 'MODAL.DOCUMENTATION.TITLE' | translate }}</h2>
+        <p>{{ 'MODAL.DOCUMENTATION.P1' | translate }}</p>
+        <p>{{ 'MODAL.DOCUMENTATION.P2' | translate }}</p>
+        <p>{{ 'MODAL.DOCUMENTATION.P3' | translate }}</p>
+      </div>
+      <div *ngIf="modalType === 'avisoLegal'">
+        <h2>{{ 'MODAL.LEGAL_NOTICE.TITLE' | translate }}</h2>
+        <p>{{ 'MODAL.LEGAL_NOTICE.P1' | translate }}</p>
+        <p>{{ 'MODAL.LEGAL_NOTICE.P2' | translate }}</p>
+        <p>{{ 'MODAL.LEGAL_NOTICE.P3' | translate }}</p>
+      </div>
+      <div *ngIf="modalType === 'privacidad'">
+        <h2>{{ 'MODAL.PRIVACY.TITLE' | translate }}</h2>
+        <p>{{ 'MODAL.PRIVACY.P1' | translate }}</p>
+        <p>{{ 'MODAL.PRIVACY.P2' | translate }}</p>
+        <p>{{ 'MODAL.PRIVACY.P3' | translate }}</p>
+        <p>{{ 'MODAL.PRIVACY.P4' | translate }}</p>
+        <p>{{ 'MODAL.PRIVACY.P5' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</footer>

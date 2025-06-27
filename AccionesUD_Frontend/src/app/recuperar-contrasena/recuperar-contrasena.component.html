@@ -1,0 +1,61 @@
+<div class="contenedor-recuperarcontrasena">
+  <h2 class="titulo">🔐 {{ 'RESET_PASSWORD.TITLE' | translate }}</h2>
+
+  <div *ngIf="error" class="alerta-error">{{ error }}</div>
+
+  <div *ngIf="tokenValido">
+    <form [formGroup]="form" (ngSubmit)="enviar()">
+      <!-- Campo: Nueva contraseña -->
+      <div class="form-group">
+        <label for="nuevaContrasena" class="nuevaContrasena">
+          {{ 'RESET_PASSWORD.NEW_PASSWORD_LABEL' | translate }}
+        </label>
+        <div class="input-icon">
+          <i class="fa-solid fa-lock"></i>
+          <input
+            id="nuevaContrasena"
+            type="password"
+            formControlName="nuevaContrasena"
+            [placeholder]="'RESET_PASSWORD.NEW_PASSWORD_PLACEHOLDER' | translate"
+            required
+          />
+        </div>
+        <div
+          *ngIf="form.get('nuevaContrasena')?.invalid && form.get('nuevaContrasena')?.touched"
+          class="mensaje-error"
+        >
+          {{ 'RESET_PASSWORD.NEW_PASSWORD_ERROR' | translate }}
+        </div>
+      </div>
+
+      <!-- Campo: Confirmar contraseña -->
+      <div class="form-group">
+        <label for="confirmarContrasena" class="nuevaContrasena">
+          {{ 'RESET_PASSWORD.CONFIRM_PASSWORD_LABEL' | translate }}
+        </label>
+        <div class="input-icon">
+          <i class="fa-solid fa-lock"></i>
+          <input
+            id="confirmarContrasena"
+            type="password"
+            formControlName="confirmarContrasena"
+            [placeholder]="'RESET_PASSWORD.CONFIRM_PASSWORD_PLACEHOLDER' | translate"
+            required
+          />
+        </div>
+        <div
+          *ngIf="form.hasError('noCoincide') && form.get('confirmarContrasena')?.touched"
+          class="mensaje-error"
+        >
+          {{ 'RESET_PASSWORD.CONFIRM_PASSWORD_ERROR' | translate }}
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="form.invalid" class="btn-principal">
+        {{ 'RESET_PASSWORD.SUBMIT_BUTTON' | translate }}
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="mensaje" class="alerta-exito">{{ mensaje }}</div>
+</div>
