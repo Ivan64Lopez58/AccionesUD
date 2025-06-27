@@ -4,6 +4,15 @@ import { Observable, of } from 'rxjs';
 import { StockDTO } from '../twelve-mercados/stock.model';
 import { StockService } from '../twelve-mercados/stock.service';
 
+export enum OrderState {
+  PROCESANDO = 'Procesando',
+  ACEPTADA = 'Aceptada',
+  PENDIENTE = 'Pendiente',
+  EN_COLA = 'En cola',
+  RECHAZADA = 'Rechazada',
+  CANCELADA = 'Cancelada',
+  EJECUTADA = 'Ejecutada'
+}
 
 export interface Order {
   id: number;
@@ -31,7 +40,7 @@ export interface Order {
 
   // Nuevos campos
   fechaCreacion: string; // Fecha de creación de la orden
-  estado: string; // Estado de la orden (ej. 'pendiente', 'completada', 'cancelada')
+  estado: OrderState; // Estado de la orden (ej. 'pendiente', 'completada', 'cancelada')
   operacion: string; // Operación asociada a la orden (ej. 'compra', 'venta')
 }
 @Injectable({
@@ -74,7 +83,7 @@ getOrders(): Observable<Order[]> {
         totalEstimado: 1816,
         saldoDisponible: 412.456,
         fechaCreacion: '2023-10-01T12:00:00Z',
-        estado: 'Pendiente',
+        estado: OrderState.PENDIENTE,
         operacion: 'Comprar'
       },
       {
@@ -100,7 +109,7 @@ getOrders(): Observable<Order[]> {
         totalEstimado: 350.23,
         saldoDisponible: 1000,
         fechaCreacion: '2023-10-02T14:30:00Z',
-        estado: 'Completada',
+        estado: OrderState.EJECUTADA,
         operacion: 'Vender' 
       }
     ];

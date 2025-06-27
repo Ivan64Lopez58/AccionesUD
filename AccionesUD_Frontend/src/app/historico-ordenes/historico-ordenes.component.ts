@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Order, OrderService } from '../servicio/acciones/order.service';
+import { Order, OrderService, OrderState } from '../servicio/acciones/order.service';
 import { CommonModule } from '@angular/common';
 import { StepperNativoComponent } from "../stepper-nativo/stepper-nativo.component";
 
@@ -16,7 +16,7 @@ export class HistoricoOrdenesComponent implements OnInit {
 
   // Atributo para condicional grafico
   mostrarOpciones: boolean = false;
-  tipoFiltro: string = 'FILTER_UNREAD';
+  tipoFiltro: string = 'Todos';
   historicoOrdenesFiltrado: Order[] = [];
 
   constructor(private orderService:OrderService) { }
@@ -32,17 +32,27 @@ export class HistoricoOrdenesComponent implements OnInit {
     });
   }
 
-  seleccionarFiltro(tipo: string): void {
-    this.tipoFiltro = tipo;
-    this.mostrarOpciones = false;
-    this.filtrarYBuscar();
+  seleccionarFiltro(tipo?: string): void {
+    if (tipo === undefined) {
+      this.historicoOrdenesFiltrado = this.historicoOrdenes;
+      this.mostrarOpciones = false;
+      this.tipoFiltro = 'Todos';
+    }
+    else {
+      this.tipoFiltro = tipo;
+      this.mostrarOpciones = false;
+      this.filtrarYBuscar();
+    }
   }
 
   filtrarYBuscar(): void {
     this.historicoOrdenesFiltrado = this.historicoOrdenes.filter((registro) => {
       const estado =
-        (this.tipoFiltro === 'FILTER_ALL')||
-        (this.tipoFiltro === 'Completada' && registro.estado === 'Completada');
+        (this.tipoFiltro === 'Procesando' && registro.estado === OrderState.PROCESANDO)||
+        (this.tipoFiltro === 'Aceptada' && registro.estado === OrderState.ACEPTADA)||
+        (this.tipoFiltro === 'Pendiente' && registro.estado === OrderState.PENDIENTE)||
+        (this.tipoFiltro === 'En cola' && registro.estado === OrderState.EN_COLA)||
+        (this.tipoFiltro === 'Ejecutada' && registro.estado === OrderState.EJECUTADA);
 
       return estado;
     });

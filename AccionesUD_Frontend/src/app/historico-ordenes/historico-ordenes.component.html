@@ -6,9 +6,9 @@
       <i class="fas fa-filter"></i>{{ tipoFiltro }}
     </button>
     <ul class="filtro-opciones" *ngIf="mostrarOpciones">
-      <li (click)="seleccionarFiltro('FILTER_ALL')">{{ 'FILTER_ALL' }}</li>
-      <li (click)="seleccionarFiltro('Completada')">{{ 'Completada' }}</li>
-      <li (click)="seleccionarFiltro('Cancelada')">{{ 'Cancelada' }}</li>
+      <li (click)="seleccionarFiltro()">{{ 'Todos' }}</li>
+      <li (click)="seleccionarFiltro('Ejecutada')">{{ 'Ejecutada' }}</li>
+      <li (click)="seleccionarFiltro('Pendiente')">{{ 'Pendiente' }}</li>
     </ul>
   </div>
 </div>
@@ -35,7 +35,7 @@
     </div>
   </div>
   <div class="barra-estado">
-    <app-stepper-nativo [estado]="'Ejecutada'"></app-stepper-nativo>
+    <app-stepper-nativo [estado]=registro.estado></app-stepper-nativo>
   </div>
   <button class="boton-detalles">
     <img src="detalles-icon.svg" alt="Icono Detalles" class="logo-detalles" />
