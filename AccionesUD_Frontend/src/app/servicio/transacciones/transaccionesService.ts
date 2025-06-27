@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 export interface BalanceInfo {
@@ -101,14 +102,25 @@ export class TransaccionesService {
    * @param amount Cantidad a ingresar
    */
   depositFunds(amount: number): Observable<{ redirectUrl: string }> {
+    console.log(`Enviando solicitud de depósito por ${amount}`);
     const headers = this.getAuthHeaders();
     // Creamos los parámetros de la URL
     const params = new HttpParams().set('amount', amount.toString());
+
+    console.log('Headers:', headers);
+    console.log('Parámetros:', params.toString());
+
     // Hacemos el POST sin body, solo con headers y params
-  return this.http.post<{ redirectUrl: string }>(
-    `${this.baseUrl}/balance/update`,
-    null, // No enviamos body
-    { headers, params }
-  );
+    return this.http.post<{ redirectUrl: string }>(
+      `${this.baseUrl}/balance/update`,
+      null, // No enviamos body
+      { headers, params }
+    ).pipe(
+      tap(response => console.log('Respuesta del backend:', response)),
+      catchError(error => {
+        console.error('Error en la solicitud HTTP:', error);
+        throw error;
+      })
+    );
   }
 }

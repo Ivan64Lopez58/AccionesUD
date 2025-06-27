@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
         this.userRepository = userRepository;
     }
 
-      @Override
+    @Override
     public OrderResponseDTO createOrder(OrderRequestDTO requestDTO, String username) {
 
         OrderValidator.validate(requestDTO);
@@ -63,6 +63,53 @@ public class OrderServiceImpl implements OrderService {
 
         return modelMapper.map(saved, OrderResponseDTO.class);
     }
+
+/*
+ * 
+ *     @Override
+    public OrderResponseDTO ejecutarOrden(Long orderId) {
+        Order orden = orderRepository.findById(orderId)
+            .orElseThrow(() -> new RuntimeException("Orden no encontrada con ID: " + orderId));
+
+        orden.setStatus(OrderStatus.EXECUTED);
+        Order actualizada = orderRepository.save(orden);
+
+        eventPublisher.publishEvent(
+            new NotificationEvent(
+                this,
+                actualizada.getUsername(),
+                NotificationType.ORDEN_EJECUTADA,
+                "Orden ejecutada",
+                "Tu orden para el símbolo " + actualizada.getSymbol() + " fue ejecutada correctamente."
+            )
+        );
+
+        return modelMapper.map(actualizada, OrderResponseDTO.class);
+    }
+
+    @Override
+    public OrderResponseDTO rechazarOrdenPorLimite(Long orderId) {
+        Order orden = orderRepository.findById(orderId)
+            .orElseThrow(() -> new RuntimeException("Orden no encontrada con ID: " + orderId));
+
+        orden.setStatus(OrderStatus.REJECTED);
+        Order actualizada = orderRepository.save(orden);
+
+        eventPublisher.publishEvent(
+            new NotificationEvent(
+                this,
+                actualizada.getUsername(),
+                NotificationType.ORDEN_RECHAZADA,
+                "Orden rechazada",
+                "Tu orden para el símbolo " + actualizada.getSymbol() + " fue rechazada por superar tu límite diario de órdenes."
+            )
+        );
+
+        return modelMapper.map(actualizada, OrderResponseDTO.class);
+    }
+ * 
+ */
+
 
     @Override
     public OrderResponseDTO ejecutarOrden(Long orderId) {

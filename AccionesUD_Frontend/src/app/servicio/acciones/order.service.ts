@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { StockDTO } from '../twelve-mercados/stock.model';
 import { StockService } from '../twelve-mercados/stock.service';
+import { environment } from '../../../environments/environment';
 
 export enum OrderState {
   PROCESANDO = 'Procesando',
@@ -56,11 +57,25 @@ export interface Order {
   estado: OrderState; // Estado de la orden (ej. 'pendiente', 'completada', 'cancelada')
   operacion: string; // Operación asociada a la orden (ej. 'compra', 'venta')
 }
+
+export interface OrderRequest {
+  symbol: string;
+  quantity: number;
+  orderType: 'MARKET' | 'LIMIT'; 
+  marketPrice: number;
+  stopLossPrice?: number;
+  takeProfitPrice?: number;
+  company: string;
+  market: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = ''; // URL de tu API
+  private baseUrl = environment.apiBaseUrl;
+  private apiUrl = `${this.baseUrl}/orders`; // URL de tu API
   private symbols = [
     'AAPL'/*, 'GOOGL', 'MSFT', 'AMZN', 'TSLA',
     'META', 'NVDA', 'NFLX', 'JPM', 'BRK.B',
@@ -107,7 +122,7 @@ getOrders(): Observable<Order[]> {
           valorPip: valorPip,
           swapDiarioCompra: '-0.25',
           swapDiarioVenta: '-0.30',
-          tipoOrden: 'market',
+          tipoOrden: 'MARKET',
           stopLoss: stopLoss,
           takeProfit: takeProfit,
           totalEstimado: totalEstimado,
@@ -127,6 +142,10 @@ getOrders(): Observable<Order[]> {
   return of([]);
 }
 
+// Método para crear una orden en el backend
+  createOrder(orderRequest: OrderRequest): Observable<any> {
+    console.log("🟡 Enviando orden:", JSON.stringify(orderRequest, null, 2));
 
-
+    return this.http.post<any>(this.apiUrl, orderRequest);
+  }
 }
