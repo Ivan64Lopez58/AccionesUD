@@ -7,9 +7,6 @@ import com.AccionesUD.AccionesUD.dto.orders.OrderRequestDTO;
 public class OrderValidator {
 
     public static void validate(OrderRequestDTO dto) {
-        if (dto.getUsername() == null || dto.getUsername().trim().isEmpty()) {
-            throw new IllegalArgumentException("El campo 'username' es obligatorio y no puede estar vacío.");
-        }
         if (dto.getMarket() == null || dto.getMarket().trim().isEmpty()) {
             throw new IllegalArgumentException("El campo 'market' es obligatorio y no puede estar vacío.");
         }

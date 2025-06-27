@@ -14,9 +14,12 @@ import com.AccionesUD.AccionesUD.dto.orders.OrderResponseDTO;
 import com.AccionesUD.AccionesUD.repository.OrderRepository;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderStatus;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderValidator;
+
 import org.springframework.context.ApplicationEventPublisher;
 import com.AccionesUD.AccionesUD.domain.model.notification.NotificationEvent;
 import com.AccionesUD.AccionesUD.domain.model.notification.NotificationType;
+import com.AccionesUD.AccionesUD.alpacaStock.application.StockService;
+import com.AccionesUD.AccionesUD.alpacaStock.domain.model.StockInfo;
 
 
 @Service
@@ -25,37 +28,39 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ModelMapper modelMapper;
     private final ApplicationEventPublisher eventPublisher;
+    private final StockService stockService;
 
-    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher) {
+    public OrderServiceImpl(OrderRepository orderRepository, ModelMapper modelMapper, ApplicationEventPublisher eventPublisher, StockService stockService) {
         this.orderRepository = orderRepository;
         this.modelMapper = modelMapper;
         this.eventPublisher = eventPublisher;
+        this.stockService = stockService;
     }
 
-    @Override
+      @Override
     public OrderResponseDTO createOrder(OrderRequestDTO requestDTO) {
-    
-        OrderValidator.validate(requestDTO);
-        Order orderEntity = modelMapper.map(requestDTO, Order.class);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        orderEntity.setUsername(username);
 
+        OrderValidator.validate(requestDTO);
+        StockInfo quote = stockService.getLatestTrade(requestDTO.getSymbol());
+        Order orderEntity = modelMapper.map(requestDTO, Order.class);
+        String username = SecurityContextHolder.getContext()
+                                               .getAuthentication()
+                                               .getName();
+        orderEntity.setUsername(username);
+        orderEntity.setMarketPrice(quote.getPrice());
+        orderEntity.setMarket(quote.getSymbol());
         orderEntity.setStatus(OrderStatus.PENDING);
         orderEntity.setCreatedAt(LocalDateTime.now());
-
         Order saved = orderRepository.save(orderEntity);
+        eventPublisher.publishEvent(new NotificationEvent(
+            this,
+            username,
+            NotificationType.ORDEN_CREADA,
+            "Orden creada",
+            "Has creado una orden del tipo " + requestDTO.getOrderType()
+        ));
 
-        eventPublisher.publishEvent(
-            new NotificationEvent(
-                this,
-                username,
-                NotificationType.ORDEN_CREADA,
-                "Orden creada",
-                "Has creado una orden del tipo " + requestDTO.getOrderType()
-            )
-        );
-        OrderResponseDTO responseDTO = modelMapper.map(saved, OrderResponseDTO.class);
-        return responseDTO;
+        return modelMapper.map(saved, OrderResponseDTO.class);
     }
 
     @Override

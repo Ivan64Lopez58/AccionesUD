@@ -7,8 +7,10 @@ import com.AccionesUD.AccionesUD.utilities.orders.OrderStatus;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderType;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class OrderResponseDTO {
 
     private Long id;

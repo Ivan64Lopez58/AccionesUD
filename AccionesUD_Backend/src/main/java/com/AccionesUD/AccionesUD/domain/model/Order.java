@@ -3,7 +3,6 @@ package com.AccionesUD.AccionesUD.domain.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import org.apache.coyote.http11.filters.IdentityOutputFilter;
 
 import com.AccionesUD.AccionesUD.utilities.orders.OrderStatus;
 import com.AccionesUD.AccionesUD.utilities.orders.OrderType;
@@ -41,8 +40,8 @@ public class Order {
     private String company;
 
     /** Precio de mercado al crear la orden */
-    @Column(precision = 19, scale = 4, nullable = false)
-    private BigDecimal marketPrice;
+    @Column(nullable = false)
+    private Double marketPrice;
 
     /** Cantidad de acciones */
     @Column(nullable = false)
@@ -80,12 +79,12 @@ public class Order {
                  String market,
                  String symbol,
                  String company,
-                 BigDecimal marketPrice,
+                 Double marketPrice,
                  Double quantity,
                  OrderType orderType,
                  BigDecimal limitPrice,
                  BigDecimal stopLossPrice,
-                 BigDecimal takeProfitPrice,
+                 BigDecimal takeProfitPrice, 
                  OrderStatus status,
                  LocalDateTime createdAt) {
         this.username         = username;
@@ -197,11 +196,11 @@ public class Order {
         this.company = company;
     }
 
-    public BigDecimal getMarketPrice() {
+    public Double getMarketPrice() {
         return marketPrice;
-    }
+    } 
 
-    public void setMarketPrice(BigDecimal marketPrice) {
+    public void setMarketPrice(double marketPrice) {
         this.marketPrice = marketPrice;
     }
 
