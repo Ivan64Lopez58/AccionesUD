@@ -1,6 +1,19 @@
 <div class="historico-ordenes-lista">
 
-<div class="registro-orden" *ngFor ="let registro of historicoOrdenes">
+<div class="filtros">
+  <div class="dropdown-filtro">
+    <button class="btn-filtro" (click)="mostrarOpciones = !mostrarOpciones">
+      <i class="fas fa-filter"></i>{{ tipoFiltro }}
+    </button>
+    <ul class="filtro-opciones" *ngIf="mostrarOpciones">
+      <li (click)="seleccionarFiltro('FILTER_ALL')">{{ 'FILTER_ALL' }}</li>
+      <li (click)="seleccionarFiltro('Completada')">{{ 'Completada' }}</li>
+      <li (click)="seleccionarFiltro('Cancelada')">{{ 'Cancelada' }}</li>
+    </ul>
+  </div>
+</div>
+
+<div class="registro-orden" *ngFor ="let registro of historicoOrdenesFiltrado">
   <div class="operacion-orden" [ngStyle]="{'color':registro.operacion === 'Comprar' ? 'green': 'red'}">{{registro.operacion}}</div>
 
   <div class="info-accion">
@@ -27,5 +40,7 @@
   <button class="boton-detalles">
     <img src="detalles-icon.svg" alt="Icono Detalles" class="logo-detalles" />
   </button>
+
+</div>
 
 </div>

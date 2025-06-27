@@ -14,18 +14,40 @@ export class HistoricoOrdenesComponent implements OnInit {
 
   historicoOrdenes: Order[] = [];
 
+  // Atributo para condicional grafico
+  mostrarOpciones: boolean = false;
+  tipoFiltro: string = 'FILTER_UNREAD';
+  historicoOrdenesFiltrado: Order[] = [];
+
   constructor(private orderService:OrderService) { }
 
   ngOnInit(): void {
     this.orderService.getOrders().subscribe({
       next: (data) => {
         this.historicoOrdenes = data;
+        this.historicoOrdenesFiltrado = data;
         console.log('Órdenes recibidas:', this.historicoOrdenes);
       },
       error: (err) => console.error('Error al cargar las órdenes', err)
     });
   }
 
+  seleccionarFiltro(tipo: string): void {
+    this.tipoFiltro = tipo;
+    this.mostrarOpciones = false;
+    this.filtrarYBuscar();
+  }
+
+  filtrarYBuscar(): void {
+    this.historicoOrdenesFiltrado = this.historicoOrdenes.filter((registro) => {
+      const estado =
+        (this.tipoFiltro === 'FILTER_ALL')||
+        (this.tipoFiltro === 'Completada' && registro.estado === 'Completada');
+
+      return estado;
+    });
+    
+  }
   
 
 }

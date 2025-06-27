@@ -88,3 +88,54 @@
     object-fit: contain;
     border-radius: 10px;
 }
+
+/* Diseño filtro */
+.filtros{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+.dropdown-filtro {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-filtro:hover {
+  background-color: var(--notif-button-hover);
+}
+
+.filtro-opciones {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  background: var(--notif-dropdown-bg);
+  border: 1px solid var(--notif-dropdown-border);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px var(--notif-dropdown-shadow);
+  list-style: none;
+  padding: 8px 0;
+  width: 180px;
+  z-index: 10001;
+}
+
+.filtro-opciones li {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: var(--color-text);
+}
+
+.btn-filtro {
+  background-color: var(--notif-button-bg);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
