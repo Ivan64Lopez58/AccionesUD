@@ -19,7 +19,7 @@ public class CorsConfig {
             "http://localhost:4200", // desarrollo
             "https://accionesud-production.up.railway.app" // producción
         ));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
         
