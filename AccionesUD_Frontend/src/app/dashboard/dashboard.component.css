@@ -1,0 +1,19 @@
+.dashboard {
+  padding: 2rem;
+  font-family: Roboto, sans-serif;
+}
+
+.logout-btn {
+  margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #E6574F;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.logout-btn:hover {
+  background-color: #C4433B;
+}

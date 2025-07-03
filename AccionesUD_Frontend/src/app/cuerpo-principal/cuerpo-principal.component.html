@@ -1,0 +1,44 @@
+<app-menu *ngIf="showMenu1" style="position: fixed; top: 0; left: 0; width: 100vw; z-index: 1000;"></app-menu>
+<app-menu2 *ngIf="showMenu2" style="position: fixed; top: 0; left: 0; width: 100vw; z-index: 1000;"></app-menu2>
+
+<div class="cuerpo-principal">
+
+  <!-- Título traducible -->
+  <h2 class="titulo-seccion">{{ 'TITLE' | translate }}</h2>
+
+  <!-- Cuadros de ciudades -->
+  <div class="cuadros-graficos">
+    <div class="cuadro">
+      <h3>USA</h3>
+      <div class="contenido-cuadro">
+        <img src="/USA.png" alt="New York" />
+      </div>
+    </div>
+    <div class="cuadro">
+      <h3>ARGENTINA</h3>
+      <div class="contenido-cuadro">
+        <img src="/ARGENTINA.png" alt="Sydney" />
+      </div>
+    </div>
+    <div class="cuadro">
+      <h3>BRASIL</h3>
+      <div class="contenido-cuadro">
+        <img src="/BRASIL.png" alt="Tokyo" />
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Botón para abrir el modal -->
+  <div style="margin-bottom: 3rem;">
+    <app-mercados-internacionales></app-mercados-internacionales>
+  </div>
+  
+  <!-- Relojes -->
+  <div class="relojes">
+    <app-relojes></app-relojes>
+  </div>
+
+  <!-- Pie de página -->
+  <app-pie-pagina-principal style="width: 99vw;"></app-pie-pagina-principal>
+</div>

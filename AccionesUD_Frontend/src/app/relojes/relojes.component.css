@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+.relojes-container {
+  background-color: var(--relojes-container-bg);
+  border-radius: 20px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 2rem;
+  margin: 3rem auto;
+  padding: 1rem;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .relojes-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.reloj {
+  background: var(--relojes-reloj-gradient);
+  border-radius: 1.5rem;
+  padding: 2rem 2.5rem;
+  box-shadow: 10px 10px 30px var(--relojes-reloj-shadow-1), -10px -10px 30px var(--relojes-reloj-shadow-2);
+  text-align: center;
+  color: var(--relojes-texto);
+  min-width: 180px;
+  transition: all 0.3s ease-in-out;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease-in-out;
+  flex: 0 0 auto;
+}
+
+.reloj::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, var(--relojes-efecto-radial), transparent 60%);
+  z-index: 0;
+  transform: rotate(25deg);
+}
+
+.reloj:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 15px 15px 35px var(--relojes-reloj-hover-shadow-1), -15px -15px 35px var(--relojes-reloj-hover-shadow-2);
+}
+
+.nombre-ciudad {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--relojes-ciudad-color);
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  z-index: 1;
+  position: relative;
+}
+
+.hora-ciudad {
+  font-size: 2.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--relojes-hora-color);
+  z-index: 1;
+  position: relative;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

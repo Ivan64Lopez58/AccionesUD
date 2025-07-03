@@ -1,0 +1,60 @@
+<div class="registro">
+      <div class="registro-container">
+        <button class="cerrar-btn" (click)="cancelarRegistro()" aria-label="Cancelar registro">&times;</button>
+
+        <h2>{{ 'REGISTER.TITLE' | translate }}</h2>
+
+        <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="form-field">
+              <label for="nombre">{{ 'REGISTER.FIRSTNAME_LABEL' | translate }}</label>
+              <input id="nombre" formControlName="firstname" [placeholder]="'REGISTER.FIRSTNAME_PLACEHOLDER' | translate" />
+            </div>
+            <div class="form-field">
+              <label for="apellido">{{ 'REGISTER.LASTNAME_LABEL' | translate }}</label>
+              <input id="apellido" formControlName="lastname" [placeholder]="'REGISTER.LASTNAME_PLACEHOLDER' | translate" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-field">
+              <label for="cedula">{{ 'REGISTER.ID_LABEL' | translate }}</label>
+              <input id="cedula" formControlName="id" [placeholder]="'REGISTER.ID_PLACEHOLDER' | translate" />
+            </div>
+            <div class="form-field">
+              <label for="telefono">{{ 'REGISTER.PHONE_LABEL' | translate }}</label>
+              <input id="telefono" formControlName="phone" [placeholder]="'REGISTER.PHONE_PLACEHOLDER' | translate" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-field">
+              <label for="correo">{{ 'REGISTER.EMAIL_LABEL' | translate }}</label>
+              <input id="correo" type="email" formControlName="username" [placeholder]="'REGISTER.EMAIL_PLACEHOLDER' | translate" />
+            </div>
+            <div class="form-field">
+              <label for="confirmarCorreo">{{ 'REGISTER.CONFIRM_EMAIL_LABEL' | translate }}</label>
+              <input id="confirmarCorreo" type="email" formControlName="confirmUsername" [placeholder]="'REGISTER.CONFIRM_EMAIL_PLACEHOLDER' | translate" />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="direccion">{{ 'REGISTER.ADDRESS_LABEL' | translate }}</label>
+            <textarea id="direccion" formControlName="address" [placeholder]="'REGISTER.ADDRESS_PLACEHOLDER' | translate"></textarea>
+          </div>
+
+          <div class="row">
+            <div class="form-field">
+              <label for="contrasena">{{ 'REGISTER.PASSWORD_LABEL' | translate }}</label>
+              <input id="contrasena" type="password" formControlName="password" [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate" />
+            </div>
+            <div class="form-field">
+              <label for="confirmarContrasena">{{ 'REGISTER.CONFIRM_PASSWORD_LABEL' | translate }}</label>
+              <input id="confirmarContrasena" type="password" formControlName="confirmPassword" [placeholder]="'REGISTER.CONFIRM_PASSWORD_PLACEHOLDER' | translate" />
+            </div>
+          </div>
+
+          <button type="submit">{{ 'REGISTER.SUBMIT_BUTTON' | translate }}</button>
+        </form>
+      </div>
+    </div>

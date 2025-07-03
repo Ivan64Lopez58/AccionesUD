@@ -1,0 +1,218 @@
+<app-menu2 style="position: fixed; top: 0; left: 0; width: 101vw; z-index: 1000;"></app-menu2>
+
+<div class="ordenes-contenedor">
+  <div class="ordenes-lista">
+    <div class="orden-tarjeta" *ngFor="let orden of ordenes">
+      <div class="orden-info">
+        <div class="orden-header">
+          <img
+            [src]="orden.logo"
+            [alt]="orden.name"
+            class="orden-logo"
+            [class.logo-oculto]="orden.logo === 'N/A'"
+          >
+          <div>
+            <div class="orden-titulo">{{orden.name}}</div>
+            <div class="orden-subtitulo">{{orden.country}}</div>
+          </div>
+        </div>
+
+        <div class="orden-precios">
+          <button class="orden-precio comprar" (click)="abrirModal(orden, 'BUY')">
+            <div class="valor">{{orden.compraPrecio}} <span class="moneda">{{orden.moneda}}</span></div>
+            {{ 'BUY' | translate }}
+          </button>
+          <button class="orden-precio vender" (click)="abrirModal(orden, 'SELL')">
+            <div class="valor">{{orden.ventaPrecio}} <span class="moneda">{{orden.moneda}}</span></div>
+            {{ 'SELL' | translate }}
+          </button>
+        </div>
+
+        <div class="orden-cantidad">
+          <span class="cantidad">{{orden.cantidad}}</span>
+          <span class="cantidad-label">{{ 'QUANTITY' | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 5cm;"></div>
+ <app-pie-pagina-principal class="footer-abajo"></app-pie-pagina-principal>
+  <!-- Pie de página fijo -->
+ </div>
+
+
+<!-- Modal -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-contenido">
+    <button class="modal-cerrar" (click)="cerrarModal()">X</button>
+    <h2 class="modal-titulo">{{modalTitulo | translate}}</h2>
+    <div class="orden-header-modal">
+      <img [src]="ordenSeleccionada?.logo" alt="{{ordenSeleccionada?.name}}" class="orden-logo">
+      <div>
+        <div class="orden-titulo-modal">{{ordenSeleccionada?.name}}</div>
+        <div class="orden-subtitulo-modal">{{ordenSeleccionada?.country}}</div>
+      </div>
+    </div>
+
+    <div class="orden-cantidadprecios-modal">
+      <label class="cantidad-modal" for="cantidad">{{ 'QUANTITY' | translate }}:
+        <input type="number" id="cantidad" step="0.1" min="0.1" [(ngModel)]="cantidad" max="{{ordenSeleccionada?.cantidad}}">
+      </label>
+        <label class="precio-modal" for="precio">{{ 'PRICE' | translate }}:
+          <p>
+            {{
+              tipoOperacion === 'SELL'
+                ? ordenSeleccionada?.ventaPrecio
+                : ordenSeleccionada?.compraPrecio
+            }}
+          </p>
+        </label>
+
+    </div>
+
+    <div class="datos-modal">
+      <label class="spread">Spread:
+        <p>{{ordenSeleccionada?.spread}} <span class="moneda">{{ordenSeleccionada?.moneda}}</span></p>
+        <p>({{ordenSeleccionada?.spreadpips}}) pips</p>
+      </label>
+      <label class="comision">{{ 'COMMISSION' | translate }}:
+        <p>{{ordenSeleccionada?.comision}} <span class="moneda">{{ordenSeleccionada?.moneda}}</span></p>
+        <p>({{ordenSeleccionada?.comisionporsentaje}}) %</p>
+      </label>
+      <label class="valorpip">{{ 'PIP_VALUE' | translate }}:
+        <p>{{ordenSeleccionada?.valorPip}} <span class="moneda">{{ordenSeleccionada?.moneda}}</span></p>
+      </label>
+      <label class="swap">{{ 'DAILY_SWAP' | translate }}:
+        <p class="datos-comprar">{{ 'BUY' | translate }}: {{ordenSeleccionada?.swapDiarioCompra}} <span class="moneda">{{ordenSeleccionada?.moneda}}</span></p>
+        <p class="datos-vender">{{ 'SELL' | translate }}: {{ordenSeleccionada?.swapDiarioVenta}} <span class="moneda">{{ordenSeleccionada?.moneda}}</span></p>
+      </label>
+    </div>
+
+    <div class="tipo-orden-precioespecifico">
+      <div class="tipo-orden">
+        <label>
+          <label for="marketOrder">Market Order</label>
+          <label class="switch">
+            <input type="radio" name="orderType" value="MARKET">
+            <span class="slider"></span>
+            <span class="visually-hidden">{{ 'MARKET_ORDER' | translate }}</span>
+          </label>
+        </label>
+        <label>
+          <label for="limitOrder">Limit Order</label>
+          <label class="switch">
+            <input type="radio" name="orderType" value="MARKET">
+            <span class="slider"></span>
+            <span class="visually-hidden">{{ 'LIMIT_ORDER' | translate }}</span>
+          </label>
+        </label>
+      </div>
+      <div class="precio-especifico">
+        <label for="precioEspecifico">{{ 'SPECIFIC_PRICE' | translate }}:</label>
+        <input type="number" id="precioEspecifico" step="0.01" min="0.01" max="{{ordenSeleccionada?.compraPrecio}}" [value]="ordenSeleccionada?.compraPrecio">
+      </div>
+    </div>
+
+    <div class="loss-take">
+      <label class="stop-loss">
+        <label>
+          <label for="stopLoss">Stop Loss:</label>
+          <label class="switch">
+            <input type="checkbox" name="stop-loss" value="STOP_LOSS">
+            <span class="slider"></span>
+            <span class="visually-hidden">{{ 'ENABLE_STOP_LOSS' | translate }}</span>
+          </label>
+        </label>
+        <input type="number" id="stopLoss" step="0.01" min="0.0" max="{{ordenSeleccionada?.compraPrecio}}" [value]="">
+      </label>
+
+      <label class="take-profit">
+        <label>
+          <label for="takeProfit">Take Profit:</label>
+          <label class="switch">
+            <input type="checkbox" name="take-profit" value="TAKE_PROFIT">
+            <span class="slider"></span>
+            <span class="visually-hidden">{{ 'ENABLE_TAKE_PROFIT' | translate }}</span>
+          </label>
+        </label>
+        <input type="number" id="takeProfit" step="0.01" min="0.01" max="{{ordenSeleccionada?.compraPrecio}}">
+      </label>
+    </div>
+
+    <div class="totales-modal">
+      <label class="total-estimado">{{ 'ESTIMATED_TOTAL' | translate }}: <span class="datototal">{{ordenSeleccionada?.totalEstimado}}</span>&nbsp;<span class="moneda">{{ordenSeleccionada?.moneda}}</span></label>
+      <label class="saldo-disponible">{{ 'AVAILABLE_BALANCE' | translate }}: <span class="datosaldo">{{ordenSeleccionada?.saldoDisponible}}</span>&nbsp;<span class="moneda">{{ordenSeleccionada?.moneda}}</span></label>
+    </div>
+
+    <div class="botones-modal">
+      <button class="cancelar-modal" (click)="cerrarModal()">{{ 'CANCEL' | translate }}</button>
+      <button class="confirmar-modal" (click)="abrirModalConfirmacion(ordenSeleccionada!, modalTitulo )">{{ 'SEND_ORDER' | translate }}</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmacion -->
+<div class="modal-confirmacion" *ngIf="mostrarModalConfirmacion">
+  <div class="modal-contenido-confirmacion">
+    <button class="modal-cerrar-confirmacion" (click)="cerrarModalConfirmacion()">X</button>
+    <h2 class="modal-titulo-confirmacion">{{ 'NEW_ORDER' | translate }} {{modalTitulo | translate}}</h2>
+
+    <div class="orden-header-modal-confirmacion">
+      <label class="orden-titulo-modal-confirmacion">
+        <img [src]="ordenSeleccionada?.logo" alt="{{ordenSeleccionada?.name}}" class="orden-logo">
+        <span class="orden-titulo-modal-confirmacion-span">{{ordenSeleccionada?.name}}</span>
+        <span class="orden-subtitulo-modal-confirmacion">{{ordenSeleccionada?.country}}</span>
+      </label>
+
+      <span class="accion"> {{ 'ACTION' | translate }}:
+        <span [ngClass]="{'accion-comprar': modalTitulo === 'BUY', 'accion-vender': modalTitulo === 'SELL'}">
+          {{modalTitulo | translate}}
+        </span>
+      </span>
+    </div>
+
+    <div class="resumen-orden">
+      <label class="cantidadToral-resumen">{{ 'TOTAL_AMOUNT' | translate }}:
+        <label class="label-cantidadToral-resumen">
+          <span class="span-cantidadToral-resumen">
+            {{ modalTitulo === 'Comprar' ? ordenSeleccionada?.compraPrecio : ordenSeleccionada?.ventaPrecio }}
+          </span>&nbsp;
+          <span class="moneda-resumen">{{ordenSeleccionada?.moneda}}</span>
+        </label>
+      </label>
+
+      <label class="totalAcciones-resumen">{{ 'TOTAL_SHARES' | translate }}:
+        <label class="label-totalAcciones-resumen">
+          <span class="span-totalAcciones-resumen">{{ordenSeleccionada?.cantidad}}</span>
+        </label>
+      </label>
+
+      <label class="comision-resumen">{{ 'COMMISSION' | translate }}:
+        <label class="label-comision-resumen">
+          <span class="span-comision-resumen">{{ordenSeleccionada?.comision}}</span>&nbsp;
+          <span class="moneda-resumen">{{ordenSeleccionada?.moneda}}</span>
+        </label>
+      </label>
+
+      <label class="importeFinal-resumen">{{ 'FINAL_AMOUNT' | translate }}:
+        <label class="label-importeFinal-resumen">
+          <span class="span-importeFinal-resumen">{{ordenSeleccionada?.totalEstimado}}</span>&nbsp;
+          <span class="moneda-resumen">{{ordenSeleccionada?.moneda}}</span>
+        </label>
+      </label>
+    </div>
+
+    <button
+    [ngClass]="{
+      'confirmar-modal-comprar': modalTitulo === 'BUY',
+      'confirmar-modal-vender': modalTitulo === 'SELL'
+    }"
+    (click)="enviarOrden()">
+    {{ 'CONFIRM_ORDER' | translate }}
+  </button>
+
+
+
+  </div>
+</div>
