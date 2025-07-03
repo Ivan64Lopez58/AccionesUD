@@ -8,7 +8,7 @@ import {
 } from '../servicio/notificaciones/notificaciones.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core'; // 👈 importa TranslateModule y TranslateService
+import { TranslateModule, TranslateService } from '@ngx-translate/core'; 
 
 
 @Component({
