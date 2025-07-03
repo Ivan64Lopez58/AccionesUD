@@ -1,4 +1,3 @@
-railway.frontend.toml
 [build]
 builder = "dockerfile"
 dockerfilePath = "AccionesUD_Frontend/Dockerfile"
