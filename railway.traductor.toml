@@ -1,0 +1,8 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "AccionesUD_Backend/microservicio-traductor/Dockerfile"
+context = "AccionesUD_Backend/microservicio-traductor"
+
+[start]
+cmd = ""
+port = 5001

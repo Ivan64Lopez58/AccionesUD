@@ -1,0 +1,8 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "AccionesUD_Backend/Dockerfile"
+context = "AccionesUD_Backend"
+
+[start]
+cmd = ""
+port = 8080

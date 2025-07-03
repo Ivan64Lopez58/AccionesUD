@@ -1,0 +1,9 @@
+railway.frontend.toml
+[build]
+builder = "dockerfile"
+dockerfilePath = "AccionesUD_Frontend/Dockerfile"
+context = "AccionesUD_Frontend"
+
+[start]
+cmd = ""
+port = 80
