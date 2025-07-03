@@ -1,10 +1,12 @@
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
+# Ignorar carpetas de Maven y archivos temporales
+target/
+.idea/
+*.iml
 *.log
-*.sqlite
-.venv/
-.git/
-tests/
-.env
+.DS_Store
+*.class
+*.jar
+
+# Git y sistema
+.git
+.gitignore
