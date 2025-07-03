@@ -11,7 +11,7 @@ import com.AccionesUD.AccionesUD.domain.model.notification.Notification;
 import com.AccionesUD.AccionesUD.dto.notification.NotificationRequest;
 import com.AccionesUD.AccionesUD.dto.notification.NotificationResponse;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://accionesud-production.up.railway.app") 
 @RestController
 @RequestMapping("/api/notifications")
 public class NotificationController {

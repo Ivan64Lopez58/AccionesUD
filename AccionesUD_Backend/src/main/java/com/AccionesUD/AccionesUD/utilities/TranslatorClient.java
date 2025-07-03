@@ -19,7 +19,7 @@ public class TranslatorClient {
 
     // Traducción individual (sigue disponible)
     public String traducir(String texto, String idioma) {
-        String url = "https://microservicio-traductor.up.railway.app/traducir";
+        String url = "http://traductor:5000/traducir";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -41,7 +41,7 @@ public class TranslatorClient {
 
     // Traducción en lote
     public List<String> traducirLote(List<String> textos, String idioma) {
-        String url = "https://microservicio-traductor.up.railway.app/traducir-lote";
+        String url = "http://traductor:5000/traducir-lote";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

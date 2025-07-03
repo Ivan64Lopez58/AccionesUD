@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/user/profile")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://accionesud-production.up.railway.app") 
 public class UserProfileController {
 
     private final UserProfileApplicationService appService;
