@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { ApiRoutes } from '../../ApiRoutes';
 
 export interface BalanceInfo {
   availableBalance: number;
@@ -40,7 +41,6 @@ export interface ChartData {
 
 @Injectable({ providedIn: 'root' })
 export class TransaccionesService {
-  private baseUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -59,7 +59,7 @@ export class TransaccionesService {
    */
   getUserBalance(): Observable<BalanceInfo> {
     const headers = this.getAuthHeaders();
-    return this.http.get<BalanceInfo>(`${this.baseUrl}/balance`, {
+    return this.http.get<BalanceInfo>(`${ApiRoutes.transactions.balance}`, {
       headers,
     });
   }
@@ -77,7 +77,7 @@ export class TransaccionesService {
       params = params.set('bank', bankName);
     }
 
-    return this.http.get<Transaction[]>(`${this.baseUrl}/history`, {
+    return this.http.get<Transaction[]>(`${ApiRoutes.transactions.history}`, {
       headers,
       params
     });
@@ -91,7 +91,7 @@ export class TransaccionesService {
     const headers = this.getAuthHeaders();
     const params = new HttpParams().set('period', period);
 
-    return this.http.get<ChartData>(`${this.baseUrl}/chart-data`, {
+    return this.http.get<ChartData>(`${ApiRoutes.transactions.chart}`, {
       headers,
       params
     });
@@ -112,7 +112,7 @@ export class TransaccionesService {
 
     // Hacemos el POST sin body, solo con headers y params
     return this.http.post<{ redirectUrl: string }>(
-      `${this.baseUrl}/balance/update`,
+      `${ApiRoutes.transactions.deposit}`,
       null, // No enviamos body
       { headers, params }
     ).pipe(

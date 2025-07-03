@@ -12,6 +12,7 @@ import {
 } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ApiRoutes } from '../ApiRoutes';
 
 @Component({
   selector: 'app-menu2',
@@ -47,7 +48,7 @@ export class Menu2Component implements OnInit {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     this.http
-      .get<Notificacion[]>('http://localhost:8080/api/notifications', {
+      .get<Notificacion[]>(ApiRoutes.notifications.all, {
         headers,
       })
       .subscribe({

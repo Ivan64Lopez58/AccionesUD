@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { StockDTO } from '../twelve-mercados/stock.model';
 import { StockService } from '../twelve-mercados/stock.service';
 import { environment } from '../../../environments/environment';
+import { ApiRoutes } from '../../ApiRoutes';
 
 export enum OrderState {
   PROCESANDO = 'Procesando',
@@ -74,8 +75,6 @@ export interface OrderRequest {
   providedIn: 'root'
 })
 export class OrderService {
-  private baseUrl = environment.apiBaseUrl;
-  private apiUrl = `${this.baseUrl}/orders`; // URL de tu API
   private symbols = [
     'AAPL'/*, 'GOOGL', 'MSFT', 'AMZN', 'TSLA',
     'META', 'NVDA', 'NFLX', 'JPM', 'BRK.B',
@@ -146,6 +145,6 @@ getOrders(): Observable<Order[]> {
   createOrder(orderRequest: OrderRequest): Observable<any> {
     console.log("🟡 Enviando orden:", JSON.stringify(orderRequest, null, 2));
 
-    return this.http.post<any>(this.apiUrl, orderRequest);
+    return this.http.post<any>(ApiRoutes.orders.orders, orderRequest);
   }
 }
