@@ -8,12 +8,13 @@
       🌐 Selecciona un país:
     </label>
 
-    <select id="pais" [value]="paisSeleccionado()" (change)="onPaisChange($event)">
-      <option value="" disabled selected>🌐 Selecciona el mercado que deseas explorar</option>
-      <option *ngFor="let p of paises" [value]="p.codigo">
-        {{ p.nombre }}
-      </option>
-    </select>
+<select id="pais" [(ngModel)]="paisSeleccionadoSeleccion" (change)="onPaisChange($event)">
+  <option value="" disabled selected>🌐 Selecciona el mercado que deseas explorar</option>
+  <option *ngFor="let p of paises" [value]="p.codigo">{{ p.nombre }}</option>
+</select>
+
+
+
   </div>
 
   <div *ngIf="cargando()">

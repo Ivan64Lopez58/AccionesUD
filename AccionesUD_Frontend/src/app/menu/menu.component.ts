@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NotificationRequest } from '../servicio/notificaciones/notification-request.model';
 import { NotificacionesService } from '../servicio/notificaciones/notificaciones.service';
 import { AuthModalService } from '../servicio/auth-modal.service';
+import { ApiRoutes } from '../ApiRoutes';
 
 @Component({
   selector: 'app-menu',
@@ -97,7 +98,7 @@ export class MenuComponent {
       };
 
       this.http
-        .post<any>('http://localhost:8080/auth/login', loginPayload)
+        .post<any>(ApiRoutes.auth.login, loginPayload)
         .subscribe({
           next: (res) => {
             console.log('Respuesta del login:', res);
@@ -130,8 +131,9 @@ export class MenuComponent {
       };
 
       this.http
-        .post<{ token: string }>(
-          'http://localhost:8080/auth/verify-otp',
+        // Reemplazo correcto:
+        this.http.post<{ token: string }>(
+          ApiRoutes.auth.verifyOtp,
           otpPayload
         )
         .subscribe({
@@ -213,8 +215,7 @@ export class MenuComponent {
       email: this.correoRecuperacion,
     };
 
-    this.http
-      .post('http://localhost:8080/auth/password/request', payload)
+    this.http.post(ApiRoutes.auth.password.request, payload)
       .subscribe({
         next: () => {
           alert(

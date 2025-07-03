@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ApiRoutes } from '../ApiRoutes';
 
 @Component({
   selector: 'app-vista-registro',
   templateUrl: './vista-registro.component.html',
   styleUrls: ['./vista-registro.component.css'],
   standalone: true,
-  imports: [
+    imports: [
     ReactiveFormsModule,
     HttpClientModule,
     TranslateModule
@@ -48,7 +49,7 @@ export class VistaRegistroComponent {
       address: this.registroForm.value.address
     };
 
-    this.http.post('http://localhost:8080/auth/register', payload).subscribe({
+    this.http.post(ApiRoutes.auth.register, payload).subscribe({
       next: (res: any) => {
         alert('Registro exitoso');
         this.router.navigate(['/']);

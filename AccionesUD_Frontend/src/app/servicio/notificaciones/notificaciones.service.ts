@@ -13,14 +13,14 @@ export interface Notificacion {
   read?: boolean;
 }
 import { NotificationRequest } from './notification-request.model';
+import { ApiRoutes } from '../../ApiRoutes';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificacionesService {
-  private apiUrl = 'http://localhost:8080/api/notifications';
-
+  
   constructor(private http: HttpClient) {}
 
   getNotificaciones(): Observable<Notificacion[]> {
@@ -31,7 +31,7 @@ export class NotificacionesService {
     }
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<Notificacion[]>(this.apiUrl, { headers });
+    return this.http.get<Notificacion[]>(ApiRoutes.notifications.all, { headers });
   }
 
   markAsRead(id: number): Observable<void> {
@@ -42,7 +42,7 @@ export class NotificacionesService {
     }
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const url = `${this.apiUrl}/${id}/read`;
+    const url = `${ApiRoutes.notifications.all}/${id}/read`;
     return this.http.patch<void>(url, null, { headers });
   }
 
@@ -51,7 +51,7 @@ getNotificacionesTraducidas(idioma: string): Observable<NotificationRequest[]> {
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
   return this.http.get<NotificationRequest[]>(
-    `http://localhost:8080/api/notifications/translated?idioma=${idioma}`,
+    `${ApiRoutes.notifications.translated}?idioma=${idioma}`,
     { headers }
   );
 }

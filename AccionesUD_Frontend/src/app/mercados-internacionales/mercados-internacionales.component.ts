@@ -6,6 +6,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthModalService } from '../servicio/auth-modal.service';
 import { TransferenciaAccionService } from '../servicio/transferencia-accion.service';
 import { Order, OrderState } from '../servicio/acciones/order.service';
+import { ApiRoutes } from '../ApiRoutes';
 
 interface Accion {
   nombre_empresa: string;
@@ -42,6 +43,8 @@ export class MercadosInternacionalesComponent implements OnInit {
 
 
   acciones = signal<Accion[]>([]);
+  paisSeleccionadoSeleccion = '';
+
   paisSeleccionado = signal<string>(''); // será dinámico
   cargando = signal<boolean>(false);
 
@@ -58,11 +61,11 @@ ngOnInit(): void {
         nombre: this.normalizarNombrePais(codigo)
       }));
 
-      if (this.paises.length > 0) {
+     /* if (this.paises.length > 0) {
         const primerPais = this.paises[0].codigo;
         this.paisSeleccionado.set(primerPais);
         this.consultarAcciones();
-      }
+      }*/
     },
     error: (err: any) => {
       console.error('❌ Error al cargar enlaces:', err);
@@ -78,9 +81,11 @@ onPaisChange(event: Event) {
 
   if (!valor || valor === this.paisSeleccionado()) return;
 
-  this.paisSeleccionado.set(valor);
+  this.paisSeleccionadoSeleccion = valor; // sincroniza modelo visual
+  this.paisSeleccionado.set(valor);      // actualiza signal reactivo
   this.consultarAcciones();
 }
+
 
 
 
@@ -128,7 +133,7 @@ consultarAcciones(): void {
 
   console.log(`🌐 Consultando API para ${pais}`);
 
-  this.http.post<Accion[]>("http://localhost:8080/acciones/scrap", empresas)
+  this.http.post<Accion[]>(ApiRoutes.acciones.scrap, empresas)
     .subscribe({
       next: (data: Accion[]) => {
         const accionesLimpias: Accion[] = data.map((acc: Accion) => ({

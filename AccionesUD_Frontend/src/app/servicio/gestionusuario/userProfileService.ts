@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiRoutes } from '../../ApiRoutes';
 
 export interface UpdateUserProfileRequest {
   id: number;
@@ -15,8 +16,7 @@ export interface UpdateUserProfileRequest {
 
 @Injectable({ providedIn: 'root' })
 export class UserProfileService {
-  private baseUrl = 'http://localhost:8080/api/user/profile';
-
+ 
   constructor(private http: HttpClient) {}
 
   /**
@@ -34,7 +34,7 @@ export class UserProfileService {
    */
   getMyProfile(): Observable<UpdateUserProfileRequest> {
     const headers = this.getAuthHeaders();
-    return this.http.get<UpdateUserProfileRequest>(`${this.baseUrl}/me`, {
+    return this.http.get<UpdateUserProfileRequest>(`${ApiRoutes.profile.me}`, {
       headers,
     });
   }
@@ -45,6 +45,6 @@ export class UserProfileService {
    */
   updateUserProfile(data: UpdateUserProfileRequest): Observable<string> {
     const headers = this.getAuthHeaders();
-    return this.http.put<string>(`${this.baseUrl}/update`, data, { headers });
+    return this.http.put<string>(`${ApiRoutes.profile.update}`, data, { headers });
   }
 }
