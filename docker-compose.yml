@@ -1,26 +1,27 @@
+version: '3.8'
 
 services:
   postgres:
     image: postgres:16-alpine
     container_name: accionesud-postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234   
-      POSTGRES_DB: accionesud_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-accionesud_db}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 5s
       timeout: 5s
       retries: 5
 
   backend:
     build:
-      context: .                     # Corregido: la raíz del proyecto
-      dockerfile: Dockerfile         # Asegúrate que tu Dockerfile del backend se llame así
+      context: ./AccionesUD_Backend
+      dockerfile: Dockerfile
     container_name: accionesud-app-backend
     depends_on:
       postgres:
@@ -28,25 +29,33 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME:-accionesud_db}
-      SPRING_DATASOURCE_USERNAME: ${DB_USER:-postgres}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       ALPACA_API_BASE_URL: ${ALPACA_API_URL}
       ALPACA_API_KEY_ID: ${ALPACA_API_KEY}
       ALPACA_SECRET_KEY: ${ALPACA_SECRET}
-    # volumes:
-    #   - .:/app
+    env_file:
+      - .env
 
   traductor:
     build:
-      context: ./microservicio-traductor
-      dockerfile: Dockerfile         # Se puede omitir si el nombre es estándar
+      context: ./AccionesUD_Backend/microservicio-traductor
     container_name: traductor-service
     ports:
       - "5001:5001"
     restart: always
 
+  frontend:
+    build:
+      context: ./AccionesUD_Frontend
+      dockerfile: Dockerfile
+    container_name: accionesud-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
