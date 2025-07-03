@@ -1,0 +1,12 @@
+# Ignorar carpetas de Maven y archivos temporales
+target/
+.idea/
+*.iml
+*.log
+.DS_Store
+*.class
+*.jar
+
+# Git y sistema
+.git
+.gitignore
