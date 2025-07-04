@@ -256,5 +256,19 @@
     "CONFIRM_PASSWORD_LABEL": "Confirm Password",
     "CONFIRM_PASSWORD_PLACEHOLDER": "Repeat your password",
     "SUBMIT_BUTTON": "Register"
-  }
+  },
+  
+  "mercados.titulo": "🌍 International Markets",
+  "mercados.seleccionarPais": "🌐 Select a country:",
+  "mercados.placeholderPais": "🌐 Select the market you want to explore",
+  "mercados.cargando": "⏳ Loading market data...",
+  "mercados.empresa": "📈 Company",
+  "mercados.precio": "💵 Price",
+  "mercados.cambio": "📉 Change",
+  "mercados.porcentajeCambio": "% Change",
+  "mercados.cierre": "🕒 Close",
+  "mercados.bolsa": "🌆 Exchange",
+  "mercados.sinAcciones": "⚠️ No stocks found for the selected country."
+
+
 }

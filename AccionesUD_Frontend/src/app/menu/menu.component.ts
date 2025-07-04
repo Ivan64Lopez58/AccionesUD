@@ -53,7 +53,7 @@ export class MenuComponent {
     private http: HttpClient,
     private router: Router,
     private translate: TranslateService,
-  private notificacionesService: NotificacionesService,
+    private notificacionesService: NotificacionesService,
     private authModalService: AuthModalService
   ) {
     this.loginForm = this.fb.group({

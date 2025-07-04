@@ -7,6 +7,8 @@ import { AuthModalService } from '../servicio/auth-modal.service';
 import { TransferenciaAccionService } from '../servicio/transferencia-accion.service';
 import { Order, OrderState } from '../servicio/acciones/order.service';
 import { ApiRoutes } from '../ApiRoutes';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Accion {
   nombre_empresa: string;
@@ -24,7 +26,7 @@ type EnlacesPorPais = Record<string, { empresa: string; url: string }[]>;
 @Component({
   selector: 'app-mercados-internacionales',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, TranslateModule],
   templateUrl: './mercados-internacionales.component.html',
   styleUrls: ['./mercados-internacionales.component.css']
 })
@@ -34,7 +36,9 @@ export class MercadosInternacionalesComponent implements OnInit {
     private router: Router,
     private authModalService: AuthModalService,
     private http: HttpClient,
-  private transferenciaAccionService: TransferenciaAccionService
+  private transferenciaAccionService: TransferenciaAccionService,
+  private translate: TranslateService
+    
   ) {}
 
 

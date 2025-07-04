@@ -245,5 +245,18 @@
     "CONFIRM_PASSWORD_LABEL": "Passwort bestätigen",
     "CONFIRM_PASSWORD_PLACEHOLDER": "Wiederhole dein Passwort",
     "SUBMIT_BUTTON": "Registrieren"
-  }
+  },
+  
+  "mercados.titulo": "🌍 Internationale Märkte",
+  "mercados.seleccionarPais": "🌐 Wähle ein Land:",
+  "mercados.placeholderPais": "🌐 Wähle den Markt, den du erkunden möchtest",
+  "mercados.cargando": "⏳ Marktdaten werden geladen...",
+  "mercados.empresa": "📈 Unternehmen",
+  "mercados.precio": "💵 Preis",
+  "mercados.cambio": "📉 Veränderung",
+  "mercados.porcentajeCambio": "% Veränderung",
+  "mercados.cierre": "🕒 Schlusskurs",
+  "mercados.bolsa": "🌆 Börse",
+  "mercados.sinAcciones": "⚠️ Keine Aktien für das ausgewählte Land gefunden."
+
 }

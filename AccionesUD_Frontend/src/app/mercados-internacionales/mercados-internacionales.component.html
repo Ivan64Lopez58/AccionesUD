@@ -1,37 +1,28 @@
 <div class="modal">
-  <h2>
-    🌍 Mercados Internacionales
-  </h2>
-
+<h2>{{ 'mercados.titulo' | translate }}</h2>
   <div class="select-wrapper">
-    <label for="pais">
-      🌐 Selecciona un país:
-    </label>
+    <label for="pais">{{ 'mercados.seleccionarPais' | translate }}</label>
 
 <select id="pais" [(ngModel)]="paisSeleccionadoSeleccion" (change)="onPaisChange($event)">
-  <option value="" disabled selected>🌐 Selecciona el mercado que deseas explorar</option>
-  <option *ngFor="let p of paises" [value]="p.codigo">{{ p.nombre }}</option>
+  <option value="" disabled selected>{{ 'mercados.placeholderPais' | translate }}</option>
+<option *ngFor="let p of paises" [value]="p.codigo">{{ p.nombre }}</option>
 </select>
 
-
-
   </div>
 
-  <div *ngIf="cargando()">
-    ⏳ Cargando datos del mercado...
-  </div>
+<div *ngIf="cargando()">
+  {{ 'mercados.cargando' | translate }}
+</div>
 
   <div *ngIf="!cargando() && acciones().length > 0">
     <table>
       <thead>
-    <tr>
-      <th style="text-align: center;">📈 Empresa</th>
-      <th style="text-align: center;">💵 Precio</th>
-      <th style="text-align: center;">📉 Cambio</th>
-      <th style="text-align: center;">% Cambio</th>
-      <th style="text-align: center;">🕒 Cierre</th>
-      <th style="text-align: center;">🌆 Bolsa</th>
-    </tr>
+        <th>{{ 'mercados.empresa' | translate }}</th>
+        <th>{{ 'mercados.precio' | translate }}</th>
+        <th>{{ 'mercados.cambio' | translate }}</th>
+        <th>{{ 'mercados.porcentajeCambio' | translate }}</th>
+        <th>{{ 'mercados.cierre' | translate }}</th>
+        <th>{{ 'mercados.bolsa' | translate }}</th>
 
       </thead>
 
@@ -70,6 +61,6 @@
   </div>
 
   <div *ngIf="!cargando() && acciones().length === 0">
-    ⚠️ No se encontraron acciones para el país seleccionado.
+    {{ 'mercados.sinAcciones' | translate }}
   </div>
 </div>

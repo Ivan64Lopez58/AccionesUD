@@ -176,7 +176,7 @@
     "CONTACT": "Contacto",
     "INVESTORS": "Inversores",
     "REPORTS": "Informes",
-    "PRICES": "Precios de costización",
+    "PRICES": "Precios de cotización",
     "LEGAL": "Legal",
     "DOCUMENTATION": "Documentación y normativas",
     "LEGAL_NOTICE": "Aviso Legal",
@@ -262,5 +262,19 @@
     "CONFIRM_PASSWORD_LABEL": "Confirmar Contraseña",
     "CONFIRM_PASSWORD_PLACEHOLDER": "Repite tu contraseña",
     "SUBMIT_BUTTON": "Registrar"
-  }
+  },
+  
+  "mercados.titulo": "🌍 Mercados Internacionales",
+  "mercados.seleccionarPais": "🌐 Selecciona un país:",
+  "mercados.placeholderPais": "🌐 Selecciona el mercado que deseas explorar",
+  "mercados.cargando": "⏳ Cargando datos del mercado...",
+  "mercados.empresa": "📈 Empresa",
+  "mercados.precio": "💵 Precio",
+  "mercados.cambio": "📉 Cambio",
+  "mercados.porcentajeCambio": "% Cambio",
+  "mercados.cierre": "🕒 Cierre",
+  "mercados.bolsa": "🌆 Bolsa",
+  "mercados.sinAcciones": "⚠️ No se encontraron acciones para el país seleccionado."
+
+
 }
