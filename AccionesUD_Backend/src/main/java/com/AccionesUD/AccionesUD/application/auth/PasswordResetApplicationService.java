@@ -30,7 +30,7 @@ public class PasswordResetApplicationService {
         userService.ensureUserExists(email);
         tokenService.deleteTokensByEmail(email);
         String token = tokenService.generateToken(email);
-        String link = "http://localhost:4200/reset-password?token=" + token;
+        String link = "https://accionesud-production.up.railway.app/reset-password?token=" + token;
         emailService.sendEmail(email, "Recuperación de contraseña", "Da clic en el enlace: " + link);
 
         // ✅ Publicar evento en lugar de llamar directamente a notificationService
