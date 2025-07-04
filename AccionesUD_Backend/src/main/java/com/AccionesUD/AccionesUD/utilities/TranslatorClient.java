@@ -1,4 +1,5 @@
 package com.AccionesUD.AccionesUD.utilities;
+import org.springframework.beans.factory.annotation.Value;
 
 
 import org.springframework.http.*;
@@ -7,19 +8,20 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
-
 @Component
 public class TranslatorClient {
 
     private final RestTemplate restTemplate;
+    private final String baseUrl;
 
-    public TranslatorClient(RestTemplate restTemplate) {
+    public TranslatorClient(RestTemplate restTemplate,
+                             @Value("${traductor.base-url}") String baseUrl) {
         this.restTemplate = restTemplate;
+        this.baseUrl = baseUrl;
     }
 
-    // Traducción individual (sigue disponible)
     public String traducir(String texto, String idioma) {
-        String url = "http://traductor:5000/traducir";
+        String url = baseUrl + "/traducir";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -35,13 +37,12 @@ public class TranslatorClient {
             ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
             return response.getBody().get("traduccion").toString();
         } catch (Exception e) {
-            return texto; // Fallback si falla la traducción
+            return texto;
         }
     }
 
-    // Traducción en lote
     public List<String> traducirLote(List<String> textos, String idioma) {
-        String url = "http://traductor:5000/traducir-lote";
+        String url = baseUrl + "/traducir-lote";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -57,9 +58,7 @@ public class TranslatorClient {
             ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
             return (List<String>) response.getBody().get("traducciones");
         } catch (Exception e) {
-            // Si falla, se retorna la lista original sin traducir
             return textos;
         }
     }
 }
-
