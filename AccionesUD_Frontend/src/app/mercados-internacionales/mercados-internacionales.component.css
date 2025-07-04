@@ -437,3 +437,148 @@ table {
   66% { content: '..'; }
   100% { content: '...'; }
 }
+
+
+.market-modal {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+  background: #f5f7fa;
+  min-height: 100vh;
+}
+
+.market-card {
+  background: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem 3rem;
+  max-width: 1100px;
+  width: 100%;
+  transition: box-shadow 0.3s ease;
+}
+
+.market-card:hover {
+  box-shadow: 0 35px 50px rgba(0, 0, 0, 0.12);
+}
+
+.market-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1e1e2f;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.market-select-wrapper {
+  margin-bottom: 2rem;
+}
+
+.market-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.6rem;
+  color: #555;
+}
+
+.market-select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background-color: #fff;
+  appearance: none;
+  transition: border 0.3s ease;
+}
+
+.market-select:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.market-loading {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.market-table-wrapper {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+}
+
+.market-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  background-color: #fff;
+}
+
+.market-table thead {
+  background-color: #f1f3f5;
+}
+
+.market-table th,
+.market-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+}
+
+.market-table td a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.market-table td a:hover {
+  text-decoration: underline;
+}
+
+.cambio-con-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.icono-flecha {
+  width: 14px;
+  height: 14px;
+}
+
+.positivo {
+  color: #2ecc71;
+}
+
+.negativo {
+  color: #e74c3c;
+}
+
+.market-no-data {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: #999;
+}

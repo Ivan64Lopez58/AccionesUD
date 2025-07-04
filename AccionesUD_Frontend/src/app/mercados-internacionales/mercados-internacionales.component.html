@@ -1,66 +1,76 @@
-<div class="modal">
-<h2>{{ 'mercados.titulo' | translate }}</h2>
-  <div class="select-wrapper">
-    <label for="pais">{{ 'mercados.seleccionarPais' | translate }}</label>
+<div class="market-modal">
+  <div class="market-card">
+    <h2 class="market-title">
+      {{ 'mercados.titulo' | translate }}
+    </h2>
 
-<select id="pais" [(ngModel)]="paisSeleccionadoSeleccion" (change)="onPaisChange($event)">
-  <option value="" disabled selected>{{ 'mercados.placeholderPais' | translate }}</option>
-<option *ngFor="let p of paises" [value]="p.codigo">{{ p.nombre }}</option>
-</select>
+    <div class="market-select-wrapper">
+      <label for="pais" class="market-label">
+        {{ 'mercados.seleccionarPais' | translate }}
+      </label>
+      <select
+        id="pais"
+        [(ngModel)]="paisSeleccionadoSeleccion"
+        (change)="onPaisChange($event)"
+        class="market-select"
+      >
+        <option value="" disabled selected>
+          {{ 'mercados.placeholderPais' | translate }}
+        </option>
+        <option *ngFor="let p of paises" [value]="p.codigo">
+          {{ p.nombre }}
+        </option>
+      </select>
+    </div>
 
-  </div>
+    <div *ngIf="cargando()" class="market-loading">
+      <span class="spinner"></span>
+      {{ 'mercados.cargando' | translate }}
+    </div>
 
-<div *ngIf="cargando()">
-  {{ 'mercados.cargando' | translate }}
-</div>
+    <div *ngIf="!cargando() && acciones().length > 0" class="market-table-wrapper">
+      <table class="market-table">
+        <thead>
+          <tr>
+            <th>{{ 'mercados.empresa' | translate }}</th>
+            <th>{{ 'mercados.precio' | translate }}</th>
+            <th>{{ 'mercados.cambio' | translate }}</th>
+            <th>{{ 'mercados.porcentajeCambio' | translate }}</th>
+            <th>{{ 'mercados.cierre' | translate }}</th>
+            <th>{{ 'mercados.bolsa' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let accion of acciones()">
+            <td>
+              <a href="#" (click)="irAOrdenes(accion.nombre_empresa); $event.preventDefault()">
+                {{ accion.nombre_empresa }}
+              </a>
+            </td>
+            <td>$ {{ accion.precio }}</td>
+            <td>
+              <span class="cambio-con-icono" [ngClass]="{'negativo': accion.cambio.startsWith('-'), 'positivo': !accion.cambio.startsWith('-')}">
+                {{ accion.cambio }}
+                <img *ngIf="accion.cambio.startsWith('-')" src="/flecha_abajo.png" alt="baja" class="icono-flecha" />
+                <img *ngIf="!accion.cambio.startsWith('-')" src="/flecha_arriba.png" alt="sube" class="icono-flecha" />
+              </span>
+            </td>
+            <td>
+              <span class="cambio-con-icono" [ngClass]="{'negativo': accion.cambio.startsWith('-'), 'positivo': !accion.cambio.startsWith('-')}">
+                {{ accion.cambio_pct }}
+                <img *ngIf="accion.cambio.startsWith('-')" src="/flecha_abajo.png" alt="baja" class="icono-flecha" />
+                <img *ngIf="!accion.cambio.startsWith('-')" src="/flecha_arriba.png" alt="sube" class="icono-flecha" />
+              </span>
+            </td>
+            <td>{{ accion.hora_cierre }}</td>
+            <td>{{ accion.moneda }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <div *ngIf="!cargando() && acciones().length > 0">
-    <table>
-      <thead>
-        <th>{{ 'mercados.empresa' | translate }}</th>
-        <th>{{ 'mercados.precio' | translate }}</th>
-        <th>{{ 'mercados.cambio' | translate }}</th>
-        <th>{{ 'mercados.porcentajeCambio' | translate }}</th>
-        <th>{{ 'mercados.cierre' | translate }}</th>
-        <th>{{ 'mercados.bolsa' | translate }}</th>
-
-      </thead>
-
-      <tbody>
-        <tr *ngFor="let accion of acciones()">
-          <td>
-            <a href="#" (click)="irAOrdenes(accion.nombre_empresa); $event.preventDefault()">
-              {{ accion.nombre_empresa }}
-            </a>
-          </td>
-          <td>$ {{ accion.precio }}</td>
-
-          <!-- CAMBIO -->
-          <td>
-            <span class="cambio-con-icono" [ngClass]="{'negativo': accion.cambio.startsWith('-'), 'positivo': !accion.cambio.startsWith('-')}">
-              {{ accion.cambio }}
-              <img *ngIf="accion.cambio.startsWith('-')" src="/flecha_abajo.png" alt="baja" class="icono-flecha">
-              <img *ngIf="!accion.cambio.startsWith('-')" src="/flecha_arriba.png" alt="sube" class="icono-flecha">
-            </span>
-          </td>
-
-          <!-- % CAMBIO -->
-          <td>
-            <span class="cambio-con-icono" [ngClass]="{'negativo': accion.cambio.startsWith('-'), 'positivo': !accion.cambio.startsWith('-')}">
-              {{ accion.cambio_pct }}
-              <img *ngIf="accion.cambio.startsWith('-')" src="/flecha_abajo.png" alt="baja" class="icono-flecha">
-              <img *ngIf="!accion.cambio.startsWith('-')" src="/flecha_arriba.png" alt="sube" class="icono-flecha">
-            </span>
-          </td>
-
-          <td>{{ accion.hora_cierre }}</td>
-          <td>{{ accion.moneda }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div *ngIf="!cargando() && acciones().length === 0">
-    {{ 'mercados.sinAcciones' | translate }}
+    <div *ngIf="!cargando() && acciones().length === 0" class="market-no-data">
+      {{ 'mercados.sinAcciones' | translate }}
+    </div>
   </div>
 </div>
