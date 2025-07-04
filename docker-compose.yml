@@ -44,7 +44,7 @@ services:
       context: ./AccionesUD_Backend/microservicio-traductor
     container_name: traductor-service
     ports:
-      - "5001:5001"
+      - "5001:5000"
     restart: always
 
   frontend:
