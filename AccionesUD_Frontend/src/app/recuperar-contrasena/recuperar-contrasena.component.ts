@@ -9,6 +9,8 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ApiRoutes } from '../ApiRoutes';
+
 
 @Component({
   selector: 'app-recuperar',
@@ -51,45 +53,46 @@ export class RecuperarComponent implements OnInit {
     }
   }
 
-  validarToken(): void {
-    console.log('Enviando token al backend:', this.token);
+validarToken(): void {
+  console.log('Enviando token al backend:', this.token);
 
-    this.http
-      .post('http://localhost:8080/auth/password/validate', {
-        token: this.token,
-      })
-      .subscribe({
-        next: () => {
-          this.tokenValido = true;
-          console.log('Token válido');
-        },
-        error: (err) => {
-          this.error = 'El token es inválido o ha expirado.';
-          console.error('Error en validación:', err);
-        },
-      });
-  }
-
-  enviar(): void {
-    if (this.form.invalid) return;
-
-    const payload = {
+  this.http
+    .post(ApiRoutes.auth.password.validate, {
       token: this.token,
-      newPassword: this.form.value.nuevaContrasena,
-    };
+    })
+    .subscribe({
+      next: () => {
+        this.tokenValido = true;
+        console.log('Token válido');
+      },
+      error: (err) => {
+        this.error = 'El token es inválido o ha expirado.';
+        console.error('Error en validación:', err);
+      },
+    });
+}
 
-    this.http
-      .post('http://localhost:8080/auth/password/update', payload)
-      .subscribe({
-        next: () => {
-          this.mensaje = 'Contraseña actualizada correctamente.';
-          setTimeout(() => this.router.navigate(['/']), 3000);
-        },
-        error: () => {
-          this.error = 'Error al actualizar la contraseña.';
-        },
-      });
-  }
+enviar(): void {
+  if (this.form.invalid) return;
+
+  const payload = {
+    token: this.token,
+    newPassword: this.form.value.nuevaContrasena,
+  };
+
+  this.http
+    .post(ApiRoutes.auth.password.update, payload)
+    .subscribe({
+      next: () => {
+        this.mensaje = 'Contraseña actualizada correctamente.';
+        setTimeout(() => this.router.navigate(['/']), 3000);
+      },
+      error: () => {
+        this.error = 'Error al actualizar la contraseña.';
+      },
+    });
+}
+
 
   validarCoincidencia(group: FormGroup) {
     const password = group.get('nuevaContrasena')?.value;
